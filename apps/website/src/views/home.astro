@@ -24,14 +24,19 @@ interface Props {
 const { locale = 'en' } = Astro.props
 const docsUrl = import.meta.env.PUBLIC_DOCS_URL || ''
 const consoleUrl = import.meta.env.PUBLIC_CONSOLE_URL || 'https://console.autharie.fr'
+const title = {
+  en: 'Autharie: managed Keycloak and Ferriskey, made in France',
+  fr: 'Autharie : Keycloak et Ferriskey gérés, conçus en France',
+}
+
 const description = {
   en: 'Managed Ferriskey and Keycloak instances on Kubernetes. Upgrades, archives, restores and access control handled, on our clusters or on yours.',
-  fr: 'Des instances Ferriskey et Keycloak gérées sur Kubernetes. Mises à jour, archives, restaurations et contrôle d’accès pris en charge, sur nos clusters ou sur les vôtres.',
+  fr: 'Des instances Ferriskey et Keycloak gérées sur Kubernetes. Mises à jour, archives et restaurations prises en charge, chez nous ou chez vous.',
 }
 ---
 
 <Base
-  title="Autharie"
+  title={title[locale]}
   description={description[locale]}
 >
   <SiteHeader docsUrl={docsUrl} consoleUrl={consoleUrl} locale={locale} pathname={Astro.url.pathname} client:load transition:persist={`site-header-${locale}`} />

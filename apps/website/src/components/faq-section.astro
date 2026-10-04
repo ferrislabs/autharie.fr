@@ -95,7 +95,20 @@ const copy = {
 }
 const t = copy[locale]
 const questions = t.questions
+
+// The same questions, for search engines: FAQ rich results must match what the page shows.
+const faqJsonLd = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: questions.map((item) => ({
+    '@type': 'Question',
+    name: item.q,
+    acceptedAnswer: { '@type': 'Answer', text: item.a },
+  })),
+})
 ---
+
+<script type="application/ld+json" set:html={faqJsonLd} />
 
 <section class="border-t">
   <div class="mx-auto max-w-4xl px-5 py-20 sm:py-28">

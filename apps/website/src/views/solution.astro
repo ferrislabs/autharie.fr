@@ -6,6 +6,7 @@ import CtaSection from '../components/cta-section.astro'
 import SiteFooter from '../components/site-footer.astro'
 import { getSolution, solutionCopy } from '../data/solutions'
 import type { Locale } from '../i18n'
+import { describe } from '../seo/describe'
 
 interface Props {
   slug: string
@@ -15,11 +16,14 @@ interface Props {
 const { slug, locale = 'en' } = Astro.props
 const solution = getSolution(slug)!
 const c = solutionCopy(solution, locale)
+const suffix = { en: 'Managed IAM', fr: 'IAM managé' }
+const full = `${c.menu} · ${suffix[locale]} | Autharie`
+const title = full.length > 66 ? `${c.menu} | Autharie` : full
 const docsUrl = import.meta.env.PUBLIC_DOCS_URL || ''
 const consoleUrl = import.meta.env.PUBLIC_CONSOLE_URL || 'https://console.autharie.fr'
 ---
 
-<Base title={`${c.name} · Autharie`} description={c.tagline}>
+<Base title={title} description={describe(c.hero.lead)}>
   <SiteHeader docsUrl={docsUrl} consoleUrl={consoleUrl} locale={locale} pathname={Astro.url.pathname} client:load transition:persist={`site-header-${locale}`} />
   <main>
     <SolutionPage solution={solution} locale={locale} />

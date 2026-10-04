@@ -8,12 +8,40 @@ import { localeFromUrl, locales, switchPath } from '../i18n'
 interface Props {
   title: string
   description?: string
+  /** Path or URL of the social card. Defaults to the one generated for this page. */
   thumbnail?: string
+  /** Keep the page out of search results (the 404 page). */
+  noindex?: boolean
 }
 
-const { title, description, thumbnail } = Astro.props
+const { title, description, thumbnail, noindex = false } = Astro.props
 const locale = localeFromUrl(Astro.url)
-const thumbnailUrl = thumbnail ?? siteConfig.thumbnail
+const site = Astro.site ?? new URL('https://autharie.fr')
+const pathname = Astro.url.pathname.endsWith('/') ? Astro.url.pathname : `${Astro.url.pathname}/`
+const canonical = new URL(pathname, site).href
+const thumbnailUrl = new URL(thumbnail ?? `${pathname}thumbnail.png`, site).href
+const metaDescription = description ?? siteConfig.description
+const ogLocale = { en: 'en_GB', fr: 'fr_FR' }[locale]
+const ogLocaleAlternate = locale === 'en' ? 'fr_FR' : 'en_GB'
+const alt = (l: (typeof locales)[number]) => new URL(switchPath(pathname, l), site).href
+
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Organization',
+    name: 'Autharie',
+    url: site.href,
+    logo: new URL('/logo.svg', site).href,
+    sameAs: ['https://github.com/ferriskey'],
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    name: 'Autharie',
+    url: site.href,
+    inLanguage: locale,
+  },
+]
 ---
 
 <!doctype html>
@@ -29,20 +57,29 @@ const thumbnailUrl = thumbnail ?? siteConfig.thumbnail
       rel="stylesheet"
       href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400..700;1,400..700&family=JetBrains+Mono:wght@400;500;600&family=Noto+Sans:wght@400;500;600;700&display=swap"
     />
-    {
-      locales.map((l) => (
-        <link rel="alternate" hreflang={l} href={new URL(switchPath(Astro.url.pathname, l), Astro.site ?? Astro.url).href} />
-      ))
-    }
-    <meta name="description" content={description ?? siteConfig.description} />
+    <link rel="canonical" href={canonical} />
+    {locales.map((l) => <link rel="alternate" hreflang={l} href={alt(l)} />)}
+    <link rel="alternate" hreflang="x-default" href={alt('en')} />
+    <meta name="theme-color" content="#fdfdfe" />
+    {noindex && <meta name="robots" content="noindex, follow" />}
+    <meta name="description" content={metaDescription} />
+    <meta property="og:site_name" content="Autharie" />
+    <meta property="og:url" content={canonical} />
     <meta property="og:title" content={title} />
-    <meta property="og:description" content={description ?? siteConfig.description} />
+    <meta property="og:description" content={metaDescription} />
     <meta property="og:image" content={thumbnailUrl} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={title} />
     <meta property="og:type" content={siteConfig.ogType} />
-    <meta name="twitter:card" content={siteConfig.twitterCard} />
+    <meta property="og:locale" content={ogLocale} />
+    <meta property="og:locale:alternate" content={ogLocaleAlternate} />
+    <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
-    <meta name="twitter:description" content={description ?? siteConfig.description} />
+    <meta name="twitter:description" content={metaDescription} />
     <meta name="twitter:image" content={thumbnailUrl} />
+    <meta name="twitter:image:alt" content={title} />
+    {jsonLd.map((data) => <script type="application/ld+json" set:html={JSON.stringify(data)} />)}
     <title>{formatTitle(siteConfig, title)}</title>
     <ClientRouter />
   </head>

@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@astrojs/react": "^4.2.0",
+    "@astrojs/sitemap": "^3.7.4",
     "@explainer/config": "workspace:*",
     "@explainer/thumbnail": "workspace:*",
     "@explainer/ui": "workspace:*",

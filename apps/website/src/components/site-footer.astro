@@ -47,7 +47,7 @@ const columns = [
       { label: t('documentation'), href: docsUrl || '#' },
       { label: t('simulator'), href: localePath(locale, '/simulator') },
       { label: t('blog'), href: blogUrl || '#' },
-      { label: t('apiReference'), href: `${docsUrl}/api` },
+      { label: t('apiReference'), href: docsUrl ? `${docsUrl}/api` : '#' },
       { label: t('status'), href: 'https://status.autharie.fr' },
     ],
   },

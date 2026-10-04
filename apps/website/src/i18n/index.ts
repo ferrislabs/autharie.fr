@@ -11,10 +11,19 @@ export function localeFromUrl(url: URL): Locale {
   return isLocale(first) && first !== defaultLocale ? first : defaultLocale
 }
 
+/** Pages are directories, so every internal link ends with a slash (before any #anchor). */
+function withTrailingSlash(path: string): string {
+  const [, pathname = '', rest = ''] = path.match(/^([^?#]*)(.*)$/) ?? []
+  if (pathname.endsWith('/') || /\.[a-z0-9]+$/i.test(pathname)) return path
+  return `${pathname}/${rest}`
+}
+
 /** Prefix an internal path (`/products/deploy`, `/#offers`) with the locale. */
 export function localePath(locale: Locale, path: string): string {
-  if (locale === defaultLocale || !path.startsWith('/')) return path
-  return path === '/' ? `/${locale}/` : `/${locale}${path}`
+  if (!path.startsWith('/')) return path
+  const normalized = withTrailingSlash(path)
+  if (locale === defaultLocale) return normalized
+  return normalized === '/' ? `/${locale}/` : `/${locale}${normalized}`
 }
 
 /** The same page in another locale, for the language switcher and hreflang. */

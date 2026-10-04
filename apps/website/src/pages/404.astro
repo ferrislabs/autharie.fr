@@ -7,7 +7,7 @@ const docsUrl = import.meta.env.PUBLIC_DOCS_URL || ''
 const consoleUrl = import.meta.env.PUBLIC_CONSOLE_URL || 'https://console.autharie.fr'
 ---
 
-<Base title="Page not found">
+<Base title="Page not found" noindex thumbnail="/thumbnail.png">
   <SiteHeader docsUrl={docsUrl} consoleUrl={consoleUrl} client:load transition:persist />
 
   <main class="flex flex-1 flex-col items-center justify-center px-6 py-32 text-center">
