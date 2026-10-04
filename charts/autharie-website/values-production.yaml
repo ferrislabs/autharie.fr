@@ -1,0 +1,49 @@
+# Production overrides only. Everything not listed here uses values.yaml.
+# Host, replicas, resources and image tag are what differ between environments.
+
+replicaCount: 2
+
+image:
+  # Written by the docker workflow on every push to main. Empty until the first
+  # image is built, which is why the Application is applied after that.
+  tag: ""
+
+gatewayApi:
+  hostnames:
+    - autharie.fr
+  # autharie-gateway (deploy/autharie/gateway.yaml in the aether repo). Its
+  # wildcard listeners do not match the apex, so autharie.fr has dedicated
+  # autharie-apex-* listeners that must be applied before this route attaches.
+  parentRefs:
+    - name: autharie-gateway
+      namespace: default
+      sectionName: autharie-apex-https
+  responseHeaders:
+    Strict-Transport-Security: max-age=31536000; includeSubDomains
+    X-Content-Type-Options: nosniff
+    Referrer-Policy: strict-origin-when-cross-origin
+    X-Frame-Options: DENY
+    Permissions-Policy: camera=(), microphone=(), geolocation=()
+  redirect:
+    enabled: true
+    from:
+      - www.autharie.fr
+    to: autharie.fr
+    # www matches the existing wildcard listener.
+    parentRefs:
+      - name: autharie-gateway
+        namespace: default
+        sectionName: autharie-https
+
+autoscaling:
+  enabled: true
+  minReplicas: 2
+  maxReplicas: 4
+
+networkPolicy:
+  enabled: true
+  # The Gateway's Envoy pods run in the namespace of the Envoy Gateway
+  # controller. Check it on the cluster before enabling this.
+  gatewayNamespaceSelector:
+    matchLabels:
+      kubernetes.io/metadata.name: envoy-gateway-system
