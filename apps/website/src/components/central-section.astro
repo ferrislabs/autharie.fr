@@ -1,0 +1,181 @@
+---
+import Icon from './icon.astro'
+import type { Locale } from '../i18n'
+
+interface Props {
+  locale?: Locale
+}
+
+const { locale = 'en' } = Astro.props
+
+const copy = {
+  en: {
+    title: 'Sign in should not be your problem',
+    lead: 'Users, applications and upkeep keep piling up. Autharie takes care of all three.',
+    cards: [
+      {
+        title: 'Users live in too many places',
+        description: 'A directory, a database, an old provider. We bring them into one place.',
+      },
+      {
+        title: 'Every application needs a login',
+        description: 'They all connect to the same instance, with the same rules.',
+      },
+      {
+        title: 'Someone has to keep it running',
+        description: 'Upgrades, archives and certificates are handled for you.',
+      },
+    ],
+    sources: [
+      { icon: 'users', label: 'Company directory' },
+      { icon: 'database', label: 'Customer database' },
+      { icon: 'key', label: 'Previous provider' },
+      { icon: 'scroll', label: 'Spreadsheet export' },
+    ],
+    login: {
+      title: 'Sign in to Acme',
+      email: 'name@acme.com',
+      button: 'Continue',
+      or: 'or',
+      sso: 'Continue with company SSO',
+    },
+    tasks: [
+      { icon: 'rotate', title: 'Version upgrade', detail: '1.4.1 to 1.4.2, Sunday 03:00' },
+      { icon: 'archive', title: 'Archive taken', detail: 'Today 02:14, 1.8 GB' },
+      { icon: 'lock', title: 'Certificate renewed', detail: 'id.acme.com' },
+    ],
+  },
+  fr: {
+    title: 'La connexion ne devrait pas être votre problème',
+    lead: 'Les utilisateurs, les applications et l’exploitation s’accumulent. Autharie s’occupe des trois.',
+    cards: [
+      {
+        title: 'Les utilisateurs sont partout',
+        description: 'Un annuaire, une base, un ancien fournisseur. Nous les réunissons au même endroit.',
+      },
+      {
+        title: 'Chaque application a besoin d’une connexion',
+        description: 'Toutes se connectent à la même instance, avec les mêmes règles.',
+      },
+      {
+        title: 'Quelqu’un doit la faire tourner',
+        description: 'Mises à jour, archives et certificats sont pris en charge pour vous.',
+      },
+    ],
+    sources: [
+      { icon: 'users', label: 'Annuaire de l’entreprise' },
+      { icon: 'database', label: 'Base de clients' },
+      { icon: 'key', label: 'Ancien fournisseur' },
+      { icon: 'scroll', label: 'Export de tableur' },
+    ],
+    login: {
+      title: 'Connexion à Acme',
+      email: 'prenom@acme.com',
+      button: 'Continuer',
+      or: 'ou',
+      sso: 'Continuer avec le SSO de l’entreprise',
+    },
+    tasks: [
+      { icon: 'rotate', title: 'Mise à jour de version', detail: '1.4.1 vers 1.4.2, dimanche 03:00' },
+      { icon: 'archive', title: 'Archive réalisée', detail: 'Aujourd’hui 02:14, 1,8 Go' },
+      { icon: 'lock', title: 'Certificat renouvelé', detail: 'id.acme.com' },
+    ],
+  },
+}
+const t = copy[locale]
+---
+
+<section id="one-identity" class="scroll-mt-20">
+  <div class="mx-auto max-w-6xl px-5 py-20 sm:py-28">
+    <div class="mx-auto max-w-2xl text-center">
+      <h2 class="text-3xl sm:text-[2.6rem] sm:leading-[1.1]">{t.title}</h2>
+      <p class="mt-5 text-lg text-muted-foreground">{t.lead}</p>
+    </div>
+
+    <div class="mt-14 grid gap-5 md:grid-cols-3">
+      <!-- 1. Users in many places -->
+      <div class="flex flex-col overflow-hidden rounded-2xl border bg-surface">
+        <div
+          class="h-64 space-y-2.5 px-6 pt-6 [mask-image:linear-gradient(to_bottom,#000_60%,transparent)]"
+          aria-hidden="true"
+        >
+          {
+            t.sources.map((source, i) => (
+              <div
+                class:list={[
+                  'flex w-fit max-w-full items-center gap-2.5 rounded-lg border bg-card px-3 py-2 text-sm shadow-sm',
+                  i % 2 === 1 && 'ml-8',
+                ]}
+              >
+                <span class="flex size-6 items-center justify-center rounded-md bg-primary/10 text-primary">
+                  <Icon name={source.icon} class="size-3.5" />
+                </span>
+                <span class="font-medium">{source.label}</span>
+              </div>
+            ))
+          }
+        </div>
+        <div class="p-6 pt-4">
+          <h3 class="font-semibold">{t.cards[0].title}</h3>
+          <p class="mt-1.5 text-sm leading-relaxed text-muted-foreground">{t.cards[0].description}</p>
+        </div>
+      </div>
+
+      <!-- 2. A login for every application -->
+      <div class="flex flex-col overflow-hidden rounded-2xl border bg-surface">
+        <div class="flex h-64 items-center justify-center px-6" aria-hidden="true">
+          <div class="w-full max-w-[15rem] rounded-xl border bg-card p-4 shadow-md">
+            <div class="flex items-center gap-2">
+              <span class="flex size-6 items-center justify-center rounded-md bg-primary text-primary-foreground">
+                <Icon name="shield" class="size-3.5" />
+              </span>
+              <span class="text-sm font-semibold">{t.login.title}</span>
+            </div>
+            <div class="mt-4 rounded-md border px-2.5 py-1.5 text-xs text-muted-foreground">{t.login.email}</div>
+            <div class="mt-2 rounded-md bg-primary px-2.5 py-1.5 text-center text-xs font-medium text-primary-foreground">
+              {t.login.button}
+            </div>
+            <div class="my-2.5 flex items-center gap-2 text-[10px] uppercase tracking-wide text-muted-foreground">
+              <span class="h-px flex-1 bg-border"></span>{t.login.or}<span class="h-px flex-1 bg-border"></span>
+            </div>
+            <div class="rounded-md border px-2.5 py-1.5 text-center text-xs font-medium">{t.login.sso}</div>
+          </div>
+        </div>
+        <div class="p-6 pt-4">
+          <h3 class="font-semibold">{t.cards[1].title}</h3>
+          <p class="mt-1.5 text-sm leading-relaxed text-muted-foreground">{t.cards[1].description}</p>
+        </div>
+      </div>
+
+      <!-- 3. Upkeep handled -->
+      <div class="flex flex-col overflow-hidden rounded-2xl border bg-surface">
+        <div class="flex h-64 flex-col justify-center gap-2.5 px-6" aria-hidden="true">
+          {
+            t.tasks.map((task, i) => (
+              <div
+                class:list={[
+                  'flex items-center gap-3 rounded-lg border bg-card px-3 py-2.5 shadow-sm',
+                  i === 0 && '-rotate-1',
+                  i === 1 && 'rotate-1',
+                  i === 2 && '-rotate-1',
+                ]}
+              >
+                <span class="flex size-8 shrink-0 items-center justify-center rounded-md bg-primary/10 text-primary">
+                  <Icon name={task.icon} class="size-4" />
+                </span>
+                <span class="text-sm leading-tight">
+                  <span class="block font-medium">{task.title}</span>
+                  <span class="block text-xs text-muted-foreground">{task.detail}</span>
+                </span>
+              </div>
+            ))
+          }
+        </div>
+        <div class="p-6 pt-4">
+          <h3 class="font-semibold">{t.cards[2].title}</h3>
+          <p class="mt-1.5 text-sm leading-relaxed text-muted-foreground">{t.cards[2].description}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

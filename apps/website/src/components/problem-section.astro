@@ -1,0 +1,94 @@
+---
+import { localePath, type Locale } from '../i18n'
+
+interface Props {
+  locale?: Locale
+}
+
+const { locale = 'en' } = Astro.props
+
+const copy = {
+  en: {
+    eyebrow: 'The reason this exists',
+    title: 'Running your own identity provider is a second job',
+    lead: 'Keycloak and Ferriskey are good software. The work is not writing the deployment, it is everything that happens in the years after it.',
+    points: [
+      {
+        n: '01',
+        title: 'Upgrades arrive whether you are ready or not',
+        description:
+          'Every release brings a schema migration and a window during which sign in still has to work. Somebody has to read the notes, pick the night, and stay up for it.',
+      },
+      {
+        n: '02',
+        title: 'A backup is only real once it has been restored',
+        description:
+          'An archive nobody has ever restored is a file. Finding that out during an incident is the expensive way to learn it.',
+      },
+      {
+        n: '03',
+        title: 'When it goes down, everything goes with it',
+        description:
+          "The identity provider sits in front of every application you run. Its bad day turns into everybody else's bad day.",
+      },
+    ],
+  },
+  fr: {
+    eyebrow: "La raison d'être du projet",
+    title: 'Exploiter son propre fournisseur d\'identité, c\'est un deuxième métier',
+    lead: "Keycloak et Ferriskey sont de bons logiciels. Le travail ne consiste pas à écrire le déploiement, mais à tout ce qui se passe dans les années qui suivent.",
+    points: [
+      {
+        n: '01',
+        title: 'Les mises à jour arrivent, que vous soyez prêt ou non',
+        description:
+          "Chaque version apporte une migration de schéma et une fenêtre pendant laquelle la connexion doit continuer à fonctionner. Il faut que quelqu'un lise les notes, choisisse la nuit et veille.",
+      },
+      {
+        n: '02',
+        title: "Une sauvegarde n'existe vraiment qu'une fois restaurée",
+        description:
+          "Une archive que personne n'a jamais restaurée n'est qu'un fichier. Le découvrir pendant un incident est la manière la plus coûteuse de l'apprendre.",
+      },
+      {
+        n: '03',
+        title: 'Quand il tombe, tout tombe avec lui',
+        description:
+          "Le fournisseur d'identité se trouve devant chaque application que vous exploitez. Sa mauvaise journée devient celle de tout le monde.",
+      },
+    ],
+  },
+}
+const t = copy[locale]
+const points = t.points
+---
+
+<section class="border-y bg-surface/50">
+  <div class="mx-auto max-w-6xl px-5 py-20 sm:py-28">
+    <div class="max-w-2xl">
+      <p class="eyebrow">{t.eyebrow}</p>
+      <h2 class="mt-4 text-3xl sm:text-[2.6rem] sm:leading-[1.1]">
+        {t.title}
+      </h2>
+      <p class="mt-5 text-lg text-muted-foreground">
+        {t.lead}
+      </p>
+    </div>
+
+    <div class="mt-14 grid gap-px overflow-hidden rounded-xl border bg-border sm:grid-cols-3">
+      {
+        points.map((point) => (
+          <div class="bg-background p-7">
+            <span class="font-mono text-xs text-primary">{point.n}</span>
+            <h3 class="mt-4 text-lg font-semibold">
+              {point.title}
+            </h3>
+            <p class="mt-3 text-sm leading-relaxed text-muted-foreground">
+              {point.description}
+            </p>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>

@@ -1,0 +1,200 @@
+---
+import Icon from './icon.astro'
+import { ConsoleWindow, MockRows, Page, SectionPage, TopBar } from './console/ui'
+import { getProduct, type Product } from '../data/products'
+import { localePath, type Locale } from '../i18n'
+
+interface Props {
+  product: Product
+  locale?: Locale
+}
+
+const { product, locale = 'en' } = Astro.props
+
+const copy = {
+  en: {
+    soon: 'In development',
+    join: 'Join early access',
+    deploy: 'Deploy an instance',
+    docs: 'Documentation',
+    around: 'Everything around it, already there',
+    hood: 'Under the hood',
+    read: 'Read the technical details',
+    explore: 'Keep exploring',
+  },
+  fr: {
+    soon: 'En développement',
+    join: 'Rejoindre l’accès anticipé',
+    deploy: 'Déployer une instance',
+    docs: 'Documentation',
+    around: 'Tout ce qu’il faut autour, déjà en place',
+    hood: 'Sous le capot',
+    read: 'Lire les détails techniques',
+    explore: 'Continuer la visite',
+  },
+}
+const t = copy[locale]
+const consoleUrl = import.meta.env.PUBLIC_CONSOLE_URL || 'https://console.autharie.fr'
+const docsUrl = import.meta.env.PUBLIC_DOCS_URL || ''
+
+const related = product.related.map((slug) => getProduct(slug, locale)).filter((p): p is Product => !!p)
+---
+
+<section class="relative overflow-hidden pb-16 pt-14 sm:pb-24 sm:pt-20">
+  <div class="bg-grid pointer-events-none absolute inset-0 -z-10 h-[560px]" aria-hidden="true"></div>
+  <div
+    class="pointer-events-none absolute left-1/2 top-0 -z-10 h-[380px] w-[820px] -translate-x-1/2 rounded-full bg-primary/10 blur-[120px]"
+    aria-hidden="true"
+  >
+  </div>
+
+  <div class="mx-auto grid max-w-6xl items-center gap-12 px-5 lg:grid-cols-[1.05fr_0.95fr]">
+    <div>
+      <p class="eyebrow flex items-center gap-2">
+        {product.name}
+        {
+          product.status === 'soon' && (
+            <span class="rounded bg-primary/10 px-1.5 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-primary">
+              {t.soon}
+            </span>
+          )
+        }
+      </p>
+      <h1 class="mt-4 text-balance text-4xl leading-[1.05] sm:text-[3.4rem] sm:leading-[1.04]">
+        <span class="block">{product.hero.title}</span>
+        <span class="block text-primary">{product.hero.accent}</span>
+      </h1>
+      <p class="mt-6 max-w-xl text-lg text-muted-foreground">{product.hero.lead}</p>
+      <div class="mt-9 flex flex-wrap items-center gap-3">
+        <a
+          href={consoleUrl}
+          class="inline-flex h-11 items-center gap-2 rounded-md bg-primary px-6 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
+        >
+          <span>{product.status === 'soon' ? t.join : t.deploy}</span>
+          <Icon name="arrow" class="size-4" />
+        </a>
+        <a
+          href={docsUrl || localePath(locale, '/#offers')}
+          class="inline-flex h-11 items-center gap-2 rounded-md border bg-card px-6 text-sm font-medium transition-colors hover:bg-accent"
+        >
+          <Icon name="terminal" class="size-4" />
+          <span>{t.docs}</span>
+        </a>
+      </div>
+    </div>
+
+    <div
+      class:list={['rounded-2xl bg-gradient-to-br p-5 ring-1 ring-border/60 sm:p-7', product.tint]}
+      aria-hidden="true"
+    >
+      <ConsoleWindow className="shadow-sm">
+        <TopBar org="Acme" crumbs={[{ label: product.mock.caption }]} />
+        <Page>
+          <SectionPage title={product.mock.title}>
+            <MockRows rows={product.mock.rows} />
+          </SectionPage>
+        </Page>
+      </ConsoleWindow>
+    </div>
+  </div>
+</section>
+
+<section class="border-y bg-surface/50">
+  <div class="mx-auto grid max-w-6xl gap-px px-5 py-16 sm:py-20 md:grid-cols-3 md:gap-10">
+    {
+      product.pillars.map((pillar) => (
+        <div class="py-4 md:py-0">
+          <span class="flex size-10 items-center justify-center rounded-lg border bg-card text-primary">
+            <Icon name={pillar.icon} class="size-5" />
+          </span>
+          <h2 class="mt-5 text-lg font-semibold">{pillar.title}</h2>
+          <p class="mt-2 text-sm leading-relaxed text-muted-foreground">{pillar.description}</p>
+        </div>
+      ))
+    }
+  </div>
+</section>
+
+<section>
+  <div class="mx-auto grid max-w-6xl items-center gap-12 px-5 py-20 sm:py-28 lg:grid-cols-2">
+    <div>
+      <p class="eyebrow">{product.spotlight.eyebrow}</p>
+      <h2 class="mt-4 text-3xl sm:text-[2.4rem] sm:leading-[1.1]">{product.spotlight.title}</h2>
+      <p class="mt-5 text-lg text-muted-foreground">{product.spotlight.description}</p>
+    </div>
+    <ul class="space-y-4">
+      {
+        product.spotlight.points.map((point) => (
+          <li class="flex items-start gap-3 rounded-xl border bg-card p-5">
+            <span class="mt-0.5 flex size-6 shrink-0 items-center justify-center rounded-full bg-primary/10 text-primary">
+              <Icon name="check" class="size-3.5" />
+            </span>
+            <span class="text-sm leading-relaxed">{point}</span>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>
+
+<section class="border-t">
+  <div class="mx-auto max-w-6xl px-5 py-20 sm:py-24">
+    <h2 class="max-w-xl text-3xl sm:text-4xl">{t.around}</h2>
+    <div class="mt-12 grid gap-x-10 gap-y-9 sm:grid-cols-2 lg:grid-cols-3">
+      {
+        product.grid.map((item) => (
+          <div class="flex gap-4">
+            <span class="mt-0.5 flex size-9 shrink-0 items-center justify-center rounded-lg border bg-card text-primary">
+              <Icon name={item.icon} class="size-[18px]" />
+            </span>
+            <div>
+              <h3 class="font-semibold">{item.title}</h3>
+              <p class="mt-1.5 text-sm leading-relaxed text-muted-foreground">{item.description}</p>
+            </div>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<section class="border-t bg-surface/50">
+  <div class="mx-auto max-w-6xl px-5 py-12">
+    <a
+      href={localePath(locale, product.underTheHood.href)}
+      class="group flex flex-col items-start justify-between gap-4 rounded-xl border bg-card p-6 transition-colors hover:border-primary/40 sm:flex-row sm:items-center"
+    >
+      <div>
+        <p class="eyebrow">{t.hood}</p>
+        <p class="mt-2 font-semibold">{product.underTheHood.label}</p>
+        <p class="mt-1 text-sm text-muted-foreground">{product.underTheHood.description}</p>
+      </div>
+      <span class="inline-flex shrink-0 items-center gap-2 text-sm font-medium text-primary">
+        {t.read}
+        <Icon name="arrow" class="size-4 transition-transform group-hover:translate-x-0.5" />
+      </span>
+    </a>
+  </div>
+</section>
+
+<section class="border-t">
+  <div class="mx-auto max-w-6xl px-5 py-16 sm:py-20">
+    <h2 class="text-2xl">{t.explore}</h2>
+    <div class="mt-8 grid gap-4 sm:grid-cols-3">
+      {
+        related.map((item) => (
+          <a
+            href={localePath(locale, `/products/${item.slug}`)}
+            class="group rounded-xl border bg-card p-5 transition-colors hover:border-primary/40"
+          >
+            <span class="flex size-9 items-center justify-center rounded-lg bg-primary/10 text-primary">
+              <Icon name={item.icon} class="size-[18px]" />
+            </span>
+            <p class="mt-4 font-semibold">{item.name}</p>
+            <p class="mt-1 text-sm text-muted-foreground">{item.tagline}</p>
+          </a>
+        ))
+      }
+    </div>
+  </div>
+</section>

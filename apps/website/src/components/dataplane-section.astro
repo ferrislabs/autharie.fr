@@ -1,0 +1,219 @@
+---
+import { localePath, type Locale } from '../i18n'
+import Icon from './icon.astro'
+import { Button, ConsoleWindow, Icon as ConsoleIcon, NavTabs, Page, PageTitle, StatusBadge, TopBar } from './console/ui'
+
+interface Props {
+  locale?: Locale
+}
+
+const { locale = 'en' } = Astro.props
+
+const copy = {
+  en: {
+    ui: {
+      platform: 'Platform',
+      tabs: ['Overview', 'Deployments', 'Organisations', 'Data planes'],
+      title: 'Data planes',
+      register: 'Register a data plane',
+      active: 'Active',
+      reporting: 'Reporting',
+      shared: 'Shared',
+      dedicated: 'Dedicated',
+      seen: '12 seconds ago',
+      seen2: '4 seconds ago',
+    },
+    items: [
+      {
+        icon: 'server',
+        title: 'Register a cluster with one chart',
+        description:
+          'Install the agent on a k3s or Kubernetes cluster you already run. It announces itself, reports what it has, and starts accepting work.',
+      },
+      {
+        icon: 'shield',
+        title: 'The data stays where you put it',
+        description:
+          'Accounts, sessions and the database live in your cluster. The control plane sends intent and reads status back. It never holds your users.',
+      },
+      {
+        icon: 'globe',
+        title: 'Regions you name yourself',
+        description:
+          'A data plane belongs to a region you declare, and a deployment is placed where you say it goes.',
+      },
+      {
+        icon: 'network',
+        title: 'Shared or reserved',
+        description:
+          'A cluster can take work from anyone on the platform, or be reserved for a single organisation and nothing else.',
+      },
+    ],
+    controlPlane: 'Autharie control plane',
+    flow: 'intent out, status back',
+    ours: 'Our clusters',
+    yours: 'Your cluster',
+    yoursSub: 'on-prem · your cloud',
+    eyebrow: 'Where it runs',
+    title: 'Our clusters, or a machine you already own',
+    intro:
+      'The same platform on either side of the line. Start on ours because it is quicker, move to yours when a policy says the database has to stay home.',
+  },
+  fr: {
+    ui: {
+      platform: 'Plateforme',
+      tabs: ["Vue d'ensemble", 'Déploiements', 'Organisations', 'Data planes'],
+      title: 'Data planes',
+      register: 'Enregistrer un data plane',
+      active: 'Actif',
+      reporting: 'Remonte son état',
+      shared: 'Partagé',
+      dedicated: 'Dédié',
+      seen: 'il y a 12 secondes',
+      seen2: 'il y a 4 secondes',
+    },
+    items: [
+      {
+        icon: 'server',
+        title: 'Enregistrez un cluster avec un seul chart',
+        description:
+          'Installez l\'agent sur un cluster k3s ou Kubernetes que vous exploitez déjà. Il se signale, indique ce dont il dispose et commence à accepter du travail.',
+      },
+      {
+        icon: 'shield',
+        title: 'Les données restent où vous les avez mises',
+        description:
+          'Les comptes, les sessions et la base vivent dans votre cluster. Le control plane envoie des intentions et relit l\'état. Il ne détient jamais vos utilisateurs.',
+      },
+      {
+        icon: 'globe',
+        title: 'Des régions que vous nommez vous-même',
+        description:
+          'Un data plane appartient à une région que vous déclarez, et un déploiement est placé là où vous le décidez.',
+      },
+      {
+        icon: 'network',
+        title: 'Partagé ou réservé',
+        description:
+          'Un cluster peut accepter du travail de n\'importe qui sur la plateforme, ou être réservé à une seule organisation et à personne d\'autre.',
+      },
+    ],
+    controlPlane: 'Control plane Autharie',
+    flow: 'intentions envoyées, état renvoyé',
+    ours: 'Nos clusters',
+    yours: 'Votre cluster',
+    yoursSub: 'sur site · votre cloud',
+    eyebrow: 'Où ça tourne',
+    title: 'Nos clusters, ou une machine que vous possédez déjà',
+    intro:
+      'La même plateforme des deux côtés de la ligne. Démarrez sur la nôtre parce que c\'est plus rapide, passez sur la vôtre quand une politique impose que la base reste chez vous.',
+  },
+}
+
+const t = copy[locale]
+
+const command = `helm upgrade --install autharie-dataplane charts/autharie-dataplane \\
+  --namespace autharie-system --create-namespace \\
+  --set dataplane.id=dp_8f2a41 \\
+  --set controlPlane.url=https://api.autharie.fr \\
+  --set controlPlane.auth.clientId=$CLIENT_ID \\
+  --set controlPlane.auth.clientSecret=$CLIENT_SECRET`
+---
+
+<section id="dataplane" class="scroll-mt-20 border-y bg-surface/50">
+  <div class="mx-auto max-w-6xl px-5 py-20 sm:py-28">
+    <div class="grid gap-14 lg:grid-cols-2 lg:items-center lg:gap-20">
+      <!-- visual -->
+      <div class="order-2 min-w-0 lg:order-1">
+        <div class="overflow-hidden rounded-xl border bg-card shadow-sm">
+          <div aria-hidden="true">
+            <ConsoleWindow className="rounded-none border-0">
+              <TopBar org={t.ui.platform} />
+              <NavTabs
+                tabs={[
+                  { label: t.ui.tabs[0], icon: 'layout-dashboard' },
+                  { label: t.ui.tabs[1], icon: 'boxes' },
+                  { label: t.ui.tabs[3], icon: 'server', active: true },
+                ]}
+              />
+              <Page>
+                <PageTitle
+                  title={t.ui.title}
+                  action={{ label: t.ui.register, icon: "plus" }}
+                />
+                <div class="mt-6 grid gap-4 sm:grid-cols-2">
+                  {
+                    [
+                      { region: 'eu-west · fr-par', id: 'c41d9e07', shared: true, cpu: '48 vCPU · 192 GiB', seen: t.ui.seen },
+                      { region: t.yoursSub, id: '8f2a41', shared: false, cpu: '16 vCPU · 64 GiB', seen: t.ui.seen2 },
+                    ].map((dp) => (
+                      <div class="rounded-lg border bg-card p-4">
+                        <div class="flex items-start justify-between gap-3">
+                          <div class="flex min-w-0 items-start gap-3">
+                            <span class="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border bg-muted/40">
+                              <ConsoleIcon name="server" className="h-4 w-4 text-muted-foreground" />
+                            </span>
+                            <div class="min-w-0">
+                              <p class="truncate font-semibold">{dp.region}</p>
+                              <p class="truncate font-mono text-xs text-muted-foreground">{dp.id}</p>
+                            </div>
+                          </div>
+                          <StatusBadge tone="success">{t.ui.active}</StatusBadge>
+                        </div>
+                        <div class="mt-4 flex flex-wrap gap-2">
+                          <StatusBadge tone={dp.shared ? 'neutral' : 'accent'} dot={false}>
+                            <ConsoleIcon name={dp.shared ? 'globe' : 'lock'} className="h-3 w-3" />
+                            {dp.shared ? t.ui.shared : t.ui.dedicated}
+                          </StatusBadge>
+                          <StatusBadge tone="success">{t.ui.reporting}</StatusBadge>
+                        </div>
+                        <div class="mt-4 flex items-center justify-between gap-2 border-t pt-3 text-xs text-muted-foreground">
+                          <span class="font-mono">{dp.cpu}</span>
+                          <span>{dp.seen}</span>
+                        </div>
+                      </div>
+                    ))
+                  }
+                </div>
+              </Page>
+            </ConsoleWindow>
+          </div>
+
+          <div class="border-t bg-deep px-5 py-4">
+            <pre class="overflow-x-auto font-mono text-[11px] leading-relaxed text-white/80"><code>{command}</code></pre>
+          </div>
+        </div>
+      </div>
+
+      <div class="order-1 min-w-0 lg:order-2">
+        <p class="eyebrow">{t.eyebrow}</p>
+        <h2 class="mt-4 text-3xl sm:text-[2.6rem] sm:leading-[1.1]">
+          {t.title}
+        </h2>
+        <p class="mt-5 text-lg text-muted-foreground">
+          {t.intro}
+        </p>
+
+        <div class="mt-10 space-y-7">
+          {
+            t.items.map((item) => (
+              <div class="flex gap-4">
+                <span class="mt-0.5 flex size-9 shrink-0 items-center justify-center rounded-lg border bg-card text-primary">
+                  <Icon name={item.icon} class="size-[18px]" />
+                </span>
+                <div>
+                  <h3 class="font-semibold">
+                    {item.title}
+                  </h3>
+                  <p class="mt-1.5 text-sm leading-relaxed text-muted-foreground">
+                    {item.description}
+                  </p>
+                </div>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

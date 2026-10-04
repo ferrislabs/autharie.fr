@@ -1,0 +1,32 @@
+---
+import { paths } from './icon-paths'
+
+/**
+ * Inline Lucide paths.
+ *
+ * Rendered at build time so a feature grid does not cost a React island per
+ * icon. Add a name here rather than reaching for the runtime icon component.
+ */
+interface Props {
+  name: string
+  class?: string
+}
+
+const { name, class: className = 'size-5' } = Astro.props
+
+
+const d = paths[name] ?? paths.check
+---
+
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="1.75"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  class={className}
+  aria-hidden="true"
+  set:html={d}
+/>

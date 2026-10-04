@@ -1,0 +1,165 @@
+@import '@explainer/ui/styles/globals.css';
+
+@source "../../../../packages/ui/src";
+
+/*
+ * Autharie brand tokens.
+ *
+ * The accent is the one the console already uses, so the marketing site and
+ * the product people land in do not look like two different companies.
+ *
+ * One theme only. The shared stylesheet still ships a `.dark` block, and
+ * nothing here ever puts that class on the document, so it stays inert.
+ */
+@theme {
+  --color-primary: oklch(0.52 0.19 285);
+  --color-primary-soft: oklch(0.78 0.13 285);
+  --color-primary-foreground: oklch(0.99 0 0);
+  --color-background: oklch(0.994 0.002 285);
+  --color-foreground: oklch(0.17 0.012 285);
+  --color-muted-foreground: oklch(0.52 0.014 285);
+  --color-border: oklch(0.905 0.005 285);
+  --color-card: oklch(1 0 0);
+
+  --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+
+  --color-ink: oklch(0.17 0.012 285);
+  --color-surface: oklch(0.975 0.004 285);
+  --color-deep: oklch(0.19 0.024 285);
+}
+
+@layer base {
+  body {
+    font-family: var(--font-sans);
+    font-feature-settings: 'ss01' on, 'cv05' on;
+  }
+
+  h1,
+  h2,
+  h3 {
+    letter-spacing: -0.028em;
+    font-weight: 600;
+  }
+}
+
+/* A hairline grid, drawn rather than blurred. */
+.bg-grid {
+  background-image:
+    linear-gradient(to right, var(--color-border) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--color-border) 1px, transparent 1px);
+  background-size: 72px 72px;
+  mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, black 20%, transparent 75%);
+}
+
+.eyebrow {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-primary);
+}
+
+@keyframes autharie-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.35; }
+}
+
+.live-dot {
+  animation: autharie-pulse 2.4s ease-in-out infinite;
+}
+
+@keyframes autharie-marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+.marquee {
+  animation: autharie-marquee 38s linear infinite;
+  width: max-content;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .marquee,
+  .live-dot {
+    animation: none;
+  }
+}
+
+/*
+ * Shiki blocks that sit on a dark card.
+ *
+ * The shared stylesheet paints code blocks to match the docs, where they sit
+ * on the page background. Here they sit on a panel that is dark whatever the
+ * page is, so the painted background has to go. The selector mirrors the one
+ * it cancels and is declared after it.
+ */
+html:not(.dark) .astro-code,
+html:not(.dark) .astro-code span:not(.highlighted, .highlighted-word, .diff) * {
+  background-color: transparent !important;
+}
+
+.astro-code {
+  margin: 0;
+  font-family: var(--font-mono);
+}
+
+/*
+ * Mock console panels.
+ *
+ * The real console sets Noto Sans and a tighter radius scale. Scoped here so
+ * the marketing site keeps its own type and corners everywhere else.
+ */
+.console-ui {
+  font-family: 'Noto Sans Variable', 'Noto Sans', ui-sans-serif, system-ui, sans-serif;
+  --radius-sm: 0.125rem;
+  --radius-md: 0.25rem;
+  --radius-lg: 0.375rem;
+  --radius-xl: 0.625rem;
+  --color-foreground: oklch(0.21 0.006 285.9);
+  --color-muted-foreground: oklch(0.552 0.014 285.9);
+  --color-border: oklch(0.92 0.004 286.3);
+  --color-accent: oklch(0.967 0.001 286.4);
+  --color-muted: oklch(0.97 0.001 286.4);
+  --color-input: oklch(0.92 0.004 286.3);
+}
+
+/* Navigation menus: the panel drops in, then its entries follow one after another. */
+@keyframes menu-panel-in {
+  from {
+    opacity: 0;
+    transform: translateY(-10px) scale(0.99);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes menu-item-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.menu-panel {
+  transform-origin: top center;
+  animation: menu-panel-in 200ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.menu-item {
+  animation: menu-item-in 320ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation-delay: calc(var(--i, 0) * 40ms + 60ms);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .menu-panel,
+  .menu-item {
+    animation: none;
+  }
+}

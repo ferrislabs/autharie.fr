@@ -1,0 +1,52 @@
+---
+import '../styles/globals.css'
+import { ClientRouter } from 'astro:transitions'
+import { formatTitle } from '@explainer/config'
+import { siteConfig } from '../config'
+import { localeFromUrl, locales, switchPath } from '../i18n'
+
+interface Props {
+  title: string
+  description?: string
+  thumbnail?: string
+}
+
+const { title, description, thumbnail } = Astro.props
+const locale = localeFromUrl(Astro.url)
+const thumbnailUrl = thumbnail ?? siteConfig.thumbnail
+---
+
+<!doctype html>
+<html lang={locale}>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="color-scheme" content="light" />
+    <link rel="icon" type="image/svg+xml" href={siteConfig.favicon} />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400..700;1,400..700&family=JetBrains+Mono:wght@400;500;600&family=Noto+Sans:wght@400;500;600;700&display=swap"
+    />
+    {
+      locales.map((l) => (
+        <link rel="alternate" hreflang={l} href={new URL(switchPath(Astro.url.pathname, l), Astro.site ?? Astro.url).href} />
+      ))
+    }
+    <meta name="description" content={description ?? siteConfig.description} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description ?? siteConfig.description} />
+    <meta property="og:image" content={thumbnailUrl} />
+    <meta property="og:type" content={siteConfig.ogType} />
+    <meta name="twitter:card" content={siteConfig.twitterCard} />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description ?? siteConfig.description} />
+    <meta name="twitter:image" content={thumbnailUrl} />
+    <title>{formatTitle(siteConfig, title)}</title>
+    <ClientRouter />
+  </head>
+  <body class="flex min-h-screen flex-col antialiased">
+    <slot />
+  </body>
+</html>

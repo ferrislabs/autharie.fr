@@ -1,0 +1,29 @@
+---
+import Base from '../layouts/base.astro'
+import { SiteHeader } from '../components/site-header'
+import SolutionPage from '../components/solution-page.astro'
+import CtaSection from '../components/cta-section.astro'
+import SiteFooter from '../components/site-footer.astro'
+import { getSolution, solutionCopy } from '../data/solutions'
+import type { Locale } from '../i18n'
+
+interface Props {
+  slug: string
+  locale?: Locale
+}
+
+const { slug, locale = 'en' } = Astro.props
+const solution = getSolution(slug)!
+const c = solutionCopy(solution, locale)
+const docsUrl = import.meta.env.PUBLIC_DOCS_URL || ''
+const consoleUrl = import.meta.env.PUBLIC_CONSOLE_URL || 'https://console.autharie.fr'
+---
+
+<Base title={`${c.name} · Autharie`} description={c.tagline}>
+  <SiteHeader docsUrl={docsUrl} consoleUrl={consoleUrl} locale={locale} pathname={Astro.url.pathname} client:load transition:persist={`site-header-${locale}`} />
+  <main>
+    <SolutionPage solution={solution} locale={locale} />
+    <CtaSection locale={locale} />
+  </main>
+  <SiteFooter locale={locale} />
+</Base>

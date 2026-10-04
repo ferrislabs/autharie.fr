@@ -1,0 +1,299 @@
+---
+import Base from '../layouts/base.astro'
+import { SiteHeader } from '../components/site-header'
+import Icon from '../components/icon.astro'
+import ExpertiseSection from '../components/expertise-section.astro'
+import EuropeSection from '../components/europe-section.astro'
+import CtaSection from '../components/cta-section.astro'
+import SiteFooter from '../components/site-footer.astro'
+import { existsSync } from 'node:fs'
+import { join } from 'node:path'
+import { team } from '../data/team'
+import { type Locale } from '../i18n'
+
+interface Props {
+  locale?: Locale
+}
+
+const { locale = 'en' } = Astro.props
+const docsUrl = import.meta.env.PUBLIC_DOCS_URL || ''
+const consoleUrl = import.meta.env.PUBLIC_CONSOLE_URL || 'https://console.autharie.fr'
+
+const copy = {
+  en: {
+    title: 'About us · Autharie',
+    description:
+      'Autharie is a French company that builds and operates identity providers, so teams can offer secure sign in without running it.',
+    eyebrow: 'About us',
+    h1a: 'Identity is a hard problem.',
+    h1b: 'We make it ours, not yours.',
+    lead: 'Every product needs sign in, and few teams want to run it. Autharie exists so that the system deciding who gets in is operated by people who do this for a living.',
+    whyEyebrow: 'Why we exist',
+    whyTitle: 'Powerful software, hard to run well',
+    whyParagraphs: [
+      'Identity providers hold the keys to everything else. They are also among the hardest pieces of software to operate: upgrades that cannot go wrong, databases that cannot be lost, access that cannot be too open or too closed.',
+      'We build Ferriskey, an open source identity provider, and we operate Keycloak. We know what it takes to keep both running, so teams get the benefit of an identity provider without carrying the operations.',
+      'And we think the service that decides who can sign in to your business should be European, open and reversible. That is how we build Autharie.',
+    ],
+    valuesTitle: 'What we care about',
+    values: [
+      {
+        icon: 'shield',
+        title: 'Security first',
+        description:
+          'Keys wrapped in a vault, allow lists, scoped roles and an audit trail are part of how an instance is built, not options.',
+      },
+      {
+        icon: 'branch',
+        title: 'Open by default',
+        description:
+          'The identity providers are open source and the data is plain Postgres. You can read it, audit it and take it with you.',
+      },
+      {
+        icon: 'globe',
+        title: 'European and independent',
+        description:
+          'A French company with French governance, hosted in Europe. Who runs your sign in should be easy to identify.',
+      },
+      {
+        icon: 'users',
+        title: 'Product before technology',
+        description:
+          'You should not need to know what Rust, Kubernetes or Keycloak are to use Autharie. We keep the technology for those who want it.',
+      },
+    ],
+    ferriskeyEyebrow: 'Open source',
+    ferriskeyTitle: 'Born from Ferriskey',
+    ferriskeyBody:
+      'Ferriskey is the open source identity provider we develop, written in Rust. Autharie is how teams run it, and Keycloak, without operating it themselves.',
+    ferriskeyCta: 'See Ferriskey on GitHub',
+    teamEyebrow: 'The team',
+    teamTitle: 'The people behind Autharie',
+    contactTitle: 'Want to talk, work with us or join us?',
+    contactBody: 'We read every message.',
+    contactCta: 'hello@autharie.fr',
+  },
+  fr: {
+    title: 'À propos · Autharie',
+    description:
+      'Autharie est une société française qui construit et exploite des fournisseurs d’identité, pour que les équipes proposent une connexion sûre sans avoir à l’exploiter.',
+    eyebrow: 'À propos',
+    h1a: 'L’identité est un problème difficile.',
+    h1b: 'Nous le prenons à notre charge, pas à la vôtre.',
+    lead: 'Tout produit a besoin d’une connexion, et peu d’équipes veulent l’exploiter. Autharie existe pour que le système qui décide qui entre soit exploité par des personnes dont c’est le métier.',
+    whyEyebrow: 'Pourquoi nous existons',
+    whyTitle: 'Des logiciels puissants, difficiles à bien exploiter',
+    whyParagraphs: [
+      'Les fournisseurs d’identité détiennent les clés de tout le reste. Ce sont aussi parmi les logiciels les plus difficiles à exploiter : des mises à jour qui ne doivent pas échouer, des bases qui ne doivent pas se perdre, des accès ni trop ouverts ni trop fermés.',
+      'Nous développons Ferriskey, un fournisseur d’identité open source, et nous exploitons Keycloak. Nous savons ce qu’il faut pour que les deux tournent, afin que les équipes profitent d’un fournisseur d’identité sans en porter l’exploitation.',
+      'Et nous pensons que le service qui décide qui peut se connecter à votre entreprise doit être européen, ouvert et réversible. C’est ainsi que nous construisons Autharie.',
+    ],
+    valuesTitle: 'Ce qui compte pour nous',
+    values: [
+      {
+        icon: 'shield',
+        title: 'La sécurité d’abord',
+        description:
+          'Clés enveloppées dans un coffre, listes d’autorisation, rôles délimités et piste d’audit font partie de la construction d’une instance, pas d’options.',
+      },
+      {
+        icon: 'branch',
+        title: 'Ouvert par défaut',
+        description:
+          'Les fournisseurs d’identité sont open source et les données sont du Postgres ordinaire. Vous pouvez les lire, les auditer et les emporter.',
+      },
+      {
+        icon: 'globe',
+        title: 'Européen et indépendant',
+        description:
+          'Une société française à la gouvernance française, hébergée en Europe. Qui exploite votre connexion doit être facile à identifier.',
+      },
+      {
+        icon: 'users',
+        title: 'Le produit avant la technique',
+        description:
+          'Vous n’avez pas besoin de savoir ce que sont Rust, Kubernetes ou Keycloak pour utiliser Autharie. Nous gardons la technique pour ceux qui la veulent.',
+      },
+    ],
+    ferriskeyEyebrow: 'Open source',
+    ferriskeyTitle: 'Née de Ferriskey',
+    ferriskeyBody:
+      'Ferriskey est le fournisseur d’identité open source que nous développons, écrit en Rust. Autharie est la façon de l’exploiter, avec Keycloak, sans avoir à le faire soi-même.',
+    ferriskeyCta: 'Voir Ferriskey sur GitHub',
+    teamEyebrow: 'L’équipe',
+    teamTitle: 'Les personnes derrière Autharie',
+    contactTitle: 'Envie d’échanger, de travailler avec nous ou de nous rejoindre ?',
+    contactBody: 'Nous lisons chaque message.',
+    contactCta: 'hello@autharie.fr',
+  },
+}
+const t = copy[locale]
+
+const slugify = (name: string) =>
+  name
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/(^-|-$)/g, '')
+
+/** The photo given in data/team.ts, else public/team/<slug>.(jpg|jpeg|png|webp) when the file exists. */
+const photoFor = (member: (typeof team)[number]) => {
+  if (member.photo) return member.photo
+  const slug = slugify(member.name)
+  const found = ['jpg', 'jpeg', 'png', 'webp'].find((ext) =>
+    existsSync(join(process.cwd(), 'public', 'team', `${slug}.${ext}`)),
+  )
+  return found ? `/team/${slug}.${found}` : undefined
+}
+
+const initials = (name: string) =>
+  name
+    .split(/\s+/)
+    .map((part) => part[0])
+    .slice(0, 2)
+    .join('')
+    .toUpperCase()
+---
+
+<Base title={t.title} description={t.description}>
+  <SiteHeader docsUrl={docsUrl} consoleUrl={consoleUrl} locale={locale} pathname={Astro.url.pathname} client:load transition:persist={`site-header-${locale}`} />
+
+  <main>
+    <section class="relative overflow-hidden pb-16 pt-14 sm:pb-24 sm:pt-20">
+      <div class="bg-grid pointer-events-none absolute inset-0 -z-10 h-[460px]" aria-hidden="true"></div>
+      <div class="mx-auto max-w-4xl px-5 text-center">
+        <p class="eyebrow">{t.eyebrow}</p>
+        <h1 class="mt-5 text-balance text-4xl leading-[1.05] sm:text-[3.6rem] sm:leading-[1.04]">
+          <span class="block">{t.h1a}</span>
+          <span class="block text-primary">{t.h1b}</span>
+        </h1>
+        <p class="mx-auto mt-6 max-w-2xl text-lg text-muted-foreground">{t.lead}</p>
+      </div>
+    </section>
+
+    <section class="border-y bg-surface/50">
+      <div class="mx-auto grid max-w-6xl gap-12 px-5 py-20 sm:py-28 lg:grid-cols-[0.9fr_1.1fr] lg:gap-16">
+        <div>
+          <p class="eyebrow">{t.whyEyebrow}</p>
+          <h2 class="mt-4 text-3xl sm:text-[2.6rem] sm:leading-[1.1]">{t.whyTitle}</h2>
+        </div>
+        <div class="space-y-5 text-lg leading-relaxed text-muted-foreground">
+          {t.whyParagraphs.map((paragraph) => <p>{paragraph}</p>)}
+        </div>
+      </div>
+    </section>
+
+    <section class="relative overflow-hidden bg-deep text-white">
+      <div
+        class="pointer-events-none absolute -left-32 -top-32 size-[460px] rounded-full bg-primary/25 blur-[140px]"
+        aria-hidden="true"
+      >
+      </div>
+      <div class="relative mx-auto max-w-6xl px-5 py-20 sm:py-24">
+        <p class="text-xs font-semibold uppercase tracking-[0.14em] text-primary-soft">
+          {t.ferriskeyEyebrow}
+        </p>
+        <h2 class="mt-4 max-w-2xl text-3xl text-white sm:text-[2.6rem] sm:leading-[1.1]">
+          {t.ferriskeyTitle}
+        </h2>
+        <p class="mt-5 max-w-2xl text-lg text-white/70">{t.ferriskeyBody}</p>
+        <a
+          href="https://github.com/ferriskey"
+          class="mt-8 inline-flex items-center gap-2 text-sm font-medium text-primary-soft transition-opacity hover:opacity-80"
+        >
+          {t.ferriskeyCta}
+          <Icon name="arrow" class="size-4" />
+        </a>
+      </div>
+    </section>
+
+    <section>
+      <div class="mx-auto max-w-6xl px-5 py-20 sm:py-28">
+        <h2 class="max-w-xl text-3xl sm:text-4xl">{t.valuesTitle}</h2>
+        <div class="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+          {
+            t.values.map((item) => (
+              <div class="rounded-xl border bg-card p-6">
+                <span class="flex size-10 items-center justify-center rounded-lg bg-primary/10 text-primary">
+                  <Icon name={item.icon} class="size-5" />
+                </span>
+                <h3 class="mt-5 font-semibold">{item.title}</h3>
+                <p class="mt-2 text-sm leading-relaxed text-muted-foreground">{item.description}</p>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+
+    <ExpertiseSection locale={locale} />
+    <EuropeSection locale={locale} link={false} />
+
+    {
+      team.length > 0 && (
+        <section>
+          <div class="mx-auto max-w-6xl px-5 py-20 sm:py-28">
+            <p class="eyebrow">{t.teamEyebrow}</p>
+            <h2 class="mt-4 max-w-xl text-3xl sm:text-4xl">{t.teamTitle}</h2>
+            <ul class="mt-12 grid max-w-3xl gap-8 sm:grid-cols-2">
+              {team.map((member) => (
+                <li>
+                  <div class="rounded-[1.75rem] bg-[oklch(0.965_0.012_285)] p-4 sm:p-5">
+                    {photoFor(member) ? (
+                      <img
+                        src={photoFor(member)}
+                        alt={member.name}
+                        class="aspect-square w-full rounded-xl border bg-card object-cover shadow-[0_1px_2px_rgb(0_0_0/0.05),0_8px_24px_-12px_rgb(30_20_80/0.25)]"
+                        loading="lazy"
+                      />
+                    ) : (
+                      <span class="flex aspect-square w-full items-center justify-center rounded-xl border bg-card text-4xl font-semibold text-primary shadow-sm">
+                        {initials(member.name)}
+                      </span>
+                    )}
+                  </div>
+                  <h3 class="mt-5 font-semibold">{member.name}</h3>
+                  {member.role && <p class="text-sm text-primary">{member.role[locale]}</p>}
+                  {member.bio && (
+                    <p class="mt-2 text-sm leading-relaxed text-muted-foreground">{member.bio[locale]}</p>
+                  )}
+                  {member.links && (
+                    <p class="mt-3 flex gap-4 text-sm">
+                      {member.links.map((link) => (
+                        <a href={link.href} class="font-medium text-primary hover:underline">
+                          {link.label}
+                        </a>
+                      ))}
+                    </p>
+                  )}
+                </li>
+              ))}
+            </ul>
+          </div>
+        </section>
+      )
+    }
+
+    <section class="border-y bg-surface/50">
+      <div class="mx-auto flex max-w-6xl flex-col items-start justify-between gap-6 px-5 py-12 sm:flex-row sm:items-center">
+        <div>
+          <h2 class="text-xl font-semibold">{t.contactTitle}</h2>
+          <p class="mt-1 text-sm text-muted-foreground">{t.contactBody}</p>
+        </div>
+        <div class="flex flex-wrap items-center gap-5">
+          <a
+            href="mailto:hello@autharie.fr"
+            class="inline-flex h-11 items-center rounded-md bg-primary px-6 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
+          >
+            {t.contactCta}
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <CtaSection locale={locale} />
+  </main>
+
+  <SiteFooter locale={locale} />
+</Base>

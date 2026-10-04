@@ -1,0 +1,27 @@
+---
+import { TechStrip } from './tech-strip'
+import { localePath, type Locale } from '../i18n'
+
+interface Props {
+  locale?: Locale
+}
+
+const { locale = 'en' } = Astro.props
+
+const copy = {
+  en: { title: 'Standard pieces, assembled and looked after' },
+  fr: { title: 'Des briques standard, assemblées et entretenues' },
+}
+const t = copy[locale]
+---
+
+<section class="border-y bg-background py-12 sm:py-14">
+  <div class="mx-auto max-w-6xl px-5">
+    <p
+      class="mb-7 text-center text-xs font-medium uppercase tracking-[0.14em] text-muted-foreground"
+    >
+      {t.title}
+    </p>
+    <TechStrip client:visible />
+  </div>
+</section>

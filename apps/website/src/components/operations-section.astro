@@ -1,0 +1,319 @@
+---
+import Icon from './icon.astro'
+import { type Locale } from '../i18n'
+import { Button, ConsoleWindow, Icon as ConsoleIcon, Meter, NavTabs, Section, SectionPage, StatusBadge, TopBar } from './console/ui'
+
+interface Props {
+  locale?: Locale
+}
+
+const { locale = 'en' } = Astro.props
+
+const copy = {
+  en: {
+    ui: {
+      deployments: 'Deployments',
+      deployment: 'auth',
+      tabs: ['Overview', 'Observability', 'Settings'],
+      platformTabs: ['Overview', 'Deployments', 'Organisations', 'Data planes', 'Upgrades', 'Releases'],
+      platform: 'Platform',
+      backupsTitle: 'Backups',
+      backupsDescription: 'When this instance is archived, and what has been archived so far.',
+      archivesTitle: 'Archives',
+      archivesSummary: '3 archives, the newest from today.',
+      took: 'took 4 min',
+      restore: 'Restore',
+      versionTitle: 'Version',
+      progressTitle: 'Upgrade in progress',
+      step: 'Step 3 of 4',
+      started: 'Started 12 minutes ago. Versions in between are applied one after the other.',
+      done: 'Done',
+      running: 'Running',
+      runningVersion: 'Running 1.4.1.',
+    },
+    archivesFrom: 'Postgres 17',
+    archives: [
+      { at: '02:14', size: '1.8 GB', label: 'today' },
+      { at: '02:14', size: '1.8 GB', label: 'yesterday' },
+      { at: '02:14', size: '1.7 GB', label: '2 days ago' },
+    ],
+    waves: [
+      { name: 'Sandbox', pct: 100, state: 'done' },
+      { name: 'Standard', pct: 100, state: 'done' },
+      { name: 'Pro', pct: 42, state: 'running' },
+      { name: 'Scale', pct: 0, state: 'held' },
+    ],
+    small: [
+      {
+        icon: 'clock',
+        title: 'A window you choose',
+        description:
+          'Say when patches may be applied and which ones the platform may apply on its own. Majors stay yours to decide.',
+      },
+      {
+        icon: 'rotate',
+        title: 'Restore into a new instance',
+        description:
+          'Pick an archive, get a deployment built from it. The original keeps serving while you check the copy.',
+      },
+      {
+        icon: 'activity',
+        title: 'Logs and usage in the console',
+        description:
+          'Follow what the instance is doing without a kubeconfig, and see how many people actually signed in this month.',
+      },
+    ],
+    eyebrow: 'Day two',
+    heading: 'The part that starts after the first deploy',
+    intro:
+      'Archives on a schedule, upgrades in waves that can be stopped, and a restore path somebody has actually walked before you need it.',
+    archiveTitle: 'Archived every night, encrypted on write',
+    archiveText:
+      'The database goes to object storage on the schedule you set. Every write asks for server side encryption and fails rather than storing anything in the clear.',
+    restorable: 'restorable',
+    rolloutTitle: 'Releases go out in waves, and waves can be stopped',
+    rolloutText:
+      'A new version reaches sandboxes first and production last. A deployment can be held back, and a rollout that starts going badly is stopped before it reaches the rest.',
+    heldBack: 'held back',
+  },
+  fr: {
+    ui: {
+      deployments: 'Déploiements',
+      deployment: 'auth',
+      tabs: ["Vue d'ensemble", 'Observabilité', 'Paramètres'],
+      platformTabs: ["Vue d'ensemble", 'Déploiements', 'Organisations', 'Data planes', 'Mises à jour', 'Versions'],
+      platform: 'Plateforme',
+      backupsTitle: 'Sauvegardes',
+      backupsDescription: "Quand cette instance est archivée, et ce qui a été archivé jusqu'ici.",
+      archivesTitle: 'Archives',
+      archivesSummary: "3 archives, la plus récente d'aujourd'hui.",
+      took: 'durée 4 min',
+      restore: 'Restaurer',
+      versionTitle: 'Version',
+      progressTitle: 'Mise à jour en cours',
+      step: 'Étape 3 sur 4',
+      started: 'Démarrée il y a 12 minutes. Les versions intermédiaires sont appliquées les unes après les autres.',
+      done: 'Terminé',
+      running: 'En cours',
+      runningVersion: 'Version 1.4.1 en service.',
+    },
+    archivesFrom: 'Postgres 17',
+    archives: [
+      { at: '02:14', size: '1.8 GB', label: "aujourd'hui" },
+      { at: '02:14', size: '1.8 GB', label: 'hier' },
+      { at: '02:14', size: '1.7 GB', label: 'il y a 2 jours' },
+    ],
+    waves: [
+      { name: 'Sandbox', pct: 100, state: 'done' },
+      { name: 'Standard', pct: 100, state: 'done' },
+      { name: 'Pro', pct: 42, state: 'running' },
+      { name: 'Scale', pct: 0, state: 'held' },
+    ],
+    small: [
+      {
+        icon: 'clock',
+        title: 'Une fenêtre que vous choisissez',
+        description:
+          "Indiquez quand les correctifs peuvent être appliqués et lesquels la plateforme peut appliquer seule. Les versions majeures restent votre décision.",
+      },
+      {
+        icon: 'rotate',
+        title: 'Restaurer vers une nouvelle instance',
+        description:
+          "Choisissez une archive, obtenez un déploiement construit à partir d'elle. L'original continue de servir pendant que vous vérifiez la copie.",
+      },
+      {
+        icon: 'activity',
+        title: "Journaux et usage dans la console",
+        description:
+          "Suivez ce que fait l'instance sans kubeconfig, et voyez combien de personnes se sont réellement connectées ce mois-ci.",
+      },
+    ],
+    eyebrow: 'Jour deux',
+    heading: 'Ce qui commence après le premier déploiement',
+    intro:
+      "Des archives planifiées, des mises à jour par vagues que l'on peut arrêter, et un chemin de restauration que quelqu'un a déjà parcouru avant que vous en ayez besoin.",
+    archiveTitle: 'Archivée chaque nuit, chiffrée à l\'écriture',
+    archiveText:
+      "La base de données part vers le stockage objet selon le calendrier que vous fixez. Chaque écriture exige le chiffrement côté serveur et échoue plutôt que de stocker quoi que ce soit en clair.",
+    restorable: 'restaurable',
+    rolloutTitle: 'Les versions sortent par vagues, et les vagues peuvent être arrêtées',
+    rolloutText:
+      "Une nouvelle version atteint d'abord les sandboxes et la production en dernier. Un déploiement peut être mis en attente, et un déploiement qui tourne mal est arrêté avant d'atteindre le reste.",
+    heldBack: 'en attente',
+  },
+}
+
+const t = copy[locale]
+const { archives, waves, small, ui } = t
+---
+
+<section id="lifecycle" class="scroll-mt-20">
+  <div class="mx-auto max-w-6xl px-5 py-20 sm:py-28">
+    <div class="max-w-2xl">
+      <p class="eyebrow">{t.eyebrow}</p>
+      <h2 class="mt-4 text-3xl sm:text-[2.6rem] sm:leading-[1.1]">
+        {t.heading}
+      </h2>
+      <p class="mt-5 text-lg text-muted-foreground">
+        {t.intro}
+      </p>
+    </div>
+
+    <div class="mt-14 grid gap-5 lg:grid-cols-2">
+      <!-- archives -->
+      <div class="rounded-xl border bg-card p-7">
+        <div class="flex items-start gap-4">
+          <span
+            class="flex size-9 shrink-0 items-center justify-center rounded-lg border bg-background text-primary"
+          >
+            <Icon name="archive" class="size-[18px]" />
+          </span>
+          <div>
+            <h3 class="font-semibold">
+              {t.archiveTitle}
+            </h3>
+            <p class="mt-1.5 text-sm leading-relaxed text-muted-foreground">
+              {t.archiveText}
+            </p>
+          </div>
+        </div>
+
+        <div aria-hidden="true" class="mt-6 min-w-0">
+          <ConsoleWindow>
+            <TopBar crumbs={[{ label: ui.deployments, icon: 'boxes' }, { label: ui.deployment }]} />
+            <NavTabs
+              tabs={[
+                { label: ui.tabs[0], icon: 'layout-grid' },
+                { label: ui.tabs[1], icon: 'radar' },
+                { label: ui.tabs[2], icon: 'settings', active: true },
+              ]}
+            />
+            <div class="px-5 py-6">
+              <SectionPage title={ui.backupsTitle} description={ui.backupsDescription}>
+                <Section title={ui.archivesTitle}>
+                  <p class="mb-3 text-xs text-muted-foreground">{ui.archivesSummary}</p>
+                  <div class="overflow-hidden rounded-lg border">
+                    {
+                      archives.map((archive) => (
+                        <div class="flex flex-wrap items-center justify-between gap-x-6 gap-y-1 border-b px-4 py-3 last:border-b-0">
+                          <div class="min-w-0">
+                            <p class="text-sm">{archive.label}</p>
+                            <p class="truncate text-xs text-muted-foreground">
+                              {archive.at} &middot; {ui.took}
+                            </p>
+                          </div>
+                          <div class="flex items-center gap-4 text-xs text-muted-foreground">
+                            <ConsoleIcon name="lock" className="h-3.5 w-3.5" />
+                            <span>{t.archivesFrom}</span>
+                            <span class="tabular-nums">{archive.size}</span>
+                            <Button variant="outline">{ui.restore}</Button>
+                          </div>
+                        </div>
+                      ))
+                    }
+                  </div>
+                </Section>
+              </SectionPage>
+            </div>
+          </ConsoleWindow>
+        </div>
+      </div>
+
+      <!-- rollout -->
+      <div class="rounded-xl border bg-card p-7">
+        <div class="flex items-start gap-4">
+          <span
+            class="flex size-9 shrink-0 items-center justify-center rounded-lg border bg-background text-primary"
+          >
+            <Icon name="branch" class="size-[18px]" />
+          </span>
+          <div>
+            <h3 class="font-semibold">
+              {t.rolloutTitle}
+            </h3>
+            <p class="mt-1.5 text-sm leading-relaxed text-muted-foreground">
+              {t.rolloutText}
+            </p>
+          </div>
+        </div>
+
+        <div aria-hidden="true" class="mt-6 min-w-0">
+          <ConsoleWindow>
+            <TopBar org={ui.platform} />
+            <NavTabs
+              tabs={[
+                { label: ui.platformTabs[0], icon: 'layout-dashboard' },
+                { label: ui.platformTabs[1], icon: 'boxes' },
+                { label: ui.platformTabs[3], icon: 'server' },
+                { label: ui.platformTabs[4], icon: 'arrow-up-circle', active: true },
+              ]}
+            />
+            <div class="px-5 py-6">
+              <SectionPage title={ui.versionTitle} description={ui.runningVersion}>
+                <Section title={ui.progressTitle}>
+                  <div class="space-y-3 rounded-lg border p-5">
+                    <div class="flex flex-wrap items-center justify-between gap-3">
+                      <div class="flex items-center gap-2 font-mono text-sm">
+                        <span class="text-muted-foreground">1.4.1</span>
+                        <span class="text-muted-foreground">&rarr;</span>
+                        <span class="font-semibold">1.4.2</span>
+                      </div>
+                      <StatusBadge tone="progress">{ui.step}</StatusBadge>
+                    </div>
+                    <div class="flex gap-1">
+                      {
+                        waves.map((wave) => (
+                          <span
+                            class:list={[
+                              'h-1.5 flex-1 rounded-full',
+                              wave.state === 'done' ? 'bg-primary' : wave.state === 'running' ? 'bg-primary/50' : 'bg-muted',
+                            ]}
+                          />
+                        ))
+                      }
+                    </div>
+                    <div class="space-y-3 pt-1">
+                      {
+                        waves.map((wave) => (
+                          <div class="space-y-1.5">
+                            <div class="flex items-center justify-between text-sm">
+                              <span class="font-medium">{wave.name}</span>
+                              {wave.state === 'done' && <StatusBadge tone="success">{ui.done}</StatusBadge>}
+                              {wave.state === 'running' && <StatusBadge tone="progress">{ui.running}</StatusBadge>}
+                              {wave.state === 'held' && <StatusBadge tone="warning">{t.heldBack}</StatusBadge>}
+                            </div>
+                            <Meter label="" value={`${wave.pct}%`} pct={wave.pct} />
+                          </div>
+                        ))
+                      }
+                    </div>
+                    <p class="text-xs text-muted-foreground">{ui.started}</p>
+                  </div>
+                </Section>
+              </SectionPage>
+            </div>
+          </ConsoleWindow>
+        </div>
+      </div>
+    </div>
+
+    <div class="mt-5 grid gap-5 sm:grid-cols-3">
+      {
+        small.map((item) => (
+          <div class="rounded-xl border bg-card p-6">
+            <span class="flex size-9 items-center justify-center rounded-lg border bg-background text-primary">
+              <Icon name={item.icon} class="size-[18px]" />
+            </span>
+            <h3 class="mt-4 font-semibold">
+              {item.title}
+            </h3>
+            <p class="mt-1.5 text-sm leading-relaxed text-muted-foreground">
+              {item.description}
+            </p>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>

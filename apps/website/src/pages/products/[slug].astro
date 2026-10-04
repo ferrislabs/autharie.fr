@@ -1,0 +1,10 @@
+---
+import Product from '../../views/product.astro'
+import { products } from '../../data/products'
+
+export const getStaticPaths = () => products.map((p) => ({ params: { slug: p.slug } }))
+
+const { slug } = Astro.params
+---
+
+<Product slug={slug!} locale="en" />

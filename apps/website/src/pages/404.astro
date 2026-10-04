@@ -1,0 +1,29 @@
+---
+import Base from '../layouts/base.astro'
+import { SiteHeader } from '../components/site-header'
+import SiteFooter from '../components/site-footer.astro'
+
+const docsUrl = import.meta.env.PUBLIC_DOCS_URL || ''
+const consoleUrl = import.meta.env.PUBLIC_CONSOLE_URL || 'https://console.autharie.fr'
+---
+
+<Base title="Page not found">
+  <SiteHeader docsUrl={docsUrl} consoleUrl={consoleUrl} client:load transition:persist />
+
+  <main class="flex flex-1 flex-col items-center justify-center px-6 py-32 text-center">
+    <p class="eyebrow">404</p>
+    <h1 class="mt-4 text-4xl sm:text-5xl">This page is not here</h1>
+    <p class="mt-4 max-w-md text-lg text-muted-foreground">
+      The link may be old, or the page may have moved. The home page is a good place to pick up
+      from.
+    </p>
+    <a
+      href="/"
+      class="mt-8 inline-flex h-11 items-center rounded-md bg-primary px-6 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
+    >
+      Back to home
+    </a>
+  </main>
+
+  <SiteFooter />
+</Base>

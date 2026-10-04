@@ -1,0 +1,94 @@
+---
+import Icon from './icon.astro'
+import { getProducts } from '../data/products'
+import { localePath, type Locale } from '../i18n'
+
+interface Props {
+  locale?: Locale
+}
+
+const { locale = 'en' } = Astro.props
+const products = getProducts(locale)
+
+const copy = {
+  en: {
+    eyebrow: 'Products',
+    title: 'Everything around sign in, in one place',
+    lead: 'Run it, look after it, see what it does, keep it safe, and know who has access.',
+    soon: 'Soon',
+    more: 'Learn more',
+    techLead: 'Curious how it is built?',
+    techBody: ' Rust, Kubernetes, open source and a data plane you can place anywhere.',
+  },
+  fr: {
+    eyebrow: 'Produits',
+    title: 'Tout ce qui entoure la connexion, au même endroit',
+    lead: 'La faire tourner, s’en occuper, voir ce qu’elle fait, la protéger, et savoir qui a accès à quoi.',
+    soon: 'Bientôt',
+    more: 'En savoir plus',
+    techLead: 'Envie de voir comment c’est construit ?',
+    techBody: ' Rust, Kubernetes, open source et un data plane que vous placez où vous voulez.',
+  },
+}
+const t = copy[locale]
+---
+
+<section id="products" class="scroll-mt-20">
+  <div class="mx-auto max-w-6xl px-5 py-20 sm:py-28">
+    <div class="max-w-2xl">
+      <p class="eyebrow">{t.eyebrow}</p>
+      <h2 class="mt-4 text-3xl sm:text-[2.6rem] sm:leading-[1.1]">
+        {t.title}
+      </h2>
+      <p class="mt-5 text-lg text-muted-foreground">
+        {t.lead}
+      </p>
+    </div>
+
+    <div class="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+      {
+        products.map((product) => (
+          <a
+            href={localePath(locale, `/products/${product.slug}`)}
+            class="group rounded-xl border bg-card p-5 transition-colors hover:border-primary/40"
+          >
+            <div
+              class:list={[
+                'flex h-28 items-center justify-center rounded-lg bg-gradient-to-br ring-1 ring-border/60',
+                product.tint,
+              ]}
+            >
+              <span class="flex size-11 items-center justify-center rounded-xl bg-white text-primary shadow-sm ring-1 ring-black/5">
+                <Icon name={product.icon} class="size-5" />
+              </span>
+            </div>
+            <p class="mt-5 flex items-center gap-2 font-semibold">
+              {product.name}
+              {product.status === 'soon' && (
+                <span class="rounded bg-primary/10 px-1.5 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-primary">
+                  {t.soon}
+                </span>
+              )}
+            </p>
+            <p class="mt-1 text-sm text-muted-foreground">{product.tagline}</p>
+            <span class="mt-4 inline-flex items-center gap-1.5 text-sm font-medium text-primary">
+              {t.more}
+              <Icon name="arrow" class="size-4 transition-transform group-hover:translate-x-0.5" />
+            </span>
+          </a>
+        ))
+      }
+    </div>
+
+    <a
+      href={localePath(locale, '/technology')}
+      class="mt-8 flex items-center justify-between gap-4 rounded-xl border bg-surface/50 p-5 text-sm transition-colors hover:border-primary/40"
+    >
+      <span>
+        <span class="font-semibold">{t.techLead}</span>
+        <span class="text-muted-foreground">{t.techBody}</span>
+      </span>
+      <Icon name="arrow" class="size-4 shrink-0 text-primary" />
+    </a>
+  </div>
+</section>

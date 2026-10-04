@@ -1,0 +1,111 @@
+---
+import Icon from './icon.astro'
+import { localePath, type Locale } from '../i18n'
+
+interface Props {
+  locale?: Locale
+}
+
+const { locale = 'en' } = Astro.props
+
+const copy = {
+  en: {
+    eyebrow: 'Expertise',
+    title: 'Identity is our trade',
+    lead: 'Sign in is the one system every other system depends on. We spend our days building, operating and securing identity providers, so you do not have to learn how.',
+    items: [
+      {
+        icon: 'key',
+        title: 'We build an open source IAM',
+        description:
+          'Ferriskey, written in Rust, is developed in the open by the team behind Autharie. We know the product from the inside, down to how a token is signed.',
+      },
+      {
+        icon: 'server',
+        title: 'We run Keycloak every day',
+        description:
+          'Realms, clients, upgrades, database operations and restores. The things that go wrong in a Keycloak you run yourself are the things we automate.',
+      },
+      {
+        icon: 'check',
+        title: 'Standards, not shortcuts',
+        description:
+          'OpenID Connect and OAuth 2, so your applications keep speaking a language every library understands, and you can leave whenever you decide to.',
+      },
+      {
+        icon: 'shield',
+        title: 'Security as a habit',
+        description:
+          'Wrapped keys, network allow lists, scoped roles and an audit trail are part of how an instance is built, not options to switch on later.',
+      },
+    ],
+    cta: 'See what we run for you',
+  },
+  fr: {
+    eyebrow: 'Expertise',
+    title: 'L’identité est notre métier',
+    lead: 'La connexion est le système dont tous les autres dépendent. Nous passons nos journées à construire, exploiter et sécuriser des fournisseurs d’identité, pour que vous n’ayez pas à l’apprendre.',
+    items: [
+      {
+        icon: 'key',
+        title: 'Nous développons un IAM open source',
+        description:
+          'Ferriskey, écrit en Rust, est développé au grand jour par l’équipe d’Autharie. Nous connaissons le produit de l’intérieur, jusqu’à la façon dont un jeton est signé.',
+      },
+      {
+        icon: 'server',
+        title: 'Nous exploitons Keycloak tous les jours',
+        description:
+          'Realms, clients, mises à jour, base de données et restaurations. Ce qui tourne mal dans un Keycloak que vous gérez vous-même, nous l’avons automatisé.',
+      },
+      {
+        icon: 'check',
+        title: 'Des standards, pas des raccourcis',
+        description:
+          'OpenID Connect et OAuth 2 : vos applications continuent de parler un langage que toutes les bibliothèques comprennent, et vous pouvez partir quand vous le décidez.',
+      },
+      {
+        icon: 'shield',
+        title: 'La sécurité comme réflexe',
+        description:
+          'Clés enveloppées, listes d’autorisation réseau, rôles délimités et piste d’audit font partie de la construction d’une instance, pas d’options à activer plus tard.',
+      },
+    ],
+    cta: 'Voir ce que nous gérons pour vous',
+  },
+}
+const t = copy[locale]
+---
+
+<section id="expertise" class="scroll-mt-20 border-y bg-surface/50">
+  <div class="mx-auto max-w-6xl px-5 py-20 sm:py-28">
+    <div class="grid gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:gap-16">
+      <div>
+        <p class="eyebrow">{t.eyebrow}</p>
+        <h2 class="mt-4 text-3xl sm:text-[2.6rem] sm:leading-[1.1]">{t.title}</h2>
+        <p class="mt-5 text-lg text-muted-foreground">{t.lead}</p>
+        <a
+          href={localePath(locale, '/products/deploy')}
+          class="mt-8 inline-flex items-center gap-2 text-sm font-medium text-primary"
+        >
+          {t.cta}
+          <Icon name="arrow" class="size-4" />
+        </a>
+      </div>
+
+      <div class="grid gap-5 sm:grid-cols-2">
+        {
+          t.items.map((item) => (
+            <div class="rounded-xl border bg-card p-6">
+              <span class="flex size-10 items-center justify-center rounded-lg bg-primary/10 text-primary">
+                <Icon name={item.icon} class="size-5" />
+              </span>
+              <h3 class="mt-5 font-semibold">{item.title}</h3>
+              <p class="mt-2 text-sm leading-relaxed text-muted-foreground">{item.description}</p>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </div>
+</section>

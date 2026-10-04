@@ -1,0 +1,180 @@
+---
+import Icon from './icon.astro'
+import { brandIcons } from '../data/brand-icons'
+import { getProduct } from '../data/products'
+import { solutionCopy, type SolutionDef } from '../data/solutions'
+import { localePath, useUi, type Locale } from '../i18n'
+
+interface Props {
+  solution: SolutionDef
+  locale?: Locale
+}
+
+const { solution, locale = 'en' } = Astro.props
+const ui = useUi(locale)
+const c = solutionCopy(solution, locale)
+const consoleUrl = import.meta.env.PUBLIC_CONSOLE_URL || 'https://console.autharie.fr'
+const docsUrl = import.meta.env.PUBLIC_DOCS_URL || ''
+
+const groupLabel = {
+  role: ui('byRole'),
+  stage: ui('byStage'),
+  industry: ui('byIndustry'),
+  migrate: ui('migrate'),
+}[solution.group]
+
+const copy = {
+  en: {
+    start: 'Deploy an instance',
+    talk: 'Talk to us',
+    challenges: 'Sound familiar?',
+    benefits: 'What Autharie gives you',
+    steps: 'How the move goes',
+    products: 'The products behind it',
+    more: 'Learn more',
+  },
+  fr: {
+    start: 'Déployer une instance',
+    talk: 'Nous contacter',
+    challenges: 'Cela vous parle ?',
+    benefits: 'Ce qu’Autharie vous apporte',
+    steps: 'Comment se passe la migration',
+    products: 'Les produits derrière',
+    more: 'En savoir plus',
+  },
+}
+const t = copy[locale]
+const brand = brandIcons[solution.slug]
+const products = solution.products
+  .map((slug) => getProduct(slug, locale))
+  .filter((p): p is NonNullable<typeof p> => !!p)
+---
+
+<section class="relative overflow-hidden pb-16 pt-14 sm:pb-24 sm:pt-20">
+  <div class="bg-grid pointer-events-none absolute inset-0 -z-10 h-[520px]" aria-hidden="true"></div>
+  <div
+    class="pointer-events-none absolute left-1/2 top-0 -z-10 h-[380px] w-[820px] -translate-x-1/2 rounded-full bg-primary/10 blur-[120px]"
+    aria-hidden="true"
+  >
+  </div>
+
+  <div class="mx-auto max-w-4xl px-5 text-center">
+    {
+      brand && (
+        <span class="mx-auto mb-6 flex size-14 items-center justify-center rounded-2xl bg-white shadow-md ring-1 ring-black/5">
+          <svg viewBox="0 0 24 24" class="size-8" fill={brand.color} aria-hidden="true">
+            <path d={brand.path} />
+          </svg>
+        </span>
+      )
+    }
+    <p class="eyebrow flex items-center justify-center gap-2">
+      <span class="text-muted-foreground">{groupLabel}</span>
+      <span class="text-muted-foreground/50">/</span>
+      <span>{c.name}</span>
+    </p>
+    <h1 class="mt-5 text-balance text-4xl leading-[1.05] sm:text-[3.6rem] sm:leading-[1.04]">
+      <span class="block">{c.hero.title}</span>
+      <span class="block text-primary">{c.hero.accent}</span>
+    </h1>
+    <p class="mx-auto mt-6 max-w-2xl text-lg text-muted-foreground">{c.hero.lead}</p>
+    <div class="mt-9 flex flex-wrap items-center justify-center gap-3">
+      <a
+        href={consoleUrl}
+        class="inline-flex h-11 items-center gap-2 rounded-md bg-primary px-6 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
+      >
+        <span>{t.start}</span>
+        <Icon name="arrow" class="size-4" />
+      </a>
+      <a
+        href="mailto:hello@autharie.fr"
+        class="inline-flex h-11 items-center rounded-md border bg-card px-6 text-sm font-medium transition-colors hover:bg-accent"
+      >
+        {t.talk}
+      </a>
+    </div>
+  </div>
+</section>
+
+<section class="border-y bg-surface/50">
+  <div class="mx-auto max-w-6xl px-5 py-16 sm:py-20">
+    <h2 class="text-2xl sm:text-3xl">{t.challenges}</h2>
+    <div class="mt-10 grid gap-5 md:grid-cols-3">
+      {
+        c.challenges.map((item, i) => (
+          <div class="rounded-xl border bg-card p-6">
+            <span class="font-mono text-xs text-primary">{String(i + 1).padStart(2, '0')}</span>
+            <h3 class="mt-3 font-semibold">{item.title}</h3>
+            <p class="mt-2 text-sm leading-relaxed text-muted-foreground">{item.description}</p>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="mx-auto max-w-6xl px-5 py-20 sm:py-24">
+    <h2 class="max-w-xl text-3xl sm:text-4xl">{t.benefits}</h2>
+    <div class="mt-12 grid gap-x-10 gap-y-9 sm:grid-cols-2">
+      {
+        c.benefits.map((item) => (
+          <div class="flex gap-4">
+            <span class="mt-0.5 flex size-9 shrink-0 items-center justify-center rounded-lg border bg-card text-primary">
+              <Icon name={item.icon} class="size-[18px]" />
+            </span>
+            <div>
+              <h3 class="font-semibold">{item.title}</h3>
+              <p class="mt-1.5 text-sm leading-relaxed text-muted-foreground">{item.description}</p>
+            </div>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+{
+  c.steps && (
+    <section class="border-t bg-surface/50">
+      <div class="mx-auto max-w-4xl px-5 py-20 sm:py-24">
+        <h2 class="text-3xl sm:text-4xl">{t.steps}</h2>
+        <ol class="mt-12 space-y-8">
+          {c.steps.map((step, i) => (
+            <li class="flex gap-5">
+              <span class="flex size-8 shrink-0 items-center justify-center rounded-full bg-primary text-sm font-semibold text-primary-foreground">
+                {i + 1}
+              </span>
+              <div>
+                <h3 class="font-semibold">{step.title}</h3>
+                <p class="mt-1.5 text-sm leading-relaxed text-muted-foreground">{step.description}</p>
+              </div>
+            </li>
+          ))}
+        </ol>
+      </div>
+    </section>
+  )
+}
+
+<section class="border-t">
+  <div class="mx-auto max-w-6xl px-5 py-16 sm:py-20">
+    <h2 class="text-2xl">{t.products}</h2>
+    <div class="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+      {
+        products.map((item) => (
+          <a
+            href={localePath(locale, `/products/${item.slug}`)}
+            class="group rounded-xl border bg-card p-5 transition-colors hover:border-primary/40"
+          >
+            <span class="flex size-9 items-center justify-center rounded-lg bg-primary/10 text-primary">
+              <Icon name={item.icon} class="size-[18px]" />
+            </span>
+            <p class="mt-4 font-semibold">{item.name}</p>
+            <p class="mt-1 text-sm text-muted-foreground">{item.tagline}</p>
+          </a>
+        ))
+      }
+    </div>
+  </div>
+</section>

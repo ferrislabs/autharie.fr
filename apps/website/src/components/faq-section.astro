@@ -1,0 +1,133 @@
+---
+import { localePath, type Locale } from '../i18n'
+
+interface Props {
+  locale?: Locale
+}
+
+const { locale = 'en' } = Astro.props
+
+const copy = {
+  en: {
+    eyebrow: 'Questions',
+    title: 'Asked often enough to write down',
+    questions: [
+      {
+        q: 'Which identity providers can I run?',
+        a: 'Ferriskey and Keycloak. Both speak OpenID Connect and OAuth 2, so an application already talking to one of them does not need changing to move onto Autharie.',
+      },
+      {
+        q: 'How much does it cost?',
+        a: 'Autharie is in early access. Talk to us about what you run and we will come back to you with a proposal.',
+      },
+      {
+        q: 'What happens if I outgrow my instance?',
+        a: 'Nothing breaks and nothing is switched off. The instance gets slower before it gets anything else, you can see it in the console, and you move to a larger size without it being rebuilt. An identity provider is not something to cut off over a quota.',
+      },
+      {
+        q: 'Where is my data hosted, and who runs Autharie?',
+        a: 'Autharie is a French company with French governance. On our clusters your instance runs at Scaleway, in Europe, under European law. If a policy requires it, run on a cluster of your own instead, at OVHcloud, Scaleway, Hetzner, Outscale or on your premises: accounts, sessions and the database stay with you.',
+      },
+      {
+        q: 'Does it have to run on your infrastructure?',
+        a: 'No. Register a Kubernetes or k3s cluster of your own as a data plane and deployments are placed there instead. The database and every account in it stay on your side, and the control plane only sends it work to do.',
+      },
+      {
+        q: 'How is my data protected?',
+        a: 'Archives are encrypted at rest, each with its own key wrapped by a key held in a vault. For full control over where the data lives, run on a cluster of your own: accounts, sessions and the database never leave your infrastructure.',
+      },
+      {
+        q: 'What happens when a new provider version ships?',
+        a: 'It is published as a release and rolled out in waves, sandboxes first. You set a window, decide whether patches may be applied without asking, and keep major versions as your own decision. A deployment can be held back and a rollout can be stopped.',
+      },
+      {
+        q: 'What if I want to leave?',
+        a: 'Both providers are open source and the database is ordinary Postgres. Archives land in object storage you can point at your own bucket, so what you take with you is a dump and a container image, not an export format we invented.',
+      },
+      {
+        q: 'Is Autharie available?',
+        a: 'Autharie is in early access. Talk to us about what you run and we will help you plan the move.',
+      },
+    ],
+  },
+  fr: {
+    eyebrow: 'Questions',
+    title: 'Posées assez souvent pour être écrites',
+    questions: [
+      {
+        q: 'Quels fournisseurs d\'identité puis-je exploiter ?',
+        a: "Ferriskey et Keycloak. Les deux parlent OpenID Connect et OAuth 2, donc une application qui dialogue déjà avec l'un d'eux n'a pas besoin d'être modifiée pour passer sur Autharie.",
+      },
+      {
+        q: 'Combien ça coûte ?',
+        a: "Autharie est en accès anticipé. Parlez-nous de ce que vous faites tourner et nous reviendrons vers vous avec une proposition.",
+      },
+      {
+        q: 'Que se passe-t-il si mon instance devient trop petite ?',
+        a: "Rien ne casse et rien n'est coupé. L'instance ralentit avant tout le reste, vous le voyez dans la console, et vous passez à une taille supérieure sans reconstruction. Un fournisseur d'identité ne se coupe pas pour un quota.",
+      },
+      {
+        q: 'Où sont hébergées mes données, et qui exploite Autharie ?',
+        a: "Autharie est une société française, à la gouvernance française. Sur nos clusters, votre instance tourne chez Scaleway, en Europe, sous droit européen. Si une politique l'exige, faites plutôt tourner Autharie sur un cluster à vous, chez OVHcloud, Scaleway, Hetzner, Outscale ou dans vos locaux : les comptes, les sessions et la base restent chez vous.",
+      },
+      {
+        q: 'Doit-il obligatoirement tourner sur votre infrastructure ?',
+        a: "Non. Enregistrez votre propre cluster Kubernetes ou k3s comme plan de données et les déploiements y seront placés. La base de données et tous les comptes qu'elle contient restent chez vous, et le plan de contrôle se contente de lui envoyer du travail.",
+      },
+      {
+        q: 'Comment mes données sont-elles protégées ?',
+        a: "Les archives sont chiffrées au repos, chacune avec sa propre clé, enveloppée par une clé conservée dans un coffre. Pour maîtriser l'endroit où vivent les données, faites tourner Autharie sur votre propre cluster : les comptes, les sessions et la base ne quittent jamais votre infrastructure.",
+      },
+      {
+        q: "Que se passe-t-il quand une nouvelle version du fournisseur sort ?",
+        a: "Elle est publiée comme une version et déployée par vagues, les Sandbox d'abord. Vous fixez une fenêtre, vous décidez si les correctifs peuvent être appliqués sans vous demander, et les versions majeures restent votre décision. Un déploiement peut être maintenu en arrière et un déploiement en cours peut être arrêté.",
+      },
+      {
+        q: 'Et si je veux partir ?',
+        a: "Les deux fournisseurs sont open source et la base de données est du Postgres ordinaire. Les archives atterrissent dans un stockage objet que vous pouvez faire pointer vers votre propre bucket : vous repartez donc avec un dump et une image de conteneur, pas avec un format d'export que nous aurions inventé.",
+      },
+      {
+        q: 'Autharie est-il disponible ?',
+        a: "Autharie est en accès anticipé. Parlez-nous de ce que vous faites tourner et nous vous aiderons à préparer la migration.",
+      },
+    ],
+  },
+}
+const t = copy[locale]
+const questions = t.questions
+---
+
+<section class="border-t">
+  <div class="mx-auto max-w-4xl px-5 py-20 sm:py-28">
+    <div class="text-center">
+      <p class="eyebrow">{t.eyebrow}</p>
+      <h2 class="mt-4 text-3xl sm:text-4xl">{t.title}</h2>
+    </div>
+
+    <div class="mt-12 divide-y rounded-xl border bg-card">
+      {
+        questions.map((item) => (
+          <details class="group px-6">
+            <summary class="flex cursor-pointer list-none items-center justify-between gap-4 py-5 text-left font-medium [&::-webkit-details-marker]:hidden">
+              <span>{item.q}</span>
+              <svg
+                viewBox="0 0 24 24"
+                class="size-4 shrink-0 text-muted-foreground transition-transform group-open:rotate-45"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                aria-hidden="true"
+              >
+                <path d="M12 5v14M5 12h14" />
+              </svg>
+            </summary>
+            <p class="pb-6 pr-10 text-sm leading-relaxed text-muted-foreground">
+              {item.a}
+            </p>
+          </details>
+        ))
+      }
+    </div>
+  </div>
+</section>

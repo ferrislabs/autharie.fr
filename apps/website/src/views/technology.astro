@@ -1,0 +1,236 @@
+---
+import type { Locale } from '../i18n'
+import Base from '../layouts/base.astro'
+import { SiteHeader } from '../components/site-header'
+import Icon from '../components/icon.astro'
+import TechSection from '../components/tech-section.astro'
+import DeclarativeSection from '../components/declarative-section.astro'
+import DataplaneSection from '../components/dataplane-section.astro'
+import CtaSection from '../components/cta-section.astro'
+import SiteFooter from '../components/site-footer.astro'
+
+interface Props {
+  locale?: Locale
+}
+
+const { locale = 'en' } = Astro.props
+const docsUrl = import.meta.env.PUBLIC_DOCS_URL || ''
+const consoleUrl = import.meta.env.PUBLIC_CONSOLE_URL || 'https://console.autharie.fr'
+
+const copy = {
+  en: {
+    title: 'Technology · Autharie',
+    description:
+      'Rust, Kubernetes, open source and a data plane you can place anywhere. How Autharie is built.',
+    eyebrow: 'Technology',
+    h1a: 'Boring where it counts,',
+    h1b: 'built to last.',
+    lead: 'You do not need any of this to use Autharie. It is here for the engineers and auditors who want to know what runs their sign in.',
+    nav: ['Rust', 'Kubernetes and CRDs', 'Data plane', 'Open source'],
+    rustEyebrow: 'Rust',
+    rustTitle: 'Written in Rust',
+    rustLead:
+      'Everything Autharie adds on top of the identity providers is Rust. A control plane that exposes the API, an operator that looks after instances, and the agent that runs in your cluster.',
+    rust: [
+      {
+        icon: 'zap',
+        title: 'Fast and light',
+        description:
+          'The control plane, the operator and the data plane agent are single binaries that start in milliseconds and use little memory.',
+      },
+      {
+        icon: 'shield',
+        title: 'Safer by construction',
+        description:
+          'No garbage collector and no whole classes of memory bugs. For the service that decides who may sign in, that matters.',
+      },
+      {
+        icon: 'database',
+        title: 'SQL checked at compile time',
+        description:
+          'A query that does not match the schema fails the build instead of failing in production.',
+      },
+    ],
+    osEyebrow: 'Open source',
+    osTitle: 'Nothing here you cannot take with you',
+    osLead: 'You are paying for the operating, not for access to the software.',
+    openSource: [
+      {
+        icon: 'branch',
+        title: 'Ferriskey and Keycloak',
+        description:
+          'Both identity providers are open source. You can read the code that handles your users’ sign in.',
+      },
+      {
+        icon: 'archive',
+        title: 'No lock in by design',
+        description:
+          'The database is ordinary Postgres and archives land in object storage. Leaving means taking a dump and a container image.',
+      },
+      {
+        icon: 'users',
+        title: 'Built in the open',
+        description:
+          'Ferriskey is developed publicly. Fixes and ideas you contribute are available to everyone.',
+      },
+    ],
+    github: 'See the code on GitHub',
+  },
+  fr: {
+    title: 'Technologie · Autharie',
+    description:
+      'Rust, Kubernetes, open source et un data plane que vous placez où vous voulez. Comment Autharie est construit.',
+    eyebrow: 'Technologie',
+    h1a: 'Sobre là où ça compte,',
+    h1b: 'conçu pour durer.',
+    lead: 'Vous n’avez besoin de rien de tout cela pour utiliser Autharie. C’est là pour les ingénieurs et les auditeurs qui veulent savoir ce qui fait tourner leur connexion.',
+    nav: ['Rust', 'Kubernetes et CRDs', 'Data plane', 'Open source'],
+    rustEyebrow: 'Rust',
+    rustTitle: 'Écrit en Rust',
+    rustLead:
+      'Tout ce qu’Autharie ajoute aux fournisseurs d’identité est écrit en Rust. Un control plane qui expose l’API, un opérateur qui s’occupe des instances, et l’agent qui tourne dans votre cluster.',
+    rust: [
+      {
+        icon: 'zap',
+        title: 'Rapide et léger',
+        description:
+          'Le control plane, l’opérateur et l’agent du data plane sont des binaires uniques qui démarrent en quelques millisecondes et consomment peu de mémoire.',
+      },
+      {
+        icon: 'shield',
+        title: 'Plus sûr par construction',
+        description:
+          'Pas de ramasse-miettes et des familles entières de bugs mémoire écartées. Pour le service qui décide qui peut se connecter, cela compte.',
+      },
+      {
+        icon: 'database',
+        title: 'SQL vérifié à la compilation',
+        description:
+          'Une requête qui ne correspond pas au schéma fait échouer le build, pas la production.',
+      },
+    ],
+    osEyebrow: 'Open source',
+    osTitle: 'Rien ici que vous ne puissiez emporter',
+    osLead: 'Vous payez l’exploitation, pas l’accès au logiciel.',
+    openSource: [
+      {
+        icon: 'branch',
+        title: 'Ferriskey et Keycloak',
+        description:
+          'Les deux fournisseurs d’identité sont open source. Vous pouvez lire le code qui gère la connexion de vos utilisateurs.',
+      },
+      {
+        icon: 'archive',
+        title: 'Aucun enfermement, par conception',
+        description:
+          'La base est du Postgres ordinaire et les archives vont dans un stockage objet. Partir, c’est emporter un dump et une image de conteneur.',
+      },
+      {
+        icon: 'users',
+        title: 'Développé au grand jour',
+        description:
+          'Ferriskey est développé publiquement. Les corrections et les idées que vous apportez profitent à tout le monde.',
+      },
+    ],
+    github: 'Voir le code sur GitHub',
+  },
+}
+const t = copy[locale]
+const anchors = ['#rust', '#kubernetes', '#dataplane', '#open-source']
+---
+
+<Base title={t.title} description={t.description}>
+  <SiteHeader docsUrl={docsUrl} consoleUrl={consoleUrl} locale={locale} pathname={Astro.url.pathname} client:load transition:persist={`site-header-${locale}`} />
+
+  <main>
+    <section class="relative overflow-hidden pb-16 pt-14 sm:pb-20 sm:pt-20">
+      <div class="bg-grid pointer-events-none absolute inset-0 -z-10 h-[460px]" aria-hidden="true">
+      </div>
+      <div class="mx-auto max-w-4xl px-5 text-center">
+        <p class="eyebrow">{t.eyebrow}</p>
+        <h1 class="mt-4 text-balance text-4xl leading-[1.05] sm:text-[3.4rem] sm:leading-[1.04]">
+          <span class="block">{t.h1a}</span>
+          <span class="block text-primary">{t.h1b}</span>
+        </h1>
+        <p class="mx-auto mt-6 max-w-2xl text-lg text-muted-foreground">{t.lead}</p>
+        <nav class="mt-8 flex flex-wrap items-center justify-center gap-2 text-sm">
+          {
+            t.nav.map((label, i) => (
+              <a
+                href={anchors[i]}
+                class="rounded-full border bg-card px-4 py-1.5 font-medium text-muted-foreground transition-colors hover:text-foreground"
+              >
+                {label}
+              </a>
+            ))
+          }
+        </nav>
+      </div>
+    </section>
+
+    <TechSection locale={locale} />
+
+    <section id="rust" class="scroll-mt-20">
+      <div class="mx-auto max-w-6xl px-5 py-20 sm:py-28">
+        <div class="max-w-2xl">
+          <p class="eyebrow">{t.rustEyebrow}</p>
+          <h2 class="mt-4 text-3xl sm:text-[2.6rem] sm:leading-[1.1]">{t.rustTitle}</h2>
+          <p class="mt-5 text-lg text-muted-foreground">{t.rustLead}</p>
+        </div>
+        <div class="mt-12 grid gap-8 md:grid-cols-3">
+          {
+            t.rust.map((item) => (
+              <div>
+                <span class="flex size-10 items-center justify-center rounded-lg border bg-card text-primary">
+                  <Icon name={item.icon} class="size-5" />
+                </span>
+                <h3 class="mt-5 font-semibold">{item.title}</h3>
+                <p class="mt-2 text-sm leading-relaxed text-muted-foreground">{item.description}</p>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+
+    <div id="kubernetes" class="scroll-mt-20">
+      <DeclarativeSection locale={locale} />
+    </div>
+
+    <DataplaneSection locale={locale} />
+
+    <section id="open-source" class="scroll-mt-20">
+      <div class="mx-auto max-w-6xl px-5 py-20 sm:py-28">
+        <div class="max-w-2xl">
+          <p class="eyebrow">{t.osEyebrow}</p>
+          <h2 class="mt-4 text-3xl sm:text-[2.6rem] sm:leading-[1.1]">{t.osTitle}</h2>
+          <p class="mt-5 text-lg text-muted-foreground">{t.osLead}</p>
+        </div>
+        <div class="mt-12 grid gap-8 md:grid-cols-3">
+          {
+            t.openSource.map((item) => (
+              <div>
+                <span class="flex size-10 items-center justify-center rounded-lg border bg-card text-primary">
+                  <Icon name={item.icon} class="size-5" />
+                </span>
+                <h3 class="mt-5 font-semibold">{item.title}</h3>
+                <p class="mt-2 text-sm leading-relaxed text-muted-foreground">{item.description}</p>
+              </div>
+            ))
+          }
+        </div>
+        <a
+          href="https://github.com/ferriskey"
+          class="mt-10 inline-flex items-center gap-2 text-sm font-medium text-primary"
+        >
+          {t.github}
+          <Icon name="arrow" class="size-4" />
+        </a>
+      </div>
+    </section>
+
+    <CtaSection locale={locale} />
+  </main>
+
+  <SiteFooter locale={locale} />
+</Base>

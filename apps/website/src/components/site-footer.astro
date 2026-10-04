@@ -1,0 +1,186 @@
+---
+import { getProducts } from '../data/products'
+import { solutionCopy, solutionsIn } from '../data/solutions'
+import { localePath, switchPath, useUi, type Locale } from '../i18n'
+
+interface Props {
+  locale?: Locale
+}
+
+const { locale = 'en' } = Astro.props
+const t = useUi(locale)
+const docsUrl = import.meta.env.PUBLIC_DOCS_URL || ''
+const blogUrl = import.meta.env.PUBLIC_BLOG_URL || ''
+const consoleUrl = import.meta.env.PUBLIC_CONSOLE_URL || 'https://console.autharie.fr'
+
+const columns = [
+  {
+    title: t('footerProduct'),
+    links: [
+      ...getProducts(locale).map((p) => ({
+        label: p.name,
+        href: localePath(locale, `/products/${p.slug}`),
+      })),
+      { label: t('pricing'), href: localePath(locale, '/#offers') },
+    ],
+  },
+  {
+    title: t('footerSolutions'),
+    links: [...solutionsIn('role'), ...solutionsIn('stage').filter((s) => s.slug !== 'associations')].map((s) => ({
+      label: solutionCopy(s, locale).menu,
+      href: localePath(locale, `/solutions/${s.slug}`),
+    })),
+  },
+  {
+    title: t('footerTechnology'),
+    links: [
+      { label: t('rust'), href: localePath(locale, '/technology#rust') },
+      { label: t('kubernetes'), href: localePath(locale, '/technology#kubernetes') },
+      { label: t('dataplane'), href: localePath(locale, '/technology#dataplane') },
+      { label: t('openSource'), href: localePath(locale, '/technology#open-source') },
+      { label: t('console'), href: consoleUrl },
+    ],
+  },
+  {
+    title: t('footerResources'),
+    links: [
+      { label: t('documentation'), href: docsUrl || '#' },
+      { label: t('simulator'), href: localePath(locale, '/simulator') },
+      { label: t('blog'), href: blogUrl || '#' },
+      { label: t('apiReference'), href: `${docsUrl}/api` },
+      { label: t('status'), href: 'https://status.autharie.fr' },
+    ],
+  },
+  {
+    title: t('footerOpenSource'),
+    links: [
+      { label: t('about'), href: localePath(locale, '/about') },
+      { label: 'Ferriskey', href: 'https://github.com/ferriskey' },
+      { label: 'GitHub', href: 'https://github.com/ferriskey' },
+      { label: t('contact'), href: 'mailto:hello@autharie.fr' },
+    ],
+  },
+]
+
+const year = new Date().getFullYear()
+
+const languages: { locale: Locale; label: string }[] = [
+  { locale: 'en', label: 'English' },
+  { locale: 'fr', label: 'Français' },
+]
+const pathname = Astro.url.pathname
+---
+
+<footer class="relative overflow-hidden border-t border-white/10 bg-deep text-white">
+  <div
+    class="pointer-events-none absolute inset-x-0 bottom-0 h-[420px] bg-[radial-gradient(60%_100%_at_50%_100%,oklch(0.52_0.19_285/0.45),transparent)]"
+    aria-hidden="true"
+  >
+  </div>
+
+  <div class="relative mx-auto max-w-6xl px-5 pt-16">
+    <div class="grid gap-12 sm:grid-cols-2 lg:grid-cols-[1.3fr_repeat(5,1fr)]">
+      <div class="sm:col-span-2 lg:col-span-1 lg:pr-8">
+        <a href={localePath(locale, '/')} class="inline-flex items-center gap-2.5">
+          <span class="flex size-7 items-center justify-center rounded-md bg-primary text-primary-foreground">
+            <svg
+              viewBox="0 0 24 24"
+              class="size-4"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2.2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+            >
+              <path d="M12 2 4 6v6c0 4.4 3.2 8.4 8 10 4.8-1.6 8-5.6 8-10V6z"></path>
+              <path d="M12 11v4"></path>
+            </svg>
+          </span>
+          <span class="text-[17px] font-semibold tracking-tight">Autharie</span>
+        </a>
+        <p class="mt-4 max-w-xs text-sm leading-relaxed text-white/60">{t('footerBlurb')}</p>
+      </div>
+
+      {
+        columns.map((column) => (
+          <div>
+            <h3 class="text-sm font-semibold text-white">{column.title}</h3>
+            <ul class="mt-5 space-y-3">
+              {column.links.map((link) => (
+                <li>
+                  <a
+                    href={link.href}
+                    class="text-sm text-white/60 transition-colors hover:text-white"
+                  >
+                    {link.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))
+      }
+    </div>
+
+    <p
+      class="pointer-events-none mt-20 select-none bg-gradient-to-b from-white/25 to-transparent bg-clip-text text-center text-[24vw] font-semibold leading-[0.8] tracking-tighter text-transparent sm:text-[16vw] lg:text-[13.5rem]"
+      aria-hidden="true"
+    >
+      Autharie
+    </p>
+
+    <div class="relative grid items-center gap-4 border-t border-white/10 py-6 text-center text-xs text-white/60 sm:grid-cols-[1fr_auto_1fr]">
+      <p class="sm:text-left">{`Autharie © ${year}`} · {t('builtIn')}</p>
+
+      <div class="flex items-center justify-center gap-4">
+        <a
+          href="https://github.com/ferriskey"
+          aria-label="GitHub"
+          class="transition-colors hover:text-white"
+        >
+          <svg viewBox="0 0 24 24" class="size-4" fill="currentColor" aria-hidden="true">
+            <path d="M12 .5a11.5 11.5 0 0 0-3.64 22.41c.58.1.79-.25.79-.56v-2c-3.2.7-3.88-1.37-3.88-1.37-.52-1.33-1.28-1.69-1.28-1.69-1.05-.71.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.55-.29-5.24-1.28-5.24-5.69 0-1.26.45-2.28 1.19-3.09-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.17 1.18a11 11 0 0 1 5.77 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.81 1.19 1.83 1.19 3.09 0 4.42-2.69 5.39-5.26 5.68.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 12 .5z"></path>
+          </svg>
+        </a>
+        <a
+          href="mailto:hello@autharie.fr"
+          aria-label={t('contact')}
+          class="transition-colors hover:text-white"
+        >
+          <svg
+            viewBox="0 0 24 24"
+            class="size-4"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.75"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            aria-hidden="true"
+          >
+            <rect width="20" height="16" x="2" y="4" rx="2"></rect>
+            <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path>
+          </svg>
+        </a>
+      </div>
+
+      <nav class="flex items-center justify-center gap-3 sm:justify-end" aria-label={t('language')}>
+        {
+          languages.map((language) => (
+            <a
+              href={switchPath(pathname, language.locale)}
+              hreflang={language.locale}
+              aria-current={language.locale === locale ? 'true' : undefined}
+              class:list={[
+                'transition-colors hover:text-white',
+                language.locale === locale && 'font-medium text-white',
+              ]}
+            >
+              {language.label}
+            </a>
+          ))
+        }
+      </nav>
+    </div>
+  </div>
+</footer>

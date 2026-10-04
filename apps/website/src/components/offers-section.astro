@@ -1,0 +1,65 @@
+---
+import Icon from './icon.astro'
+import { localePath, type Locale } from '../i18n'
+
+interface Props {
+  locale?: Locale
+}
+
+const { locale = 'en' } = Astro.props
+const consoleUrl = import.meta.env.PUBLIC_CONSOLE_URL || 'https://console.autharie.fr'
+
+const copy = {
+  en: {
+    eyebrow: 'Pricing',
+    title: 'Early access',
+    intro:
+      'Autharie is in early access. Tell us what you run and we will come back to you with a proposal.',
+    primary: 'Deploy an instance',
+    secondary: 'Talk to us',
+    simulate: 'Estimate what running it yourself costs',
+  },
+  fr: {
+    eyebrow: 'Tarifs',
+    title: 'Accès anticipé',
+    intro:
+      'Autharie est en accès anticipé. Dites-nous ce que vous faites tourner et nous reviendrons vers vous avec une proposition.',
+    primary: 'Déployer une instance',
+    secondary: 'Nous contacter',
+    simulate: 'Estimer ce que coûte de l’exploiter vous-même',
+  },
+}
+const t = copy[locale]
+---
+
+<section id="offers" class="scroll-mt-20 border-y bg-surface/50">
+  <div class="mx-auto max-w-3xl px-5 py-20 text-center sm:py-24">
+    <p class="eyebrow">{t.eyebrow}</p>
+    <h2 class="mt-4 text-3xl sm:text-[2.6rem] sm:leading-[1.1]">{t.title}</h2>
+    <p class="mx-auto mt-5 max-w-xl text-lg text-muted-foreground">{t.intro}</p>
+    <div class="mt-8 flex flex-wrap items-center justify-center gap-3">
+      <a
+        href={consoleUrl}
+        class="inline-flex h-11 items-center gap-2 rounded-md bg-primary px-6 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
+      >
+        <span>{t.primary}</span>
+        <Icon name="arrow" class="size-4" />
+      </a>
+      <a
+        href="mailto:hello@autharie.fr"
+        class="inline-flex h-11 items-center rounded-md border bg-card px-6 text-sm font-medium transition-colors hover:bg-accent"
+      >
+        {t.secondary}
+      </a>
+    </div>
+    <p class="mt-6">
+      <a
+        href={localePath(locale, '/simulator')}
+        class="inline-flex items-center gap-2 text-sm font-medium text-primary"
+      >
+        {t.simulate}
+        <Icon name="arrow" class="size-4" />
+      </a>
+    </p>
+  </div>
+</section>

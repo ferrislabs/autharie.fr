@@ -1,0 +1,54 @@
+---
+import Icon from './icon.astro'
+import { localePath, type Locale } from '../i18n'
+
+const consoleUrl = import.meta.env.PUBLIC_CONSOLE_URL || 'https://console.autharie.fr'
+
+interface Props {
+  locale?: Locale
+}
+
+const { locale = 'en' } = Astro.props
+
+const copy = {
+  en: {
+    title: 'Put the identity provider somewhere it gets looked after',
+    body: 'An instance takes a few minutes to bring up. If it turns out not to fit, you have lost an afternoon.',
+    deploy: 'Deploy an instance',
+    talk: 'Talk to us first',
+  },
+  fr: {
+    title: "Placez le fournisseur d'identité là où l'on s'en occupe",
+    body: "Une instance se crée en quelques minutes. Si elle ne vous convient pas, vous aurez perdu un après-midi.",
+    deploy: 'Déployer une instance',
+    talk: 'Nous parler avant',
+  },
+}
+const t = copy[locale]
+---
+
+<section class="bg-deep text-white">
+  <div class="mx-auto max-w-6xl px-5 py-20 text-center sm:py-28">
+    <h2 class="mx-auto max-w-2xl text-3xl text-white sm:text-[2.7rem] sm:leading-[1.1]">
+      {t.title}
+    </h2>
+    <p class="mx-auto mt-5 max-w-xl text-lg text-white/70">
+      {t.body}
+    </p>
+    <div class="mt-9 flex flex-wrap items-center justify-center gap-3">
+      <a
+        href={consoleUrl}
+        class="inline-flex h-11 items-center gap-2 rounded-md bg-white px-6 text-sm font-medium text-ink transition-opacity hover:opacity-90"
+      >
+        <span>{t.deploy}</span>
+        <Icon name="arrow" class="size-4" />
+      </a>
+      <a
+        href="mailto:hello@autharie.fr"
+        class="inline-flex h-11 items-center gap-2 rounded-md border border-white/25 px-6 text-sm font-medium text-white transition-colors hover:bg-white/10"
+      >
+        <span>{t.talk}</span>
+      </a>
+    </div>
+  </div>
+</section>

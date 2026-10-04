@@ -1,0 +1,56 @@
+---
+import { type Locale } from '../i18n'
+import Base from '../layouts/base.astro'
+import { SiteHeader } from '../components/site-header'
+import HeroSection from '../components/hero-section.astro'
+import TechSection from '../components/tech-section.astro'
+import ProblemSection from '../components/problem-section.astro'
+import DeploySection from '../components/deploy-section.astro'
+import CentralSection from '../components/central-section.astro'
+import ProductsSection from '../components/products-section.astro'
+import OperationsSection from '../components/operations-section.astro'
+import SecuritySection from '../components/security-section.astro'
+import ExpertiseSection from '../components/expertise-section.astro'
+import EuropeSection from '../components/europe-section.astro'
+import OffersSection from '../components/offers-section.astro'
+import FaqSection from '../components/faq-section.astro'
+import CtaSection from '../components/cta-section.astro'
+import SiteFooter from '../components/site-footer.astro'
+
+interface Props {
+  locale?: Locale
+}
+
+const { locale = 'en' } = Astro.props
+const docsUrl = import.meta.env.PUBLIC_DOCS_URL || ''
+const consoleUrl = import.meta.env.PUBLIC_CONSOLE_URL || 'https://console.autharie.fr'
+const description = {
+  en: 'Managed Ferriskey and Keycloak instances on Kubernetes. Upgrades, archives, restores and access control handled, on our clusters or on yours.',
+  fr: 'Des instances Ferriskey et Keycloak gérées sur Kubernetes. Mises à jour, archives, restaurations et contrôle d’accès pris en charge, sur nos clusters ou sur les vôtres.',
+}
+---
+
+<Base
+  title="Autharie"
+  description={description[locale]}
+>
+  <SiteHeader docsUrl={docsUrl} consoleUrl={consoleUrl} locale={locale} pathname={Astro.url.pathname} client:load transition:persist={`site-header-${locale}`} />
+
+  <main>
+    <HeroSection locale={locale} />
+    <TechSection locale={locale} />
+    <ProblemSection locale={locale} />
+    <CentralSection locale={locale} />
+    <ProductsSection locale={locale} />
+    <DeploySection locale={locale} />
+    <OperationsSection locale={locale} />
+    <SecuritySection locale={locale} />
+    <ExpertiseSection locale={locale} />
+    <EuropeSection locale={locale} />
+    <OffersSection locale={locale} />
+    <FaqSection locale={locale} />
+    <CtaSection locale={locale} />
+  </main>
+
+  <SiteFooter locale={locale} />
+</Base>
