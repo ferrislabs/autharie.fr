@@ -9,7 +9,7 @@ import SiteFooter from '../components/site-footer.astro'
 import { existsSync } from 'node:fs'
 import { join } from 'node:path'
 import { team } from '../data/team'
-import { type Locale } from '../i18n'
+import { localePath, type Locale } from '../i18n'
 
 interface Props {
   locale?: Locale
@@ -71,7 +71,7 @@ const copy = {
     teamTitle: 'The people behind Autharie',
     contactTitle: 'Want to talk, work with us or join us?',
     contactBody: 'We read every message.',
-    contactCta: 'hello@autharie.fr',
+    contactCta: 'Contact us',
   },
   fr: {
     title: 'À propos d’Autharie : un éditeur d’IAM français',
@@ -124,7 +124,7 @@ const copy = {
     teamTitle: 'Les personnes derrière Autharie',
     contactTitle: 'Envie d’échanger, de travailler avec nous ou de nous rejoindre ?',
     contactBody: 'Nous lisons chaque message.',
-    contactCta: 'hello@autharie.fr',
+    contactCta: 'Nous contacter',
   },
 }
 const t = copy[locale]
@@ -283,7 +283,7 @@ const initials = (name: string) =>
         </div>
         <div class="flex flex-wrap items-center gap-5">
           <a
-            href="mailto:hello@autharie.fr"
+            href={localePath(locale, '/contact')}
             class="inline-flex h-11 items-center rounded-md bg-primary px-6 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
           >
             {t.contactCta}

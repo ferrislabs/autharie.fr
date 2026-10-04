@@ -39,6 +39,12 @@ const fixed = {
       accent: 'We make it ours, not yours.',
       description: 'A French company that builds and operates identity providers.',
     },
+    contact: {
+      eyebrow: 'Contact',
+      title: 'Tell us what you run,',
+      accent: 'we will take it from there.',
+      description: 'Early access, pricing, a migration or a security question.',
+    },
     simulator: {
       eyebrow: 'Simulator',
       title: 'What does it really cost to run',
@@ -59,6 +65,12 @@ const fixed = {
       accent: 'Nous le prenons à notre charge.',
       description: 'Une société française qui construit et exploite des fournisseurs d’identité.',
     },
+    contact: {
+      eyebrow: 'Contact',
+      title: 'Dites-nous ce que vous faites tourner,',
+      accent: 'nous nous occupons du reste.',
+      description: 'Accès anticipé, tarifs, une migration ou une question de sécurité.',
+    },
     simulator: {
       eyebrow: 'Simulateur',
       title: 'Que coûte vraiment l’exploitation',
@@ -75,7 +87,7 @@ export const thumbnailPages: StaticPage[] = (['en', 'fr'] as const).flatMap((loc
   const p = prefix[locale]
   return [
     { path: locale === 'en' ? '/' : '/fr', locale, ...home[locale] },
-    ...(['technology', 'about', 'simulator'] as const).map((slug) => ({
+    ...(['technology', 'about', 'contact', 'simulator'] as const).map((slug) => ({
       path: `${p}/${slug}`,
       locale,
       ...fixed[locale][slug],

@@ -2,6 +2,7 @@
 import { ProductShowcase } from './product-showcase'
 import Icon from './icon.astro'
 import { localePath, type Locale } from '../i18n'
+import { primaryCta } from '../platform'
 
 const consoleUrl = import.meta.env.PUBLIC_CONSOLE_URL || 'https://console.autharie.fr'
 const docsUrl = import.meta.env.PUBLIC_DOCS_URL || ''
@@ -33,7 +34,8 @@ const copy = {
   },
 }
 const t = copy[locale]
-const fallbackHref = docsUrl || localePath(locale, '/#platform')
+const cta = primaryCta(locale, consoleUrl)
+const fallbackHref = docsUrl || localePath(locale, '/products/deploy')
 ---
 
 <section class="relative overflow-hidden pb-16 pt-14 sm:pb-24 sm:pt-20">
@@ -66,10 +68,10 @@ const fallbackHref = docsUrl || localePath(locale, '/#platform')
 
       <div class="mt-9 flex flex-wrap items-center justify-center gap-3">
         <a
-          href={consoleUrl}
+          href={cta.href}
           class="inline-flex h-11 items-center gap-2 rounded-md bg-primary px-6 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
         >
-          <span>{t.deploy}</span>
+          <span>{cta.label}</span>
           <Icon name="arrow" class="size-4" />
         </a>
         <a

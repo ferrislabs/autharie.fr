@@ -4,6 +4,7 @@ import { brandIcons } from '../data/brand-icons'
 import { getProducts } from '../data/products'
 import { solutionCopy, solutionGroups, solutionsIn } from '../data/solutions'
 import { localePath, switchPath, useUi, type Locale } from '../i18n'
+import { platformOpen } from '../platform'
 import { paths } from './icon-paths'
 
 interface SiteHeaderProps {
@@ -270,6 +271,7 @@ export function SiteHeader({
   const links = [
     { label: t('technology'), href: href('/technology') },
     { label: t('about'), href: href('/about') },
+    { label: t('estimate'), href: href('/simulator'), accent: true },
     { label: t('pricing'), href: href('/#offers') },
     { label: t('docs'), href: docsUrl || '#' },
   ]
@@ -400,7 +402,7 @@ export function SiteHeader({
 
                     <div className="border-l pl-10">
                       <GroupTitle index={3}>{groupLabels.migrate}</GroupTitle>
-                      <ul className="grid grid-cols-2 gap-3">
+                      <ul className={cn('grid gap-3', solutionLinks('migrate').length > 1 ? 'grid-cols-2' : 'grid-cols-1')}>
                         {solutionLinks('migrate').map((item, i) => (
                           <li key={item.slug}>
                             <a
@@ -424,7 +426,7 @@ export function SiteHeader({
                   >
                     <span className="text-muted-foreground">{t('notSure')}</span>
                     <a
-                      href="mailto:hello@autharie.fr"
+                      href={href('/contact')}
                       onClick={closeMenu}
                       className="group inline-flex items-center gap-1.5 font-medium text-primary"
                     >
@@ -441,8 +443,12 @@ export function SiteHeader({
             <a
               key={link.label}
               href={link.href}
-              className="rounded-full px-3.5 py-1.5 text-sm text-muted-foreground transition-colors hover:bg-accent/70 hover:text-foreground"
+              className={cn(
+                'inline-flex items-center gap-1.5 rounded-full px-3.5 py-1.5 text-sm transition-colors hover:bg-accent/70 hover:text-foreground',
+                link.accent ? 'font-medium text-primary hover:text-primary' : 'text-muted-foreground',
+              )}
             >
+              {link.accent && <span className="size-1.5 rounded-full bg-primary" aria-hidden="true" />}
               {link.label}
             </a>
           ))}
@@ -453,22 +459,39 @@ export function SiteHeader({
             href={switchPath(pathname, otherLocale)}
             hrefLang={otherLocale}
             aria-label={t('language')}
-            className="rounded-full px-2.5 py-1.5 text-xs font-semibold uppercase tracking-wide text-muted-foreground transition-colors hover:bg-accent/70 hover:text-foreground"
+            className="rounded-full px-2.5 py-1.5 text-xs font-semibold uppercase tracking-wide text-muted-foreground transition-colors hover:bg-accent/70 hover:text-foreground max-[359px]:hidden"
           >
             {otherLocale}
           </a>
-          <a
-            href={consoleUrl}
-            className="hidden rounded-full px-3 py-1.5 text-sm font-medium text-muted-foreground transition-colors hover:bg-accent/70 hover:text-foreground sm:inline-flex"
-          >
-            {t('signIn')}
-          </a>
-          <a
-            href={consoleUrl}
-            className="inline-flex h-9 items-center rounded-full bg-primary px-4 text-sm font-medium text-primary-foreground shadow-sm shadow-primary/30 transition-all hover:bg-primary/90 hover:shadow-md hover:shadow-primary/30"
-          >
-            {t('getStarted')}
-          </a>
+          {platformOpen ? (
+            <>
+              <a
+                href={href('/contact')}
+                className="hidden h-9 items-center rounded-full border bg-card px-4 text-sm font-medium transition-colors hover:bg-accent xl:inline-flex"
+              >
+                {t('talkToUs')}
+              </a>
+              <a
+                href={consoleUrl}
+                className="hidden rounded-full px-3 py-1.5 text-sm font-medium text-muted-foreground transition-colors hover:bg-accent/70 hover:text-foreground xl:inline-flex"
+              >
+                {t('signIn')}
+              </a>
+              <a
+                href={consoleUrl}
+                className="inline-flex h-9 items-center rounded-full bg-primary px-4 text-sm font-medium text-primary-foreground shadow-sm shadow-primary/30 transition-all hover:bg-primary/90 hover:shadow-md hover:shadow-primary/30"
+              >
+                {t('getStarted')}
+              </a>
+            </>
+          ) : (
+            <a
+              href={href('/contact')}
+              className="inline-flex h-9 items-center rounded-full bg-primary px-4 text-sm font-medium text-primary-foreground shadow-sm shadow-primary/30 transition-all hover:bg-primary/90 hover:shadow-md hover:shadow-primary/30"
+            >
+              {t('talkToUs')}
+            </a>
+          )}
           <button
             type="button"
             onClick={() => setOpen(!open)}
@@ -572,6 +595,21 @@ export function SiteHeader({
                 {link.label}
               </a>
             ))}
+            <a
+              href={href('/contact')}
+              onClick={() => setOpen(false)}
+              className="border-b border-border/60 py-3 text-sm font-medium"
+            >
+              {t('contactUs')}
+            </a>
+            <a
+              href={switchPath(pathname, otherLocale)}
+              hrefLang={otherLocale}
+              onClick={() => setOpen(false)}
+              className="py-3 text-sm font-medium text-muted-foreground"
+            >
+              {otherLocale === 'fr' ? 'Français' : 'English'}
+            </a>
           </nav>
         </div>
       )}

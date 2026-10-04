@@ -3,12 +3,7 @@ import { type Locale } from '../i18n'
 import Base from '../layouts/base.astro'
 import { SiteHeader } from '../components/site-header'
 import HeroSection from '../components/hero-section.astro'
-import TechSection from '../components/tech-section.astro'
-import ProblemSection from '../components/problem-section.astro'
-import DeploySection from '../components/deploy-section.astro'
 import CentralSection from '../components/central-section.astro'
-import ProductsSection from '../components/products-section.astro'
-import OperationsSection from '../components/operations-section.astro'
 import SecuritySection from '../components/security-section.astro'
 import ExpertiseSection from '../components/expertise-section.astro'
 import EuropeSection from '../components/europe-section.astro'
@@ -43,12 +38,7 @@ const description = {
 
   <main>
     <HeroSection locale={locale} />
-    <TechSection locale={locale} />
-    <ProblemSection locale={locale} />
     <CentralSection locale={locale} />
-    <ProductsSection locale={locale} />
-    <DeploySection locale={locale} />
-    <OperationsSection locale={locale} />
     <SecuritySection locale={locale} />
     <ExpertiseSection locale={locale} />
     <EuropeSection locale={locale} />

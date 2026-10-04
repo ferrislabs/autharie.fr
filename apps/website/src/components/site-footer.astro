@@ -2,6 +2,7 @@
 import { getProducts } from '../data/products'
 import { solutionCopy, solutionsIn } from '../data/solutions'
 import { localePath, switchPath, useUi, type Locale } from '../i18n'
+import { platformOpen } from '../platform'
 
 interface Props {
   locale?: Locale
@@ -38,7 +39,7 @@ const columns = [
       { label: t('kubernetes'), href: localePath(locale, '/technology#kubernetes') },
       { label: t('dataplane'), href: localePath(locale, '/technology#dataplane') },
       { label: t('openSource'), href: localePath(locale, '/technology#open-source') },
-      { label: t('console'), href: consoleUrl },
+      ...(platformOpen ? [{ label: t('console'), href: consoleUrl }] : []),
     ],
   },
   {
@@ -57,7 +58,7 @@ const columns = [
       { label: t('about'), href: localePath(locale, '/about') },
       { label: 'Ferriskey', href: 'https://github.com/ferriskey' },
       { label: 'GitHub', href: 'https://github.com/ferriskey' },
-      { label: t('contact'), href: 'mailto:hello@autharie.fr' },
+      { label: t('contact'), href: localePath(locale, '/contact') },
     ],
   },
 ]
@@ -144,7 +145,7 @@ const pathname = Astro.url.pathname
           </svg>
         </a>
         <a
-          href="mailto:hello@autharie.fr"
+          href={localePath(locale, '/contact')}
           aria-label={t('contact')}
           class="transition-colors hover:text-white"
         >

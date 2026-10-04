@@ -1,4 +1,5 @@
 ---
+import { primaryCta } from '../platform'
 import Icon from './icon.astro'
 import { brandIcons } from '../data/brand-icons'
 import { getProduct } from '../data/products'
@@ -44,6 +45,7 @@ const copy = {
   },
 }
 const t = copy[locale]
+const cta = primaryCta(locale, consoleUrl)
 const brand = brandIcons[solution.slug]
 const products = solution.products
   .map((slug) => getProduct(slug, locale))
@@ -80,14 +82,14 @@ const products = solution.products
     <p class="mx-auto mt-6 max-w-2xl text-lg text-muted-foreground">{c.hero.lead}</p>
     <div class="mt-9 flex flex-wrap items-center justify-center gap-3">
       <a
-        href={consoleUrl}
+        href={cta.href}
         class="inline-flex h-11 items-center gap-2 rounded-md bg-primary px-6 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
       >
-        <span>{t.start}</span>
+        <span>{cta.label}</span>
         <Icon name="arrow" class="size-4" />
       </a>
       <a
-        href="mailto:hello@autharie.fr"
+        href={localePath(locale, '/contact')}
         class="inline-flex h-11 items-center rounded-md border bg-card px-6 text-sm font-medium transition-colors hover:bg-accent"
       >
         {t.talk}

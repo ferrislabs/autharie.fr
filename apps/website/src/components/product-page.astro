@@ -1,4 +1,5 @@
 ---
+import { primaryCta } from '../platform'
 import Icon from './icon.astro'
 import { ConsoleWindow, MockRows, Page, SectionPage, TopBar } from './console/ui'
 import { getProduct, type Product } from '../data/products'
@@ -35,6 +36,7 @@ const copy = {
 }
 const t = copy[locale]
 const consoleUrl = import.meta.env.PUBLIC_CONSOLE_URL || 'https://console.autharie.fr'
+const cta = primaryCta(locale, consoleUrl)
 const docsUrl = import.meta.env.PUBLIC_DOCS_URL || ''
 
 const related = product.related.map((slug) => getProduct(slug, locale)).filter((p): p is Product => !!p)
@@ -67,14 +69,14 @@ const related = product.related.map((slug) => getProduct(slug, locale)).filter((
       <p class="mt-6 max-w-xl text-lg text-muted-foreground">{product.hero.lead}</p>
       <div class="mt-9 flex flex-wrap items-center gap-3">
         <a
-          href={consoleUrl}
+          href={cta.href}
           class="inline-flex h-11 items-center gap-2 rounded-md bg-primary px-6 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
         >
-          <span>{product.status === 'soon' ? t.join : t.deploy}</span>
+          <span>{cta.label}</span>
           <Icon name="arrow" class="size-4" />
         </a>
         <a
-          href={docsUrl || localePath(locale, '/#offers')}
+          href={docsUrl || localePath(locale, '/simulator')}
           class="inline-flex h-11 items-center gap-2 rounded-md border bg-card px-6 text-sm font-medium transition-colors hover:bg-accent"
         >
           <Icon name="terminal" class="size-4" />

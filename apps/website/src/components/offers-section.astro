@@ -1,4 +1,5 @@
 ---
+import { primaryCta } from '../platform'
 import Icon from './icon.astro'
 import { localePath, type Locale } from '../i18n'
 
@@ -17,7 +18,18 @@ const copy = {
       'Autharie is in early access. Tell us what you run and we will come back to you with a proposal.',
     primary: 'Deploy an instance',
     secondary: 'Talk to us',
-    simulate: 'Estimate what running it yourself costs',
+    cardEyebrow: 'Estimate',
+    cardTitle: 'What does it cost you to run it yourself?',
+    cardLead: 'Infrastructure, upgrades, backups and on-call, with your own numbers. It takes a minute.',
+    exampleLabel: 'Example: 2 environments, 10,000 users, highly available',
+    perMonth: 'per month',
+    lines: [
+      ['Infrastructure', '€416'],
+      ['Upgrades and patching', '€814'],
+      ['Backups, incidents, security', '€409'],
+    ],
+    days: '24 working days a year',
+    cta: 'Estimate your cost',
   },
   fr: {
     eyebrow: 'Tarifs',
@@ -26,40 +38,79 @@ const copy = {
       'Autharie est en accès anticipé. Dites-nous ce que vous faites tourner et nous reviendrons vers vous avec une proposition.',
     primary: 'Déployer une instance',
     secondary: 'Nous contacter',
-    simulate: 'Estimer ce que coûte de l’exploiter vous-même',
+    cardEyebrow: 'Estimation',
+    cardTitle: 'Combien vous coûte de l’exploiter vous-même ?',
+    cardLead: 'Infrastructure, mises à jour, sauvegardes et astreinte, avec vos propres chiffres. Une minute suffit.',
+    exampleLabel: 'Exemple : 2 environnements, 10 000 utilisateurs, haute disponibilité',
+    perMonth: 'par mois',
+    lines: [
+      ['Infrastructure', '416 €'],
+      ['Mises à jour et correctifs', '814 €'],
+      ['Sauvegardes, incidents, sécurité', '409 €'],
+    ],
+    days: '24 jours de travail par an',
+    cta: 'Estimer mon coût',
   },
 }
 const t = copy[locale]
+const cta = primaryCta(locale, consoleUrl)
+const total = locale === 'fr' ? '1 639 €' : '€1,639'
 ---
 
 <section id="offers" class="scroll-mt-20 border-y bg-surface/50">
-  <div class="mx-auto max-w-3xl px-5 py-20 text-center sm:py-24">
-    <p class="eyebrow">{t.eyebrow}</p>
-    <h2 class="mt-4 text-3xl sm:text-[2.6rem] sm:leading-[1.1]">{t.title}</h2>
-    <p class="mx-auto mt-5 max-w-xl text-lg text-muted-foreground">{t.intro}</p>
-    <div class="mt-8 flex flex-wrap items-center justify-center gap-3">
-      <a
-        href={consoleUrl}
-        class="inline-flex h-11 items-center gap-2 rounded-md bg-primary px-6 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
-      >
-        <span>{t.primary}</span>
-        <Icon name="arrow" class="size-4" />
-      </a>
-      <a
-        href="mailto:hello@autharie.fr"
-        class="inline-flex h-11 items-center rounded-md border bg-card px-6 text-sm font-medium transition-colors hover:bg-accent"
-      >
-        {t.secondary}
-      </a>
+  <div class="mx-auto grid max-w-6xl items-center gap-12 px-5 py-20 sm:py-28 lg:grid-cols-2 lg:gap-16">
+    <div>
+      <p class="eyebrow">{t.eyebrow}</p>
+      <h2 class="mt-4 text-3xl sm:text-[2.6rem] sm:leading-[1.1]">{t.title}</h2>
+      <p class="mt-5 text-lg text-muted-foreground">{t.intro}</p>
+      <div class="mt-8 flex flex-wrap items-center gap-3">
+        <a
+          href={cta.href}
+          class="inline-flex h-11 items-center gap-2 rounded-md bg-primary px-6 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
+        >
+          <span>{cta.label}</span>
+          <Icon name="arrow" class="size-4" />
+        </a>
+        <a
+          href={localePath(locale, '/contact')}
+          class="inline-flex h-11 items-center rounded-md border bg-card px-6 text-sm font-medium transition-colors hover:bg-accent"
+        >
+          {t.secondary}
+        </a>
+      </div>
     </div>
-    <p class="mt-6">
-      <a
-        href={localePath(locale, '/simulator')}
-        class="inline-flex items-center gap-2 text-sm font-medium text-primary"
-      >
-        {t.simulate}
+
+    <a
+      href={localePath(locale, '/simulator')}
+      class="group block rounded-2xl border border-primary/30 bg-card p-6 shadow-[0_24px_48px_-28px_rgb(60_40_160/0.35)] transition-all hover:-translate-y-0.5 hover:border-primary/50 sm:p-8"
+    >
+      <p class="eyebrow">{t.cardEyebrow}</p>
+      <h3 class="mt-3 text-xl font-semibold leading-snug sm:text-2xl">{t.cardTitle}</h3>
+      <p class="mt-2 text-sm text-muted-foreground">{t.cardLead}</p>
+
+      <div class="mt-6 rounded-xl bg-surface p-4 sm:p-5" aria-hidden="true">
+        <p class="text-xs text-muted-foreground">{t.exampleLabel}</p>
+        <p class="mt-2 flex flex-wrap items-baseline gap-x-2">
+          <span class="text-4xl font-semibold tracking-tight">{total}</span>
+          <span class="text-sm text-muted-foreground">{t.perMonth}</span>
+        </p>
+        <ul class="mt-4 divide-y text-sm">
+          {
+            t.lines.map(([label, value]) => (
+              <li class="flex items-center justify-between gap-4 py-2">
+                <span class="text-muted-foreground">{label}</span>
+                <span class="font-medium tabular-nums">{value}</span>
+              </li>
+            ))
+          }
+        </ul>
+        <p class="mt-3 text-xs text-muted-foreground">{t.days}</p>
+      </div>
+
+      <span class="mt-6 inline-flex h-11 items-center gap-2 rounded-md bg-primary px-6 text-sm font-medium text-primary-foreground transition-colors group-hover:bg-primary/90">
+        {t.cta}
         <Icon name="arrow" class="size-4" />
-      </a>
-    </p>
+      </span>
+    </a>
   </div>
 </section>
