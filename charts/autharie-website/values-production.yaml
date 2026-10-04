@@ -2,12 +2,10 @@
 # Host, replicas, resources and image tag are what differ between environments.
 
 replicaCount: 2
-
 image:
   # Written by the docker workflow on every push to main. Empty until the first
   # image is built, which is why the Application is applied after that.
-  tag: ""
-
+  tag: "sha-52cbb9d"
 gatewayApi:
   hostnames:
     - autharie.fr
@@ -34,12 +32,10 @@ gatewayApi:
       - name: autharie-gateway
         namespace: default
         sectionName: autharie-https
-
 autoscaling:
   enabled: true
   minReplicas: 2
   maxReplicas: 4
-
 networkPolicy:
   enabled: true
   # The Gateway's Envoy pods run in the namespace of the Envoy Gateway
