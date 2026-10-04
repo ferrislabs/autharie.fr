@@ -25,6 +25,10 @@ const ogLocale = { en: 'en_GB', fr: 'fr_FR' }[locale]
 const ogLocaleAlternate = locale === 'en' ? 'fr_FR' : 'en_GB'
 const alt = (l: (typeof locales)[number]) => new URL(switchPath(pathname, l), site).href
 
+// Umami, only when an instance is configured. Not tracked on localhost or previews.
+const umamiSrc = import.meta.env.PUBLIC_UMAMI_SRC
+const umamiId = import.meta.env.PUBLIC_UMAMI_WEBSITE_ID
+
 const jsonLd = [
   {
     '@context': 'https://schema.org',
@@ -80,6 +84,18 @@ const jsonLd = [
     <meta name="twitter:image" content={thumbnailUrl} />
     <meta name="twitter:image:alt" content={title} />
     {jsonLd.map((data) => <script type="application/ld+json" set:html={JSON.stringify(data)} />)}
+    {
+      umamiSrc && umamiId && (
+        <script
+          is:inline
+          defer
+          src={umamiSrc}
+          data-website-id={umamiId}
+          data-domains={site.hostname}
+          data-do-not-track="true"
+        />
+      )
+    }
     <title>{formatTitle(siteConfig, title)}</title>
     <ClientRouter />
   </head>
