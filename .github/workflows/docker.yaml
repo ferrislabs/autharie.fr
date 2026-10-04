@@ -114,6 +114,10 @@ jobs:
             PUBLIC_DOCS_URL=${{ vars.PUBLIC_DOCS_URL }}
             PUBLIC_BLOG_URL=${{ vars.PUBLIC_BLOG_URL }}
             PUBLIC_CONSOLE_URL=${{ vars.PUBLIC_CONSOLE_URL }}
+            PUBLIC_UMAMI_SRC=${{ vars.PUBLIC_UMAMI_SRC || 'https://cloud.umami.is/script.js' }}
+            PUBLIC_UMAMI_WEBSITE_ID=${{ vars.PUBLIC_UMAMI_WEBSITE_ID || '14493c03-236c-4f13-a474-cffe7dd2d4d7' }}
+            PUBLIC_CONTACT_ENDPOINT=${{ vars.PUBLIC_CONTACT_ENDPOINT }}
+            PUBLIC_PLATFORM_OPEN=${{ vars.PUBLIC_PLATFORM_OPEN }}
           labels: ${{ steps.meta.outputs.labels }}
           cache-from: type=gha,scope=website-${{ matrix.platform }}
           cache-to: type=gha,scope=website-${{ matrix.platform }},mode=max
