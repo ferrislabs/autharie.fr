@@ -1,0 +1,21 @@
+# What the website's Application may deploy, and where. Kept apart from the
+# `autharie` project, which is scoped to the aether repository and its two
+# namespaces. Merge this into that project instead if you prefer a single one.
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: autharie-website
+  namespace: argocd
+spec:
+  description: The Autharie marketing website.
+  sourceRepos:
+    - https://github.com/ferrislabs/autharie.fr
+  destinations:
+    - namespace: autharie-website
+      server: https://kubernetes.default.svc
+  clusterResourceWhitelist:
+    - group: ""
+      kind: Namespace
+  namespaceResourceWhitelist:
+    - group: "*"
+      kind: "*"
