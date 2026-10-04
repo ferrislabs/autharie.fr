@@ -5,7 +5,7 @@ export type SolutionGroup = 'role' | 'stage' | 'industry' | 'migrate'
 export interface SolutionCopy {
   /** Page eyebrow and heading context, e.g. "Platform engineers". */
   name: string
-  /** Label in the Solutions menu, e.g. "Platform Engineers" or "Migrate from Auth0". */
+  /** Label in the Solutions menu, e.g. "Platform Engineers" or "Migrate from self-hosted Keycloak". */
   menu: string
   /** One line, used in meta description and the "Keep exploring" cards. */
   tagline: string
