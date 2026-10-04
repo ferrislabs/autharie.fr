@@ -3,6 +3,7 @@ import { fileURLToPath } from 'node:url'
 import { resolve, dirname } from 'node:path'
 import satori from 'satori'
 import { resolveColor } from './colors'
+import { generateBrandThumbnail, type BrandThumbnailOptions } from './brand'
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
 
@@ -15,9 +16,24 @@ export interface ThumbnailOptions {
   title: string
   description?: string
   primaryColor?: string
+  /** `brand` is the Autharie website look (1200x630, light). */
+  variant?: 'default' | 'brand'
+  accent?: string
+  eyebrow?: string
+  locale?: BrandThumbnailOptions['locale']
 }
 
 export async function generateThumbnail(options: ThumbnailOptions): Promise<string> {
+  if (options.variant === 'brand') {
+    return generateBrandThumbnail({
+      eyebrow: options.eyebrow ?? options.headline,
+      title: options.title,
+      accent: options.accent,
+      description: options.description,
+      locale: options.locale,
+    })
+  }
+
   const { headline, title, description } = options
   const primaryColor = resolveColor(options.primaryColor)
 

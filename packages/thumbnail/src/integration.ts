@@ -5,16 +5,31 @@ import { join } from 'node:path'
 import { generateThumbnail } from './generator'
 import { renderThumbnail, renderThumbnailToFile } from './renderer'
 
+export interface StaticPage {
+  path: string
+  title: string
+  /** Second line of the title, in the brand colour (`brand` variant). */
+  accent?: string
+  /** Small uppercase label above the title (`brand` variant). */
+  eyebrow?: string
+  description?: string
+  locale?: 'en' | 'fr'
+}
+
 export interface ThumbnailConfig {
   appName: string
   primaryColor?: string
+  /** `brand` is the Autharie website look: 1200x630, light. */
+  variant?: 'default' | 'brand'
   content:
     | { type: 'collection'; dir: string }
     | {
         type: 'static'
-        pages: Array<{ path: string; title: string; description?: string }>
+        pages: StaticPage[]
       }
 }
+
+const widthOf = (config: ThumbnailConfig) => (config.variant === 'brand' ? 1200 : 960)
 
 interface ContentEntry {
   filePath: string
@@ -111,20 +126,15 @@ export function thumbnailIntegration(config: ThumbnailConfig): AstroIntegration 
                     }
 
                     try {
-                      const { headline, title, description } = resolvePageMeta(
-                        config,
-                        req.url,
-                        await getContentIndex(),
-                      )
+                      const meta = resolvePageMeta(config, req.url, await getContentIndex())
 
                       const svg = await generateThumbnail({
-                        headline,
-                        title,
-                        description,
+                        ...meta,
                         primaryColor: config.primaryColor,
+                        variant: config.variant,
                       })
 
-                      const png = await renderThumbnail(svg)
+                      const png = await renderThumbnail(svg, widthOf(config))
 
                       cache.set(req.url, png)
                       logger.info(`Dev thumbnail generated for ${req.url}`)
@@ -153,12 +163,16 @@ export function thumbnailIntegration(config: ThumbnailConfig): AstroIntegration 
             try {
               const svg = await generateThumbnail({
                 title: page.title,
+                accent: page.accent,
+                eyebrow: page.eyebrow,
+                locale: page.locale,
                 description: page.description,
                 primaryColor: config.primaryColor,
+                variant: config.variant,
               })
-              const pagePath = page.path === '/' ? '' : page.path.replace(/^\//, '')
+              const pagePath = page.path === '/' ? '' : page.path.replace(/^\//, '').replace(/\/$/, '')
               const outputPath = join(outputDir, pagePath, 'thumbnail.png')
-              await renderThumbnailToFile(svg, outputPath)
+              await renderThumbnailToFile(svg, outputPath, widthOf(config))
               logger.info(`Thumbnail generated for ${page.path}`)
             } catch (error) {
               logger.warn(`Failed to generate thumbnail for ${page.path}: ${error}`)
@@ -187,7 +201,7 @@ export function thumbnailIntegration(config: ThumbnailConfig): AstroIntegration 
             })
 
             const outputPath = join(outputDir, pathname, 'thumbnail.png')
-            await renderThumbnailToFile(svg, outputPath)
+            await renderThumbnailToFile(svg, outputPath, widthOf(config))
             logger.info(`Thumbnail generated for ${pathname}`)
           } catch (error) {
             logger.warn(`Failed to generate thumbnail for ${pathname}: ${error}`)
@@ -203,6 +217,9 @@ export function thumbnailIntegration(config: ThumbnailConfig): AstroIntegration 
 interface PageMeta {
   headline?: string
   title: string
+  accent?: string
+  eyebrow?: string
+  locale?: 'en' | 'fr'
   description?: string
 }
 
@@ -216,6 +233,9 @@ function resolvePageMeta(
     const page = config.content.pages.find((p) => p.path === pagePath)
     return {
       title: page?.title ?? config.appName,
+      accent: page?.accent,
+      eyebrow: page?.eyebrow,
+      locale: page?.locale,
       description: page?.description,
     }
   }
