@@ -64,20 +64,12 @@ spec:
             failureThreshold: 3
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
-          # nginx writes its pid, temp files and cache at start. The root
-          # filesystem is read-only, so those paths are scratch volumes.
+          # nginx writes its pid and temp files under /tmp only (nginx.conf).
+          # The root filesystem is read-only, so /tmp is a scratch volume.
           volumeMounts:
-            - name: run
-              mountPath: /run
-            - name: cache
-              mountPath: /var/cache/nginx
             - name: tmp
               mountPath: /tmp
       volumes:
-        - name: run
-          emptyDir: {}
-        - name: cache
-          emptyDir: {}
         - name: tmp
           emptyDir: {}
       {{- if and .Values.topologySpread.enabled (gt (int .Values.replicaCount) 1) }}

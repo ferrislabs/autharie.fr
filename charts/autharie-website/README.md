@@ -7,7 +7,7 @@ through a Gateway API `HTTPRoute`. No Ingress, no database, no secret.
 
 | Resource | Notes |
 |---|---|
-| `Deployment` | nginx, non-root (uid 101), read-only root filesystem, scratch `emptyDir` for `/run`, `/var/cache/nginx` and `/tmp`, rolling update with `maxUnavailable: 0` |
+| `Deployment` | nginx, non-root (uid 101), read-only root filesystem, a scratch `emptyDir` on `/tmp`, rolling update with `maxUnavailable: 0` |
 | `Service` | `ClusterIP`, port 80 to the container's 8080 |
 | `HTTPRoute` | One host list, security headers set by the route, `/_astro/*` cached as immutable |
 | `HTTPRoute` (redirect) | Optional 301 from other hostnames (for example `www`) to the main one |
@@ -27,10 +27,10 @@ before use.
 
 ## Image
 
-Built from the repository `Dockerfile`:
+Built from the repository `Dockerfile`, which builds only the website:
 
 ```
-docker build --build-arg APP=website -t ghcr.io/ferrislabs/autharie-website:sha-<commit> .
+docker build -t ghcr.io/ferrislabs/autharie-website:sha-<commit> .
 ```
 
 The `PUBLIC_*` variables (`PUBLIC_CONSOLE_URL`, `PUBLIC_DOCS_URL`, `PUBLIC_BLOG_URL`,
