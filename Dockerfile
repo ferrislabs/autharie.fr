@@ -1,32 +1,38 @@
-# Multi-stage Dockerfile for building any Explainer app
-# Usage: docker build --build-arg APP=docs -t explainer-docs .
-#        docker build --build-arg APP=blog -t explainer-blog .
-#        docker build --build-arg APP=website -t explainer-website .
+# syntax=docker/dockerfile:1
 
-# --- Stage 1: Install dependencies ---
-FROM node:20-alpine AS deps
-RUN corepack enable && corepack prepare pnpm@latest --activate
+# The Autharie website: built with Astro, served by nginx on 8080.
+#
+#   docker build -t autharie-website .
+#   docker run --rm -p 8080:8080 autharie-website
+#
+# The PUBLIC_* build arguments are read at build time, not at container start:
+# the site is static.
+
+# --- Dependencies: only what the website needs ----------------------------
+FROM node:22-alpine AS deps
+# The pnpm version comes from the packageManager field of package.json.
+RUN corepack enable
 WORKDIR /app
-COPY pnpm-lock.yaml pnpm-workspace.yaml package.json ./
-COPY packages/ui/package.json packages/ui/package.json
-COPY packages/mdx/package.json packages/mdx/package.json
-COPY apps/docs/package.json apps/docs/package.json
-COPY apps/blog/package.json apps/blog/package.json
+
+# Manifests first, so this layer is reused until a dependency changes.
+COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
 COPY apps/website/package.json apps/website/package.json
-RUN pnpm install --frozen-lockfile
+COPY packages/config/package.json packages/config/package.json
+COPY packages/thumbnail/package.json packages/thumbnail/package.json
+COPY packages/ui/package.json packages/ui/package.json
 
-# --- Stage 2: Build the target app ---
-FROM node:20-alpine AS builder
-ARG APP=docs
-RUN corepack enable && corepack prepare pnpm@latest --activate
-WORKDIR /app
-COPY --from=deps /app/node_modules ./node_modules
-COPY --from=deps /app/packages/ui/node_modules ./packages/ui/node_modules
-COPY --from=deps /app/packages/mdx/node_modules ./packages/mdx/node_modules
-COPY --from=deps /app/apps/${APP}/node_modules ./apps/${APP}/node_modules
-COPY . .
+RUN --mount=type=cache,id=pnpm-store,target=/root/.local/share/pnpm/store \
+    pnpm install --frozen-lockfile --filter "@explainer/website..."
 
-# Read by the build, not at container start: the site is static.
+# --- Build -----------------------------------------------------------------
+FROM deps AS build
+# The packages extend the root tsconfig.
+COPY tsconfig.json ./
+COPY apps/website apps/website
+COPY packages/config packages/config
+COPY packages/thumbnail packages/thumbnail
+COPY packages/ui packages/ui
+
 ARG PUBLIC_WEBSITE_URL
 ARG PUBLIC_DOCS_URL
 ARG PUBLIC_BLOG_URL
@@ -36,11 +42,14 @@ ENV PUBLIC_WEBSITE_URL=${PUBLIC_WEBSITE_URL} \
     PUBLIC_BLOG_URL=${PUBLIC_BLOG_URL} \
     PUBLIC_CONSOLE_URL=${PUBLIC_CONSOLE_URL}
 
-RUN pnpm --filter @explainer/${APP} build
+RUN pnpm --filter @explainer/website build
 
-# --- Stage 3: Serve with nginx ---
+# --- Runtime ---------------------------------------------------------------
 FROM nginx:1.28.0-alpine3.21-slim AS runtime
-ARG APP=docs
-COPY ./nginx.conf /etc/nginx/nginx.conf
-COPY --from=builder /app/apps/${APP}/dist /usr/share/nginx/html
-EXPOSE 80
+COPY nginx.conf /etc/nginx/nginx.conf
+COPY --from=build /app/apps/website/dist /usr/share/nginx/html
+
+# nginx writes only under /tmp (see nginx.conf), so it runs as a plain user
+# with a read-only root filesystem.
+USER 101
+EXPOSE 8080
