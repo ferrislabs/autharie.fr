@@ -110,7 +110,6 @@ jobs:
           context: .
           platforms: ${{ matrix.platform }}
           build-args: |
-            APP=website
             PUBLIC_WEBSITE_URL=${{ vars.PUBLIC_WEBSITE_URL }}
             PUBLIC_DOCS_URL=${{ vars.PUBLIC_DOCS_URL }}
             PUBLIC_BLOG_URL=${{ vars.PUBLIC_BLOG_URL }}
