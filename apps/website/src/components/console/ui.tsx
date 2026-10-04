@@ -188,9 +188,9 @@ export function PageTitle({
 }) {
   return (
     <div className="space-y-3 border-b pb-4">
-      <div className="flex items-start justify-between gap-4">
-        <div className="truncate text-2xl font-bold tracking-tight">{title}</div>
-        {actions && <div className="flex shrink-0 items-center gap-2">{actions}</div>}
+      <div className="flex flex-wrap items-start justify-between gap-x-4 gap-y-3">
+        <div className="min-w-0 text-2xl font-bold tracking-tight">{title}</div>
+        {actions && <div className="flex shrink-0 flex-wrap items-center gap-2">{actions}</div>}
       </div>
       {badges && <div className="flex flex-wrap items-center gap-2">{badges}</div>}
     </div>
@@ -213,8 +213,8 @@ export function SectionPage({
 }) {
   return (
     <div className="space-y-5">
-      <div className="flex items-start justify-between gap-4 border-b pb-4">
-        <div className="space-y-1">
+      <div className="flex flex-wrap items-start justify-between gap-x-4 gap-y-3 border-b pb-4">
+        <div className="min-w-0 space-y-1">
           <div className="text-xl font-semibold tracking-tight">{title}</div>
           {description && <p className="text-sm text-muted-foreground">{description}</p>}
         </div>

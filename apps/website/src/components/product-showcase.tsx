@@ -477,10 +477,10 @@ export function ProductShowcase({ locale = 'en' }: { locale?: Locale }) {
   return (
     <div className="relative pb-8">
       {/*
-        Every panel sits in the same grid cell, so the card is always as tall
-        as the tallest one and switching tabs never moves the page under the
-        reader. A fixed height would need a magic number that stops being true
-        at the next breakpoint.
+        From md up, every panel sits in the same grid cell, so the card is always
+        as tall as the tallest one and switching tabs never moves the page under
+        the reader. On a phone the panels differ a lot in height, so only the
+        active one is rendered and the card is as tall as what it shows.
       */}
       <div className="grid min-w-0 pb-6 shadow-[0_24px_48px_-24px_rgba(16,16,28,0.28)] [&>div]:rounded-lg">
         {TABS.map((candidate) => {
@@ -490,7 +490,7 @@ export function ProductShowcase({ locale = 'en' }: { locale?: Locale }) {
           return (
             <div
               key={candidate.id}
-              className={cn('col-start-1 row-start-1 min-w-0', !shown && 'invisible pointer-events-none')}
+              className={cn('col-start-1 row-start-1 min-w-0', !shown && 'hidden md:block md:invisible md:pointer-events-none')}
               aria-hidden={!shown}
             >
               <Body t={t} />

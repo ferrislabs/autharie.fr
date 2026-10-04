@@ -30,6 +30,12 @@
 }
 
 @layer base {
+  /* A grid item sizes to its content by default, which lets one wide child push
+     a whole column past the screen. Utilities such as min-w-* still win. */
+  .grid > * {
+    min-width: 0;
+  }
+
   body {
     font-family: var(--font-sans);
     font-feature-settings: 'ss01' on, 'cv05' on;
