@@ -1,9 +1,11 @@
 ---
 import { primaryCta } from '../platform'
 import Icon from './icon.astro'
+import ProductVisual from './product-visual.astro'
 import { brandIcons } from '../data/brand-icons'
 import { getProduct } from '../data/products'
 import { solutionCopy, type SolutionDef } from '../data/solutions'
+import { solutionTints, solutionVisuals } from '../data/solution-visuals'
 import { localePath, useUi, type Locale } from '../i18n'
 
 interface Props {
@@ -47,6 +49,8 @@ const copy = {
 const t = copy[locale]
 const cta = primaryCta(locale, consoleUrl)
 const brand = brandIcons[solution.slug]
+const visuals = solutionVisuals[solution.slug]?.[locale] ?? []
+const tint = solutionTints[solution.slug.length % solutionTints.length]
 const products = solution.products
   .map((slug) => getProduct(slug, locale))
   .filter((p): p is NonNullable<typeof p> => !!p)
@@ -135,6 +139,8 @@ const products = solution.products
     </div>
   </div>
 </section>
+
+{visuals.map((visual, i) => <ProductVisual visual={visual} tint={tint} locale={locale} flip={i % 2 === 0} />)}
 
 {
   c.steps && (

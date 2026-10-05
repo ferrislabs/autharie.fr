@@ -2,7 +2,9 @@
 import { primaryCta } from '../platform'
 import Icon from './icon.astro'
 import { ConsoleWindow, MockRows, Page, SectionPage, TopBar } from './console/ui'
+import ProductVisual from './product-visual.astro'
 import { getProduct, type Product } from '../data/products'
+import { productVisuals } from '../data/product-visuals'
 import { localePath, type Locale } from '../i18n'
 
 interface Props {
@@ -39,6 +41,7 @@ const consoleUrl = import.meta.env.PUBLIC_CONSOLE_URL || 'https://console.authar
 const cta = primaryCta(locale, consoleUrl)
 const docsUrl = import.meta.env.PUBLIC_DOCS_URL || ''
 
+const visuals = productVisuals[product.slug]?.[locale] ?? []
 const related = product.related.map((slug) => getProduct(slug, locale)).filter((p): p is Product => !!p)
 ---
 
@@ -76,7 +79,7 @@ const related = product.related.map((slug) => getProduct(slug, locale)).filter((
           <Icon name="arrow" class="size-4" />
         </a>
         <a
-          href={docsUrl || localePath(locale, '/simulator')}
+          href={docsUrl || localePath(locale, '/pricing')}
           class="inline-flex h-11 items-center gap-2 rounded-md border bg-card px-6 text-sm font-medium transition-colors hover:bg-accent"
         >
           <Icon name="terminal" class="size-4" />
@@ -116,6 +119,8 @@ const related = product.related.map((slug) => getProduct(slug, locale)).filter((
     }
   </div>
 </section>
+
+{visuals.map((visual, i) => <ProductVisual visual={visual} tint={product.tint} locale={locale} flip={i % 2 === 1} />)}
 
 <section>
   <div class="mx-auto grid max-w-6xl items-center gap-12 px-5 py-20 sm:py-28 lg:grid-cols-2">
