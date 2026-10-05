@@ -421,7 +421,7 @@ export const products: Product[] = [
       ],
     },
     grid: [
-      { icon: 'server', title: 'Bring your cluster', description: 'Kubernetes or k3s, at OVHcloud, Scaleway, Hetzner, Outscale or on your premises.' },
+      { icon: 'server', title: 'Bring your cluster', description: 'Kubernetes or k3s, at OVHcloud, Scaleway or on your premises.' },
       { icon: 'globe', title: 'Several regions', description: 'Run close to the people who sign in.' },
       { icon: 'lock', title: 'Data stays home', description: 'The database never leaves your cluster.' },
       { icon: 'network', title: 'Reserved capacity', description: 'Nothing else is scheduled beside you.' },

@@ -366,7 +366,7 @@ export const productsFr: Record<string, ProductCopy> = {
       ],
     },
     grid: [
-      { icon: 'server', title: 'Apportez votre cluster', description: 'Kubernetes ou k3s, chez OVHcloud, Scaleway, Hetzner, Outscale ou dans vos locaux.' },
+      { icon: 'server', title: 'Apportez votre cluster', description: 'Kubernetes ou k3s, chez OVHcloud, Scaleway ou dans vos locaux.' },
       { icon: 'globe', title: 'Plusieurs régions', description: 'Hébergez au plus près des personnes qui se connectent.' },
       { icon: 'lock', title: 'Les données restent chez vous', description: 'La base de données ne quitte jamais votre cluster.' },
       { icon: 'network', title: 'Capacité réservée', description: 'Rien d’autre n’est planifié à côté de vous.' },
