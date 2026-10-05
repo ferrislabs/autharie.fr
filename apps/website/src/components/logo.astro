@@ -1,0 +1,28 @@
+---
+import { logoColors, logoPaths } from './logo-paths'
+
+interface Props {
+  /** Pixels. Multiples of 12 keep every pixel of the mark sharp on a 2x screen. */
+  size?: number
+  class?: string
+  label?: string
+}
+
+const { size = 36, class: className, label } = Astro.props
+---
+
+<svg
+  width={size}
+  height={size}
+  viewBox="0 0 24 24"
+  shape-rendering="crispEdges"
+  class={className}
+  role={label ? 'img' : undefined}
+  aria-label={label}
+  aria-hidden={label ? undefined : 'true'}
+>
+  <path fill={logoColors.body} d={logoPaths.body}></path>
+  <path fill={logoColors.shade} d={logoPaths.shade}></path>
+  <path fill={logoColors.belly} d={logoPaths.belly}></path>
+  <path fill={logoColors.outline} d={logoPaths.outline}></path>
+</svg>

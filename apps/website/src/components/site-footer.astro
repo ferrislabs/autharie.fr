@@ -1,4 +1,6 @@
 ---
+import FooterMascot from './footer-mascot.astro'
+import Logo from './logo.astro'
 import { getProducts } from '../data/products'
 import { solutionCopy, solutionsIn } from '../data/solutions'
 import { localePath, switchPath, useUi, type Locale } from '../i18n'
@@ -22,7 +24,7 @@ const columns = [
         label: p.name,
         href: localePath(locale, `/products/${p.slug}`),
       })),
-      { label: t('pricing'), href: localePath(locale, '/#offers') },
+      { label: t('pricing'), href: localePath(locale, '/pricing') },
     ],
   },
   {
@@ -46,7 +48,7 @@ const columns = [
     title: t('footerResources'),
     links: [
       { label: t('documentation'), href: docsUrl || '#' },
-      { label: t('simulator'), href: localePath(locale, '/simulator') },
+      { label: t('simulator'), href: localePath(locale, '/pricing#compare') },
       { label: t('blog'), href: blogUrl || '#' },
       { label: t('apiReference'), href: docsUrl ? `${docsUrl}/api` : '#' },
       { label: t('status'), href: 'https://status.autharie.fr' },
@@ -83,21 +85,7 @@ const pathname = Astro.url.pathname
     <div class="grid gap-12 sm:grid-cols-2 lg:grid-cols-[1.3fr_repeat(5,1fr)]">
       <div class="sm:col-span-2 lg:col-span-1 lg:pr-8">
         <a href={localePath(locale, '/')} class="inline-flex items-center gap-2.5">
-          <span class="flex size-7 items-center justify-center rounded-md bg-primary text-primary-foreground">
-            <svg
-              viewBox="0 0 24 24"
-              class="size-4"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2.2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              aria-hidden="true"
-            >
-              <path d="M12 2 4 6v6c0 4.4 3.2 8.4 8 10 4.8-1.6 8-5.6 8-10V6z"></path>
-              <path d="M12 11v4"></path>
-            </svg>
-          </span>
+          <Logo size={36} />
           <span class="text-[17px] font-semibold tracking-tight">Autharie</span>
         </a>
         <p class="mt-4 max-w-xs text-sm leading-relaxed text-white/60">{t('footerBlurb')}</p>
@@ -124,12 +112,15 @@ const pathname = Astro.url.pathname
       }
     </div>
 
-    <p
-      class="pointer-events-none mt-20 select-none bg-gradient-to-b from-white/25 to-transparent bg-clip-text text-center text-[24vw] font-semibold leading-[0.8] tracking-tighter text-transparent sm:text-[16vw] lg:text-[13.5rem]"
-      aria-hidden="true"
-    >
-      Autharie
-    </p>
+    <div class="relative mt-20 min-h-[170px]">
+      <p
+        class="pointer-events-none select-none bg-gradient-to-b from-white/25 to-transparent bg-clip-text text-center text-[24vw] font-semibold leading-[0.8] tracking-tighter text-transparent sm:text-[16vw] lg:text-[13.5rem]"
+        aria-hidden="true"
+      >
+        Autharie
+      </p>
+      <FooterMascot />
+    </div>
 
     <div class="relative grid items-center gap-4 border-t border-white/10 py-6 text-center text-xs text-white/60 sm:grid-cols-[1fr_auto_1fr]">
       <p class="sm:text-left">{`Autharie © ${year}`} · {t('builtIn')}</p>

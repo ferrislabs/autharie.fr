@@ -2,6 +2,7 @@ import { readFileSync } from 'node:fs'
 import { fileURLToPath } from 'node:url'
 import { resolve, dirname } from 'node:path'
 import satori from 'satori'
+import { logoColors, logoPaths } from './logo'
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
 
@@ -42,10 +43,12 @@ const flag = (
   </div>
 )
 
-const shield = (size: number) => (
-  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="#ffffff" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
-    <path d="M12 2 4 6v6c0 4.4 3.2 8.4 8 10 4.8-1.6 8-5.6 8-10V6z" />
-    <path d="M12 11v4" />
+const logo = (size: number) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" shapeRendering="crispEdges">
+    <path fill={logoColors.body} d={logoPaths.body} />
+    <path fill={logoColors.shade} d={logoPaths.shade} />
+    <path fill={logoColors.belly} d={logoPaths.belly} />
+    <path fill={logoColors.outline} d={logoPaths.outline} />
   </svg>
 )
 
@@ -132,10 +135,8 @@ export async function generateBrandThumbnail(options: BrandThumbnailOptions): Pr
 
       {/* Brand */}
       <div style={{ position: 'absolute', top: 52, left: 72, display: 'flex', alignItems: 'center' }}>
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: 44, height: 44, borderRadius: 11, background: PRIMARY }}>
-          {shield(26)}
-        </div>
-        <div style={{ marginLeft: 14, fontSize: 32, fontWeight: 600, color: INK, letterSpacing: -0.6 }}>Autharie</div>
+        {logo(48)}
+        <div style={{ marginLeft: 12, fontSize: 32, fontWeight: 600, color: INK, letterSpacing: -0.6 }}>Autharie</div>
       </div>
 
       {/* Title block */}

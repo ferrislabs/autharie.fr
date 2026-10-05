@@ -6,6 +6,7 @@ import { solutionCopy, solutionGroups, solutionsIn } from '../data/solutions'
 import { localePath, switchPath, useUi, type Locale } from '../i18n'
 import { platformOpen } from '../platform'
 import { paths } from './icon-paths'
+import { logoColors, logoPaths } from './logo-paths'
 
 interface SiteHeaderProps {
   docsUrl?: string
@@ -196,7 +197,7 @@ export function SiteHeader({
     { label: t('openSource'), href: href('/technology#open-source') },
   ]
   const getStarted = [
-    { label: t('pricing'), href: href('/#offers') },
+    { label: t('pricing'), href: href('/pricing') },
     { label: t('howItWorks'), href: href('/technology') },
   ]
   const groupLabels = {
@@ -271,8 +272,7 @@ export function SiteHeader({
   const links = [
     { label: t('technology'), href: href('/technology') },
     { label: t('about'), href: href('/about') },
-    { label: t('estimate'), href: href('/simulator'), accent: true },
-    { label: t('pricing'), href: href('/#offers') },
+    { label: t('pricing'), href: href('/pricing'), accent: true },
     { label: t('docs'), href: docsUrl || '#' },
   ]
 
@@ -321,12 +321,19 @@ export function SiteHeader({
       />
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between gap-4 px-5">
         <a href={href('/')} className="group flex items-center gap-2.5">
-          <span className="flex size-7 items-center justify-center rounded-md bg-primary text-primary-foreground shadow-sm transition-transform duration-300 group-hover:rotate-[-6deg] group-hover:scale-105">
-            <svg viewBox="0 0 24 24" className="size-4" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-              <path d="M12 2 4 6v6c0 4.4 3.2 8.4 8 10 4.8-1.6 8-5.6 8-10V6z" />
-              <path d="M12 11v4" />
-            </svg>
-          </span>
+          <svg
+            viewBox="0 0 24 24"
+            width={36}
+            height={36}
+            shapeRendering="crispEdges"
+            className="shrink-0 transition-transform duration-300 group-hover:-translate-y-0.5"
+            aria-hidden="true"
+          >
+            <path fill={logoColors.body} d={logoPaths.body} />
+            <path fill={logoColors.shade} d={logoPaths.shade} />
+            <path fill={logoColors.belly} d={logoPaths.belly} />
+            <path fill={logoColors.outline} d={logoPaths.outline} />
+          </svg>
           <span className="text-[17px] font-semibold tracking-tight">Autharie</span>
         </a>
 

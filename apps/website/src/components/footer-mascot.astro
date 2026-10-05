@@ -1,0 +1,114 @@
+---
+import { logoColors, logoPaths } from './logo-paths'
+
+/**
+ * The sea lion peeks out of a shield when the bottom of the page comes into view.
+ *
+ * Both are pixel art on the same 4 px grid: the mark from the logo, and a shield drawn
+ * here cell by cell. Without JavaScript, or with reduced motion, the sea lion stays up.
+ */
+
+const CELL = 4
+const COLS = 30
+const ROWS = 28
+
+// Shield outline: flat shoulders, then a point.
+const span = (r: number): [number, number] | null => {
+  if (r === 0) return [2, COLS - 3]
+  if (r === 1) return [1, COLS - 2]
+  if (r <= 15) return [0, COLS - 1]
+  const left = Math.round((r - 15) * 1.2)
+  return left > COLS - 1 - left ? null : [left, COLS - 1 - left]
+}
+const inside = (x: number, y: number) => {
+  const s = y >= 0 && y < ROWS ? span(y) : null
+  return !!s && x >= s[0] && x <= s[1]
+}
+
+const palette = { outline: logoColors.outline, light: '#8f7ef5', body: '#634ecf', shade: '#4636a3', key: logoColors.belly }
+const cells: Record<string, string[]> = { outline: [], light: [], body: [], shade: [], key: [] }
+
+for (let y = 0; y < ROWS; y++) {
+  for (let x = 0; x < COLS; x++) {
+    if (!inside(x, y)) continue
+    const edge = [!inside(x - 1, y), !inside(x + 1, y), !inside(x, y - 1), !inside(x, y + 1)]
+    let tone = 'body'
+    if (edge.some(Boolean)) tone = 'outline'
+    else {
+      const near = [!inside(x - 2, y) || !inside(x - 1, y - 1), !inside(x + 2, y) || !inside(x + 1, y + 1), !inside(x, y - 2), !inside(x, y + 2)]
+      if (!inside(x - 2, y) || !inside(x, y - 2)) tone = 'light'
+      else if (!inside(x + 2, y) || !inside(x, y + 2)) tone = 'shade'
+      void near
+    }
+    // Keyhole
+    const dx = x - 14.5
+    if (dx * dx + (y - 11) * (y - 11) <= 5.2 || (y >= 13 && y <= 18 && Math.abs(dx) <= 0.5 + (y >= 17 ? 1 : 0))) tone = 'key'
+    cells[tone].push(`M${x * CELL} ${y * CELL}h${CELL}v${CELL}h-${CELL}z`)
+  }
+}
+const shieldPaths = Object.entries(cells).map(([tone, d]) => ({ fill: palette[tone as keyof typeof palette], d: d.join('') }))
+---
+
+<div class="footer-mascot pointer-events-none absolute bottom-0 right-0 w-[88px] sm:w-[112px] lg:w-[140px]" data-mascot aria-hidden="true">
+  <svg viewBox="0 0 140 180" class="block w-full overflow-visible">
+
+    <!-- The sea lion, behind the shield. It rises from the shield's top edge. -->
+    <g class="mascot-seal">
+      <g transform="translate(22 14) scale(4)" shape-rendering="crispEdges">
+        <path fill={logoColors.body} d={logoPaths.body}></path>
+        <path fill={logoColors.shade} d={logoPaths.shade}></path>
+        <path fill={logoColors.belly} d={logoPaths.belly}></path>
+        <path fill={logoColors.outline} d={logoPaths.outline}></path>
+      </g>
+    </g>
+
+    <!-- The shield, pixel by pixel. 30 cells of 4 px, centred under the sea lion. -->
+    <g transform="translate(10 64)" shape-rendering="crispEdges">
+      {shieldPaths.map((p) => <path fill={p.fill} d={p.d}></path>)}
+    </g>
+  </svg>
+</div>
+
+<style is:global>
+  .footer-mascot .mascot-seal {
+    transform: translateY(0);
+  }
+
+  /* Armed by the script: the sea lion starts hidden behind the shield. */
+  .footer-mascot[data-armed] .mascot-seal {
+    transform: translateY(62px);
+  }
+
+  .footer-mascot[data-armed][data-up] .mascot-seal {
+    transform: translateY(0);
+    transition: transform 780ms cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .footer-mascot[data-armed] .mascot-seal,
+    .footer-mascot[data-armed][data-up] .mascot-seal {
+      transform: translateY(0);
+      transition: none;
+    }
+  }
+</style>
+
+<script>
+  // Arms the animation, then plays it each time the mascot enters the screen.
+  const setup = () => {
+    const mascot = document.querySelector<HTMLElement>('[data-mascot]')
+    if (!mascot || mascot.dataset.armed !== undefined) return
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
+
+    mascot.dataset.armed = ''
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) mascot.dataset.up = ''
+        else delete mascot.dataset.up
+      },
+      { threshold: 0.7 },
+    )
+    observer.observe(mascot)
+  }
+  document.addEventListener('astro:page-load', setup)
+</script>
