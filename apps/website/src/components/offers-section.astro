@@ -1,7 +1,8 @@
 ---
-import { primaryCta } from '../platform'
 import Icon from './icon.astro'
+import { primaryCta } from '../platform'
 import { localePath, type Locale } from '../i18n'
+import { TCO_DEFAULTS, internalMonthly, priceOf } from '../pricing/model'
 
 interface Props {
   locale?: Locale
@@ -9,52 +10,57 @@ interface Props {
 
 const { locale = 'en' } = Astro.props
 const consoleUrl = import.meta.env.PUBLIC_CONSOLE_URL || 'https://console.autharie.fr'
+const cta = primaryCta(locale, consoleUrl)
+
+// The example is the pricing page's own: the same model, the same defaults.
+const business = priceOf({ mode: 'managed', engine: 'ferriskey', plan: 'business', volume: 10000 })
+const autharieMonthly = business.kind === 'price' ? business.amount : 0
+const internal = internalMonthly(TCO_DEFAULTS)
+const yearlySaving = Math.round(((internal - autharieMonthly) * 12) / 100) * 100
+
+const eur = new Intl.NumberFormat(locale === 'fr' ? 'fr-FR' : 'en-GB', {
+  style: 'currency',
+  currency: 'EUR',
+  maximumFractionDigits: 0,
+})
 
 const copy = {
   en: {
     eyebrow: 'Pricing',
-    title: 'Early access',
+    title: 'Clear pricing, whichever way you deploy',
     intro:
-      'Autharie is in early access. Tell us what you run and we will come back to you with a proposal.',
-    primary: 'Deploy an instance',
-    secondary: 'Talk to us',
-    cardEyebrow: 'Estimate',
+      'Fully managed or in your own cloud, FerrisKey or Keycloak. FerrisKey is free up to 1,000 accounts, and the price updates as you choose.',
+    primary: 'See the pricing',
+    cardEyebrow: 'Comparison',
     cardTitle: 'What does it cost you to run it yourself?',
-    cardLead: 'Infrastructure, upgrades, backups and on-call, with your own numbers. It takes a minute.',
-    exampleLabel: 'Example: 2 environments, 10,000 users, highly available',
+    cardLead: 'Set your own numbers and compare with the configuration you pick.',
+    exampleLabel: 'Example: 75,000 € salary, 15% of a full-time position, high availability, 24/7 on-call',
+    internal: 'In house',
+    autharie: 'Autharie Business, 10,000 accounts',
     perMonth: 'per month',
-    lines: [
-      ['Infrastructure', '€416'],
-      ['Upgrades and patching', '€814'],
-      ['Backups, incidents, security', '€409'],
-    ],
-    days: '24 working days a year',
-    cta: 'Estimate your cost',
+    saving: 'about',
+    perYear: 'a year',
+    cta: 'Compare with your numbers',
   },
   fr: {
     eyebrow: 'Tarifs',
-    title: 'Accès anticipé',
+    title: 'Des tarifs lisibles, quel que soit votre mode de déploiement',
     intro:
-      'Autharie est en accès anticipé. Dites-nous ce que vous faites tourner et nous reviendrons vers vous avec une proposition.',
-    primary: 'Déployer une instance',
-    secondary: 'Nous contacter',
-    cardEyebrow: 'Estimation',
+      'Entièrement managé ou dans votre cloud, FerrisKey ou Keycloak. FerrisKey est gratuit jusqu’à 1 000 comptes, et le prix se recalcule selon vos choix.',
+    primary: 'Voir les tarifs',
+    cardEyebrow: 'Comparateur',
     cardTitle: 'Combien vous coûte de l’exploiter vous-même ?',
-    cardLead: 'Infrastructure, mises à jour, sauvegardes et astreinte, avec vos propres chiffres. Une minute suffit.',
-    exampleLabel: 'Exemple : 2 environnements, 10 000 utilisateurs, haute disponibilité',
+    cardLead: 'Saisissez vos propres chiffres et comparez avec la configuration choisie.',
+    exampleLabel: 'Exemple : 75 000 € de salaire, 15 % d’un temps plein, haute disponibilité, astreinte 24/7',
+    internal: 'En interne',
+    autharie: 'Autharie Business, 10 000 comptes',
     perMonth: 'par mois',
-    lines: [
-      ['Infrastructure', '416 €'],
-      ['Mises à jour et correctifs', '814 €'],
-      ['Sauvegardes, incidents, sécurité', '409 €'],
-    ],
-    days: '24 jours de travail par an',
-    cta: 'Estimer mon coût',
+    saving: 'environ',
+    perYear: 'par an',
+    cta: 'Comparer avec mes chiffres',
   },
 }
 const t = copy[locale]
-const cta = primaryCta(locale, consoleUrl)
-const total = locale === 'fr' ? '1 639 €' : '€1,639'
 ---
 
 <section id="offers" class="scroll-mt-20 border-y bg-surface/50">
@@ -65,23 +71,23 @@ const total = locale === 'fr' ? '1 639 €' : '€1,639'
       <p class="mt-5 text-lg text-muted-foreground">{t.intro}</p>
       <div class="mt-8 flex flex-wrap items-center gap-3">
         <a
-          href={cta.href}
+          href={localePath(locale, '/pricing')}
           class="inline-flex h-11 items-center gap-2 rounded-md bg-primary px-6 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
         >
-          <span>{cta.label}</span>
+          <span>{t.primary}</span>
           <Icon name="arrow" class="size-4" />
         </a>
         <a
-          href={localePath(locale, '/contact')}
+          href={cta.href}
           class="inline-flex h-11 items-center rounded-md border bg-card px-6 text-sm font-medium transition-colors hover:bg-accent"
         >
-          {t.secondary}
+          {cta.label}
         </a>
       </div>
     </div>
 
     <a
-      href={localePath(locale, '/simulator')}
+      href={localePath(locale, '/pricing#compare')}
       class="group block rounded-2xl border border-primary/30 bg-card p-6 shadow-[0_24px_48px_-28px_rgb(60_40_160/0.35)] transition-all hover:-translate-y-0.5 hover:border-primary/50 sm:p-8"
     >
       <p class="eyebrow">{t.cardEyebrow}</p>
@@ -90,21 +96,23 @@ const total = locale === 'fr' ? '1 639 €' : '€1,639'
 
       <div class="mt-6 rounded-xl bg-surface p-4 sm:p-5" aria-hidden="true">
         <p class="text-xs text-muted-foreground">{t.exampleLabel}</p>
-        <p class="mt-2 flex flex-wrap items-baseline gap-x-2">
-          <span class="text-4xl font-semibold tracking-tight">{total}</span>
-          <span class="text-sm text-muted-foreground">{t.perMonth}</span>
+        <div class="mt-4 grid grid-cols-2 gap-4">
+          <div>
+            <p class="text-xs text-muted-foreground">{t.internal}</p>
+            <p class="mt-1 text-2xl font-semibold tracking-tight tabular-nums">{eur.format(internal)}</p>
+            <p class="text-xs text-muted-foreground">{t.perMonth}</p>
+          </div>
+          <div>
+            <p class="text-xs text-muted-foreground">{t.autharie}</p>
+            <p class="mt-1 text-2xl font-semibold tracking-tight tabular-nums">{eur.format(autharieMonthly)}</p>
+            <p class="text-xs text-muted-foreground">{t.perMonth}</p>
+          </div>
+        </div>
+        <p class="mt-4 border-t pt-3 text-sm">
+          <span class="text-muted-foreground">{t.saving}</span>
+          <span class="font-semibold text-emerald-600">{eur.format(yearlySaving)}</span>
+          <span class="text-muted-foreground">{t.perYear}</span>
         </p>
-        <ul class="mt-4 divide-y text-sm">
-          {
-            t.lines.map(([label, value]) => (
-              <li class="flex items-center justify-between gap-4 py-2">
-                <span class="text-muted-foreground">{label}</span>
-                <span class="font-medium tabular-nums">{value}</span>
-              </li>
-            ))
-          }
-        </ul>
-        <p class="mt-3 text-xs text-muted-foreground">{t.days}</p>
       </div>
 
       <span class="mt-6 inline-flex h-11 items-center gap-2 rounded-md bg-primary px-6 text-sm font-medium text-primary-foreground transition-colors group-hover:bg-primary/90">

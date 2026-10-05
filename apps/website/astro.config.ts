@@ -13,6 +13,8 @@ export default defineConfig({
   redirects: {
     '/europe': '/about',
     '/fr/europe': '/fr/about',
+    '/simulator': '/pricing',
+    '/fr/simulator': '/fr/pricing',
   },
   integrations: [
     react(),
@@ -29,5 +31,20 @@ export default defineConfig({
   vite: {
     plugins: [tailwindcss()],
     envDir: '../../',
+    optimizeDeps: {
+      // Dependencies of the shared UI package. Vite finds them only when a page
+      // first imports them, then re-optimizes mid-session; a running dev server
+      // can be left serving pages that point at dependencies it no longer has
+      // (504 Outdated Optimize Dep) and every React component stops working.
+      // Declaring them keeps the set complete from the start.
+      include: [
+        '@explainer/ui > clsx',
+        '@explainer/ui > tailwind-merge',
+        '@explainer/ui > class-variance-authority',
+        '@explainer/ui > @radix-ui/react-slot',
+        '@explainer/ui > @radix-ui/react-dropdown-menu',
+        '@explainer/ui > @iconify/react',
+      ],
+    },
   },
 })

@@ -45,11 +45,11 @@ const fixed = {
       accent: 'we will take it from there.',
       description: 'Early access, pricing, a migration or a security question.',
     },
-    simulator: {
-      eyebrow: 'Simulator',
-      title: 'What does it really cost to run',
-      accent: 'your own identity provider?',
-      description: 'Infrastructure, engineering time and on-call, with your own numbers.',
+    pricing: {
+      eyebrow: 'Pricing',
+      title: 'Clear pricing,',
+      accent: 'whichever way you deploy.',
+      description: 'Managed or BYOC, FerrisKey or Keycloak.',
     },
   },
   fr: {
@@ -71,11 +71,11 @@ const fixed = {
       accent: 'nous nous occupons du reste.',
       description: 'Accès anticipé, tarifs, une migration ou une question de sécurité.',
     },
-    simulator: {
-      eyebrow: 'Simulateur',
-      title: 'Que coûte vraiment l’exploitation',
-      accent: 'de votre fournisseur d’identité ?',
-      description: 'Infrastructure, temps d’ingénierie et astreinte, avec vos propres chiffres.',
+    pricing: {
+      eyebrow: 'Tarifs',
+      title: 'Des tarifs lisibles,',
+      accent: 'quel que soit votre mode de déploiement.',
+      description: 'Managé ou BYOC, FerrisKey ou Keycloak.',
     },
   },
 }
@@ -87,7 +87,7 @@ export const thumbnailPages: StaticPage[] = (['en', 'fr'] as const).flatMap((loc
   const p = prefix[locale]
   return [
     { path: locale === 'en' ? '/' : '/fr', locale, ...home[locale] },
-    ...(['technology', 'about', 'contact', 'simulator'] as const).map((slug) => ({
+    ...(['technology', 'about', 'contact', 'pricing'] as const).map((slug) => ({
       path: `${p}/${slug}`,
       locale,
       ...fixed[locale][slug],
