@@ -147,6 +147,16 @@ const photoFor = (member: (typeof team)[number]) => {
   return found ? `/team/${slug}.${found}` : undefined
 }
 
+/** The easter egg's picture: public/team/<slug>-otarie.(jpg|jpeg|png|webp), when it exists. */
+const otarieFor = (member: (typeof team)[number]) => {
+  const slug = slugify(member.name)
+  const found = ['jpg', 'jpeg', 'png', 'webp'].find((ext) =>
+    existsSync(join(process.cwd(), 'public', 'team', `${slug}-otarie.${ext}`)),
+  )
+  return found ? `/team/${slug}-otarie.${found}` : undefined
+}
+const otarieAlt = (name: string) => (locale === 'fr' ? `${name}, en otarie` : `${name}, as a sea lion`)
+
 const initials = (name: string) =>
   name
     .split(/\s+/)
@@ -242,6 +252,10 @@ const initials = (name: string) =>
                   <div class="rounded-[1.75rem] bg-[oklch(0.965_0.012_285)] p-4 sm:p-5">
                     {photoFor(member) ? (
                       <img
+                        data-photo={photoFor(member)}
+                        data-alt={member.name}
+                        data-otarie={otarieFor(member)}
+                        data-alt-otarie={otarieFor(member) ? otarieAlt(member.name) : undefined}
                         src={photoFor(member)}
                         alt={member.name}
                         class="aspect-square w-full rounded-xl border bg-card object-cover shadow-[0_1px_2px_rgb(0_0_0/0.05),0_8px_24px_-12px_rgb(30_20_80/0.25)]"
@@ -296,4 +310,17 @@ const initials = (name: string) =>
   </main>
 
   <SiteFooter locale={locale} />
+
+  <script>
+    // Easter egg: add ?otarie to the address and the team becomes sea lions.
+    const swap = () => {
+      const value = new URLSearchParams(window.location.search).get('otarie')
+      const on = value !== null && !['0', 'false', 'off'].includes(value.toLowerCase())
+      document.querySelectorAll<HTMLImageElement>('img[data-otarie]').forEach((img) => {
+        img.src = (on ? img.dataset.otarie : img.dataset.photo) ?? img.src
+        img.alt = (on ? img.dataset.altOtarie : img.dataset.alt) ?? img.alt
+      })
+    }
+    document.addEventListener('astro:page-load', swap)
+  </script>
 </Base>
