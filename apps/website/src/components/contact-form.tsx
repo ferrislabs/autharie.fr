@@ -1,5 +1,5 @@
 import { cn } from '@explainer/ui'
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import type { Locale } from '../i18n'
 
 /**
@@ -10,7 +10,7 @@ import type { Locale } from '../i18n'
  * works before a backend exists.
  */
 
-const EMAIL = 'hello@autharie.fr'
+const EMAIL = 'contact@ferrislabs.fr'
 const MIN_FILL_MS = 3000
 
 const copy = {
@@ -89,6 +89,16 @@ export function ContactForm({ locale = 'en', endpoint = '' }: { locale?: Locale;
   const [status, setStatus] = useState<Status>('idle')
   const [errors, setErrors] = useState<Partial<Record<Field, string>>>({})
   const shownAt = useRef(Date.now())
+  // The pricing page sends people here with their configuration already written.
+  const [prefill, setPrefill] = useState<{ topic?: string; message?: string }>({})
+  useEffect(() => {
+    const query = new URLSearchParams(window.location.search)
+    const topic = query.get('topic') ?? ''
+    setPrefill({
+      topic: t.topics.some(([key]) => key === topic) ? topic : undefined,
+      message: query.get('message')?.slice(0, 1000) || undefined,
+    })
+  }, [])
 
   async function onSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault()
@@ -139,8 +149,13 @@ export function ContactForm({ locale = 'en', endpoint = '' }: { locale?: Locale;
     try {
       const response = await fetch(endpoint, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload),
+        // Accept: the form service answers in JSON instead of redirecting to its own page.
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        // _subject sets the subject of the notification email; the email field becomes the reply address (Formspree).
+        body: JSON.stringify({
+          ...payload,
+          _subject: `[Autharie] ${t.topics.find(([key]) => key === payload.topic)?.[1] || 'Contact'}, ${payload.name}`,
+        }),
       })
       setStatus(response.ok ? 'sent' : 'failed')
     } catch {
@@ -214,7 +229,7 @@ export function ContactForm({ locale = 'en', endpoint = '' }: { locale?: Locale;
         </div>
         <div>
           <label htmlFor="contact-topic" className="text-sm font-medium">{t.topic}</label>
-          <select id="contact-topic" name="topic" defaultValue="access" className={cn(input, 'mt-1.5')}>
+          <select id="contact-topic" key={`topic-${prefill.topic ?? ''}`} name="topic" defaultValue={prefill.topic ?? 'access'} className={cn(input, 'mt-1.5')}>
             {t.topics.map(([key, label]) => (
               <option key={key} value={key}>{label}</option>
             ))}
@@ -226,6 +241,8 @@ export function ContactForm({ locale = 'en', endpoint = '' }: { locale?: Locale;
         <label htmlFor="contact-message" className="text-sm font-medium">{t.message}</label>
         <textarea
           id="contact-message"
+          key={`message-${prefill.message ? 1 : 0}`}
+          defaultValue={prefill.message}
           name="message"
           rows={6}
           placeholder={t.placeholder}
