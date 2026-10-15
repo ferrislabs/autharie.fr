@@ -10,14 +10,12 @@ const { locale = 'en' } = Astro.props
 
 const copy = {
   en: {
-    eyebrow: 'Agent policies',
     title: 'Rules for agents, as blocks or as code',
-    lead: 'Who, which right, from where, which tool: a rule combines simple conditions and is checked on every action. Build it with blocks, or let your tech team keep it as code. Every decision is recorded end to end.',
+    lead: 'Who, under which conditions, what it may do and what it may never do: a rule is checked on every action. Build it with blocks, or let your tech team keep it as code. Every decision is recorded end to end.',
   },
   fr: {
-    eyebrow: 'Règles pour agents',
     title: 'Des règles pour agents, en blocs ou en code',
-    lead: 'Qui, quel droit, depuis où, quel outil : une règle combine des conditions simples et se vérifie à chaque action. Construisez-la en blocs, ou laissez votre équipe tech la garder en code. Chaque décision est tracée de bout en bout.',
+    lead: 'Qui, sous quelles conditions, ce qu’il peut faire et ce qu’il ne fera jamais : une règle se vérifie à chaque action. Construisez-la en blocs, ou laissez votre équipe tech la garder en code. Chaque décision est tracée de bout en bout.',
   },
 }
 const t = copy[locale]
@@ -26,8 +24,7 @@ const t = copy[locale]
 <section id="policies" class="scroll-mt-20 border-y bg-surface/50">
   <div class="mx-auto max-w-6xl px-5 py-20 sm:py-28">
     <div class="max-w-2xl">
-      <p class="eyebrow">{t.eyebrow}</p>
-      <h2 class="mt-4 text-3xl sm:text-[2.6rem] sm:leading-[1.1]">{t.title}</h2>
+      <h2 class="text-3xl sm:text-[2.6rem] sm:leading-[1.1]">{t.title}</h2>
       <p class="mt-5 text-lg text-muted-foreground">{t.lead}</p>
     </div>
     <div class="mt-12">

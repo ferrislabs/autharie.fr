@@ -13,13 +13,13 @@ const { locale = 'en' } = Astro.props
 
 const copy = {
   en: {
-    eyebrow: 'Plans',
     title: 'Start free. Upgrade when it matters.',
     lead: 'Try Autharie on a real project at no cost. When your product grows, Premium gives you your own infrastructure and full visibility.',
     free: {
       name: 'Free',
       tagline: 'To start and validate',
       price: 'Free, no credit card',
+      next: 'We open free spaces in small groups during the private beta.',
       items: [
         'One space (realm) on our shared infrastructure in Europe',
         'Sign in and user accounts, up to a user quota',
@@ -46,13 +46,13 @@ const copy = {
     talk: 'Talk to us about Premium',
   },
   fr: {
-    eyebrow: 'Offres',
     title: 'Démarrez gratuitement. Passez en Premium quand ça compte.',
     lead: 'Essayez Autharie sur un vrai projet, sans frais. Quand votre produit grandit, Premium vous donne votre propre infrastructure et une visibilité complète.',
     free: {
       name: 'Gratuit',
       tagline: 'Pour démarrer et valider',
       price: 'Gratuit, sans carte bancaire',
+      next: 'Nous ouvrons les espaces gratuits par petits groupes pendant la bêta privée.',
       items: [
         'Un espace (realm) sur notre infrastructure partagée en Europe',
         'Connexion et comptes utilisateurs, jusqu’à un quota',
@@ -86,13 +86,12 @@ const cta = primaryCta(locale, consoleUrl)
 <section id="plans" class="scroll-mt-20 border-y bg-surface/50">
   <div class="mx-auto max-w-5xl px-5 py-20 sm:py-28">
     <div class="mx-auto max-w-2xl text-center">
-      <p class="eyebrow">{t.eyebrow}</p>
-      <h2 class="mt-4 text-balance text-3xl sm:text-[2.6rem] sm:leading-[1.1]">{t.title}</h2>
+      <h2 class="text-balance text-3xl sm:text-[2.6rem] sm:leading-[1.1]">{t.title}</h2>
       <p class="mt-5 text-lg text-muted-foreground">{t.lead}</p>
     </div>
 
     <div class="mt-14 grid gap-5 md:grid-cols-2">
-      <div class="flex flex-col rounded-2xl border bg-card p-7">
+      <div class="flex flex-col rounded-2xl border bg-card p-7 shadow-resting">
         <h3 class="text-xl font-semibold">{t.free.name}</h3>
         <p class="mt-1 text-sm text-muted-foreground">{t.free.tagline}</p>
         <p class="mt-5 text-sm font-semibold text-primary">{t.free.price}</p>
@@ -115,6 +114,7 @@ const cta = primaryCta(locale, consoleUrl)
           <span>{cta.label}</span>
           <Icon name="arrow" class="size-4" />
         </a>
+        <p class="mt-3 text-center text-xs text-muted-foreground">{t.free.next}</p>
       </div>
 
       <div class="flex flex-col rounded-2xl bg-deep p-7 text-white">

@@ -75,7 +75,7 @@ export default function SecurePolicy({ locale = 'en' }: { locale?: 'en' | 'fr' }
                   {t[r.result]}
                 </StatusBadge>
               </div>
-              <code className="mt-1 inline-block rounded border bg-muted/40 px-1.5 py-0.5 font-mono text-[11px] text-muted-foreground">{r.rule}</code>
+              <code className="mt-1 inline-block rounded border bg-muted/40 px-1.5 py-0.5 font-mono text-micro text-muted-foreground">{r.rule}</code>
             </div>
           </li>
         ))}

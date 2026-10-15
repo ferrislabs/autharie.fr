@@ -10,30 +10,26 @@ const { locale = 'en' } = Astro.props
 
 const copy = {
   en: {
-    eyebrow: 'Our vision',
-    title: 'Identity should not be a weight.',
+    title: 'Handing work to agents should not mean losing control.',
     beliefs: [
-      'Software no longer waits for a click. Agents sign in, call APIs and act on behalf of your users.',
-      'Every agent deserves an identity of its own: rights scoped to its task, a short life, and a record of everything it does.',
-      'Security that needs a dedicated team is security a startup never gets. It has to be there by default, with nothing to configure.',
-      'An IAM should be forgettable. No server to watch, no upgrade to schedule, no sleepless night.',
-      'And it should stay yours: open source, built on standards, reversible. Leave whenever you want, and take everything with you.',
+      'Software no longer waits for a click. Agents read, write and act on behalf of your teams.',
+      'Every agent deserves its own identity, rights limited to its task, and a record of everything it does.',
+      'When one runs away, anyone on the team should be able to stop it in one click, without being a security expert.',
+      'And all of it should stay yours: an open source engine, hosted in Europe, that you can leave whenever you want.',
     ],
     signoff: 'That is why we are building Autharie, on top of Ferriskey.',
-    cta: 'See how it works',
+    cta: 'See the technology',
   },
   fr: {
-    eyebrow: 'Notre vision',
-    title: 'L’identité ne devrait pas être un poids.',
+    title: 'Confier du travail à des agents ne devrait pas vouloir dire perdre la main.',
     beliefs: [
-      'Les logiciels n’attendent plus qu’on clique. Des agents se connectent, appellent des API et agissent au nom de vos utilisateurs.',
-      'Chaque agent mérite une identité à lui : des droits limités à sa tâche, une durée de vie courte, et une trace de tout ce qu’il fait.',
-      'Une sécurité qui exige une équipe dédiée, une startup ne l’a jamais. Elle doit être là par défaut, sans rien à configurer.',
-      'Un IAM doit se faire oublier. Pas de serveur à surveiller, pas de mise à jour à planifier, pas de nuit blanche.',
-      'Et il doit rester à vous : open source, fondé sur les standards, réversible. Vous partez quand vous voulez, avec tout.',
+      'Les logiciels n’attendent plus qu’on clique. Des agents lisent, écrivent et agissent au nom de vos équipes.',
+      'Chaque agent mérite sa propre identité, des droits limités à sa tâche, et une trace de tout ce qu’il fait.',
+      'Quand l’un d’eux s’emballe, n’importe qui dans l’équipe doit pouvoir l’arrêter en un clic, sans être expert en sécurité.',
+      'Et tout cela doit rester à vous : un moteur open source, hébergé en Europe, que vous pouvez quitter quand vous voulez.',
     ],
     signoff: 'C’est pour ça que nous construisons Autharie, au-dessus de Ferriskey.',
-    cta: 'Voir comment ça marche',
+    cta: 'Voir la technologie',
   },
 }
 const t = copy[locale]
@@ -41,27 +37,23 @@ const t = copy[locale]
 
 <section id="vision" class="scroll-mt-20 border-y bg-surface/50">
   <div class="mx-auto max-w-3xl px-5 py-20 sm:py-28">
-    <p class="eyebrow">{t.eyebrow}</p>
-    <h2 class="mt-4 text-balance text-4xl sm:text-[3.2rem] sm:leading-[1.05]">{t.title}</h2>
+    <h2 class="text-balance text-3xl sm:text-[2.6rem] sm:leading-[1.1]">{t.title}</h2>
 
-    <ol class="mt-12 space-y-8">
+    <ul class="mt-12 space-y-7">
       {
-        t.beliefs.map((belief, i) => (
-          <li class="grid grid-cols-[2.5rem_1fr] gap-4 sm:grid-cols-[3.5rem_1fr]">
-            <span class="font-mono text-sm font-semibold text-primary sm:text-base" aria-hidden="true">
-              {String(i + 1).padStart(2, '0')}
-            </span>
+        t.beliefs.map((belief) => (
+          <li class="border-l-2 border-primary/30 pl-5">
             <p class="text-lg leading-relaxed sm:text-xl">{belief}</p>
           </li>
         ))
       }
-    </ol>
+    </ul>
 
     <div class="mt-14 border-t pt-8">
       <p class="text-xl font-semibold text-primary sm:text-2xl">{t.signoff}</p>
       <a
         href={localePath(locale, '/technology')}
-        class="mt-5 inline-flex items-center gap-2 text-sm font-medium text-primary"
+        class="mt-4 inline-flex items-center gap-2 py-1 text-sm font-medium text-primary"
       >
         {t.cta}
         <Icon name="arrow" class="size-4" />

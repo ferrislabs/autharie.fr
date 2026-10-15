@@ -63,7 +63,7 @@ export default function IdentityRightsizing({ locale = 'en' }: { locale?: 'en' |
         {rows.map((r) => (
           <li key={r.user} className={cn('grid grid-cols-[1.1fr_1.2fr_1fr] items-center gap-2 px-4 py-3 text-sm transition-colors duration-300', done && 'bg-muted/40')}>
             <span className={cn('truncate font-medium', done && 'text-muted-foreground')}>{r.user}</span>
-            <code className={cn('w-fit truncate rounded border bg-muted/40 px-1.5 py-0.5 font-mono text-[11px]', done && 'text-muted-foreground line-through')}>{r.role}</code>
+            <code className={cn('w-fit truncate rounded border bg-muted/40 px-1.5 py-0.5 font-mono text-micro', done && 'text-muted-foreground line-through')}>{r.role}</code>
             <span className="flex justify-end">
               {done ? (
                 <StatusBadge tone="success">{t.removed}</StatusBadge>

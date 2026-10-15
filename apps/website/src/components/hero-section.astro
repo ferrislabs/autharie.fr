@@ -17,7 +17,7 @@ const copy = {
     badge: 'Private beta · limited spots · free to start',
     title1: 'Your AI agents do the work.',
     title2: 'You stay in control.',
-    body: 'Autharie gives each AI agent its access, shows you everything it does and stops it at the first slip. And sign in for your users is ready in two minutes, so you launch faster, safely.',
+    body: 'Autharie gives each AI agent its own access, shows you everything it does and stops it at the first slip. Sign in for your users is included.',
     how: 'See how it works',
     note: 'Ready in 2 minutes · No credit card · Made in France',
   },
@@ -25,7 +25,7 @@ const copy = {
     badge: 'Bêta privée · places limitées · gratuit pour démarrer',
     title1: 'Vos agents IA travaillent.',
     title2: 'Vous gardez la main.',
-    body: "Autharie donne à chaque agent IA ses accès, vous montre tout ce qu'il fait et l'arrête au moindre écart. Et la connexion de vos utilisateurs est prête en deux minutes : vous lancez plus vite, en sécurité.",
+    body: "Autharie donne à chaque agent IA ses propres accès, vous montre tout ce qu'il fait et l'arrête au moindre écart. La connexion de vos utilisateurs est incluse.",
     how: 'Voir comment ça marche',
     note: 'Prêt en 2 minutes · Sans carte bancaire · Conçu en France',
   },
@@ -44,14 +44,10 @@ const cta = primaryCta(locale, consoleUrl)
 
   <div class="mx-auto max-w-6xl px-5">
     <div class="mx-auto max-w-4xl text-center">
-      <a
-        href={cta.href}
-        class="inline-flex items-center gap-2 rounded-full border bg-card px-3 py-1 text-xs font-medium text-muted-foreground transition-colors hover:text-foreground"
-      >
-        <span class="live-dot size-1.5 rounded-full bg-primary"></span>
+      <p class="inline-flex items-center gap-2 rounded-full border bg-card px-3 py-1 text-xs font-medium text-muted-foreground">
+        <span class="live-dot size-1.5 rounded-full bg-primary" aria-hidden="true"></span>
         <span>{t.badge}</span>
-        <Icon name="arrow" class="size-3.5" />
-      </a>
+      </p>
 
       <h1 class="mt-6 text-balance text-4xl leading-[1.05] sm:text-[4rem] sm:leading-[1.04]">
         <span class="block">{t.title1}</span>
@@ -88,8 +84,15 @@ const cta = primaryCta(locale, consoleUrl)
       </p>
     </div>
 
-    <div class="mx-auto mt-14 max-w-5xl sm:mt-20">
-      <AgentControl client:visible locale={locale} />
+    <div class="relative mx-auto mt-14 max-w-5xl sm:mt-20">
+      <div
+        class="pointer-events-none absolute -inset-x-3 -inset-y-3 rounded-[1.75rem] bg-primary/[0.06] ring-1 ring-primary/10 sm:-inset-x-5 sm:-inset-y-5"
+        aria-hidden="true"
+      >
+      </div>
+      <div class="relative">
+        <AgentControl client:visible locale={locale} />
+      </div>
     </div>
   </div>
 </section>

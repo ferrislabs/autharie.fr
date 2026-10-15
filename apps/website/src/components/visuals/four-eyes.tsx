@@ -27,7 +27,7 @@ export default function FourEyes({ locale = 'en' }: { locale?: 'en' | 'fr' }) {
       </div>
       <div className="space-y-3 p-4">
         <div className="rounded-lg border p-3 text-sm">
-          <p><span className="font-medium">{t.who}</span> <span className="text-muted-foreground">{t.ask}</span> <code className="rounded border bg-muted/40 px-1.5 py-0.5 font-mono text-[11px]">{t.role}</code> <span className="text-muted-foreground">{t.for}</span></p>
+          <p><span className="font-medium">{t.who}</span> <span className="text-muted-foreground">{t.ask}</span> <code className="rounded border bg-muted/40 px-1.5 py-0.5 font-mono text-micro">{t.role}</code> <span className="text-muted-foreground">{t.for}</span></p>
           <p className="mt-1.5 text-xs text-muted-foreground">{t.why}</p>
         </div>
         <ol className="space-y-0">

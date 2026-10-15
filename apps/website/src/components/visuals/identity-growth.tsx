@@ -27,7 +27,7 @@ export default function IdentityGrowth({ locale = 'en' }: { locale?: 'en' | 'fr'
           [t.joined, `+${news[news.length - 1]}`],
         ].map(([label, value]) => (
           <div key={label} className="p-3">
-            <p className="text-[11px] leading-tight text-muted-foreground">{label}</p>
+            <p className="text-micro leading-tight text-muted-foreground">{label}</p>
             <p className="mt-1 text-lg font-semibold">{value}</p>
           </div>
         ))}

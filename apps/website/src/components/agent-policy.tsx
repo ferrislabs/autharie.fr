@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { logoColors, logoPaths, type LogoColors } from './logo-paths'
+import { PixelOtarie } from './pixel-otarie'
 import type { Locale } from '../i18n'
 
 const STEP_MS = 3400
@@ -47,117 +47,119 @@ const copy = {
     preview: 'Preview',
     visual: 'Visual',
     code: 'Code',
-    cut: 'Cut the agent',
-    resume: 'Resume',
+    cut: 'Stop this agent',
+    cutShort: 'Stop',
+    resume: 'Restart',
     columns: { who: 'Who', if: 'If', then: 'Then' },
-    agent: ['Agent', 'Accounting assistant', 'for Lea'],
-    sub: ['Sub-agent', 'Reminder assistant', 'started by the assistant'],
+    agent: ['Agent', 'Support assistant', 'for the support team'],
+    sub: ['Sub-agent', 'Survey assistant', 'started by the assistant'],
     condTitle: 'All of these are true',
     rows: {
-      identity: ['Acts for', 'Lea'],
-      network: ['From', 'the company network'],
-      time: ['Until', '8 pm tonight'],
+      identity: ['Acts for', 'the support team'],
+      network: ['From', 'the helpdesk tool'],
+      time: ['During', 'opening hours'],
     } as Record<Row, string[]>,
-    breaker: ['Safety', 'Cut if over 30 actions a minute'],
-    tool1: 'View invoices',
-    tool2: 'Make a transfer',
+    breaker: ['Safety', 'Stopped over 30 actions a minute'],
+    tool1: 'Reply to customers',
+    tool2: 'Refund an order',
     never: 'Never',
     burst: '48 actions a minute',
     allowed: 'Allowed',
-    denied: 'Denied',
-    tripped: 'Tripped',
-    cutLabel: 'Cut',
+    denied: 'Blocked',
+    tripped: 'Triggered',
+    cutLabel: 'Stopped',
     yes: 'Yes',
     no: 'No',
     traceTitle: 'What happened, end to end',
     trace: [
-      ['14:02:01', 'Lea → Accounting assistant', 'delegation for 15 min', 'ok'],
-      ['14:02:04', 'Accounting assistant → View invoices', 'allowed by the billing rule', 'ok'],
-      ['14:02:09', 'Accounting assistant → Make a transfer', 'denied, not allowed by the rule', 'fail'],
-      ['14:02:15', 'Reminder assistant → 48 emails', 'cut by the safety', 'fail'],
+      ['09:14:02', 'Support team → Support assistant', 'delegation for the day', 'ok'],
+      ['09:14:05', 'Support assistant → Reply to customers', 'allowed by the support rule', 'ok'],
+      ['09:16:40', 'Support assistant → Refund an order', 'blocked, never allowed by the rule', 'fail'],
+      ['09:17:12', 'Survey assistant → 48 emails', 'stopped by the safety', 'fail'],
     ],
     captions: [
       'Read it like a sentence: who, if these conditions are true, then what it may and may never do.',
-      'The assistant views invoices: all three conditions are true. Allowed.',
-      'It tries to make a transfer: the conditions are true, but the rule never allows transfers. Denied, and recorded.',
-      'A sub-agent runs away (48 actions a minute): the safety cuts it on its own.',
+      'The assistant replies to a customer: all three conditions are true. Allowed.',
+      'It tries to refund an order: the conditions are true, but the rule never allows refunds. Blocked, and recorded.',
+      'A sub-agent runs away (48 actions a minute): the safety stops it on its own.',
     ],
-    cutCaption: 'You cut the agent: no action goes through any more, effective immediately.',
+    cutCaption: 'You stopped the agent: no action goes through any more, effective immediately.',
     sameRule: 'Same rule, as blocks or as code.',
   },
   fr: {
     preview: 'Aperçu',
     visual: 'Visuel',
     code: 'Code',
-    cut: 'Couper l’agent',
-    resume: 'Rétablir',
+    cut: 'Arrêter cet agent',
+    cutShort: 'Arrêter',
+    resume: 'Relancer',
     columns: { who: 'Qui', if: 'Si', then: 'Alors' },
-    agent: ['Agent', 'Assistant compta', 'pour Léa'],
-    sub: ['Sous-agent', 'Assistant relances', 'lancé par l’assistant'],
+    agent: ['Agent', 'Assistant support', 'pour l’équipe support'],
+    sub: ['Sous-agent', 'Assistant enquêtes', 'lancé par l’assistant'],
     condTitle: 'Toutes ces conditions sont vraies',
     rows: {
-      identity: ['Agit pour', 'Léa'],
-      network: ['Depuis', 'le réseau de l’entreprise'],
-      time: ['Jusqu’à', '20 h ce soir'],
+      identity: ['Agit pour', 'l’équipe support'],
+      network: ['Depuis', 'l’outil de support'],
+      time: ['Pendant', 'les heures d’ouverture'],
     } as Record<Row, string[]>,
-    breaker: ['Sécurité', 'Coupé au-delà de 30 actions par minute'],
-    tool1: 'Consulter les factures',
-    tool2: 'Faire un virement',
+    breaker: ['Sécurité', 'Arrêté au-delà de 30 actions par minute'],
+    tool1: 'Répondre aux clients',
+    tool2: 'Rembourser',
     never: 'Jamais',
     burst: '48 actions par minute',
     allowed: 'Autorisé',
-    denied: 'Refusé',
+    denied: 'Bloqué',
     tripped: 'Déclenchée',
-    cutLabel: 'Coupé',
+    cutLabel: 'Arrêté',
     yes: 'Oui',
     no: 'Non',
     traceTitle: 'Ce qui s’est passé, de bout en bout',
     trace: [
-      ['14:02:01', 'Léa → Assistant compta', 'délégation pour 15 min', 'ok'],
-      ['14:02:04', 'Assistant compta → Consulter les factures', 'autorisé par la règle facturation', 'ok'],
-      ['14:02:09', 'Assistant compta → Faire un virement', 'refusé, interdit par la règle', 'fail'],
-      ['14:02:15', 'Assistant relances → 48 e-mails', 'coupé par la sécurité', 'fail'],
+      ['09:14:02', 'Équipe support → Assistant support', 'délégation pour la journée', 'ok'],
+      ['09:14:05', 'Assistant support → Répondre aux clients', 'autorisé par la règle support', 'ok'],
+      ['09:16:40', 'Assistant support → Rembourser', 'bloqué, jamais permis par la règle', 'fail'],
+      ['09:17:12', 'Assistant enquêtes → 48 e-mails', 'arrêté par la sécurité', 'fail'],
     ],
     captions: [
       'Ça se lit comme une phrase : qui, si ces conditions sont vraies, alors ce qu’il peut faire et ce qu’il ne fera jamais.',
-      'L’assistant consulte les factures : les trois conditions sont vraies. Autorisé.',
-      'Il tente un virement : les conditions sont vraies, mais la règle interdit les virements. Refusé, et tracé.',
-      'Un sous-agent s’emballe (48 actions par minute) : la sécurité le coupe toute seule.',
+      'L’assistant répond à un client : les trois conditions sont vraies. Autorisé.',
+      'Il tente de rembourser une commande : les conditions sont vraies, mais la règle interdit les remboursements. Bloqué, et tracé.',
+      'Un sous-agent s’emballe (48 actions par minute) : la sécurité l’arrête toute seule.',
     ],
-    cutCaption: 'Vous avez coupé l’agent : plus aucune action ne passe, immédiatement.',
+    cutCaption: 'Vous avez arrêté l’agent : plus aucune action ne passe, immédiatement.',
     sameRule: 'La même règle, en blocs ou en code.',
   },
 }
 
 const CODE: Record<Locale, string> = {
-  en: `policy: billing-read
-agent: agent·billing
+  en: `policy: support-replies
+agent: agent·support
 allow:
-  tool: stripe.invoices.list
+  tool: helpdesk.reply
   when:
-    identity: delegated_by(lea@acme.io)
-    network: vpc-acme 10.0.0.0/8
-    until: "20:00"
+    identity: delegated_by(team:support)
+    network: helpdesk.acme.io
+    hours: "09:00-18:00"
 deny:
-  tool: stripe.transfers.*
+  tool: payments.refund
 breaker:
-  agent: sub-agent·reminders
-  above: 30 req/min
-  action: cut`,
-  fr: `policy: facturation-lecture
-agent: agent·facturation
+  agent: sub-agent·surveys
+  above: 30 actions/min
+  action: stop`,
+  fr: `policy: support-reponses
+agent: agent·support
 allow:
-  tool: stripe.invoices.list
+  tool: helpdesk.reply
   when:
-    identity: delegated_by(lea@acme.fr)
-    network: vpc-acme 10.0.0.0/8
-    until: "20:00"
+    identity: delegated_by(team:support)
+    network: helpdesk.acme.fr
+    hours: "09:00-18:00"
 deny:
-  tool: stripe.transfers.*
+  tool: payments.refund
 breaker:
-  agent: sub-agent·relance
-  above: 30 req/min
-  action: cut`,
+  agent: sub-agent·enquetes
+  above: 30 actions/min
+  action: stop`,
 }
 
 const EDGE_COLOR: Record<Status, string> = {
@@ -178,16 +180,6 @@ const PILL: Record<Exclude<Status, 'idle'>, string> = {
   ok: 'bg-emerald-50 text-emerald-700',
   fail: 'bg-red-50 text-red-700',
   cut: 'bg-zinc-100 text-zinc-600',
-}
-
-function Mark() {
-  return (
-    <svg viewBox="0 0 24 24" className="size-4" shapeRendering="crispEdges" aria-hidden="true">
-      {(Object.keys(logoPaths) as (keyof LogoColors)[]).map((layer) => (
-        <path key={layer} fill={logoColors[layer]} d={logoPaths[layer]} />
-      ))}
-    </svg>
-  )
 }
 
 interface State {
@@ -222,7 +214,8 @@ const box = (id: NodeId) => {
 export function AgentPolicy({ locale = 'en' }: { locale?: Locale }) {
   const t = copy[locale]
   const last = t.captions.length - 1
-  const [step, setStep] = useState(0)
+  // The static state (no JavaScript, reduced motion) shows the blocked decision.
+  const [step, setStep] = useState(2)
   const [animated, setAnimated] = useState(false)
   const [view, setView] = useState<'visual' | 'code'>('visual')
   const [cut, setCut] = useState(false)
@@ -230,6 +223,7 @@ export function AgentPolicy({ locale = 'en' }: { locale?: Locale }) {
   useEffect(() => {
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
     setAnimated(true)
+    setStep(0)
   }, [])
 
   useEffect(() => {
@@ -240,12 +234,12 @@ export function AgentPolicy({ locale = 'en' }: { locale?: Locale }) {
 
   const { node, edge, rows } = statuses(step, cut)
   const caption = cut ? t.cutCaption : t.captions[step]
-  const traced = animated ? (cut ? 1 : step + 1) : t.trace.length
+  const traced = cut ? 1 : step + 1
   const subBurst = step === 3 && !cut
 
   const statusPill = (status: Status | undefined, label: string) =>
     status && status !== 'idle' ? (
-      <span className={`shrink-0 rounded-sm px-1.5 font-mono text-[10px] font-semibold ${PILL[status]}`}>{label}</span>
+      <span className={`shrink-0 rounded-sm px-1.5 font-mono text-micro font-semibold ${PILL[status]}`}>{label}</span>
     ) : null
 
   const actor = (id: 'agent' | 'sub', [tag, title, sub]: string[]) => {
@@ -254,11 +248,11 @@ export function AgentPolicy({ locale = 'en' }: { locale?: Locale }) {
     return (
       <div className={`absolute flex flex-col justify-center rounded-lg border bg-white px-3 shadow-sm transition-all duration-300 ${NODE_RING[status]}`} style={box(id)}>
         <span className="flex items-center justify-between gap-2">
-          <span className="font-mono text-[9px] font-semibold uppercase tracking-[0.18em] text-ink">{tag}</span>
+          <span className="font-mono text-micro font-semibold uppercase tracking-[0.18em] text-ink">{tag}</span>
           {statusPill(status, t.cutLabel)}
         </span>
         <span className="mt-0.5 truncate text-sm font-semibold">{title}</span>
-        <span className={`truncate text-[11px] ${burst ? 'font-semibold text-red-700' : 'text-muted-foreground'}`}>{burst ? t.burst : sub}</span>
+        <span className={`truncate text-micro ${burst ? 'font-semibold text-red-700' : 'text-muted-foreground'}`}>{burst ? t.burst : sub}</span>
       </div>
     )
   }
@@ -274,7 +268,7 @@ export function AgentPolicy({ locale = 'en' }: { locale?: Locale }) {
         style={box(id)}
       >
         <span className="truncate text-sm font-medium">
-          {forbidden && <span className="mr-2 rounded-sm bg-red-100 px-1.5 py-0.5 font-mono text-[10px] font-semibold uppercase text-red-700">{t.never}</span>}
+          {forbidden && <span className="mr-2 rounded-sm bg-red-100 px-1.5 py-0.5 font-mono text-micro font-semibold uppercase text-red-700">{t.never}</span>}
           {label}
         </span>
         {statusPill(status, status === 'ok' ? t.allowed : t.denied)}
@@ -283,9 +277,11 @@ export function AgentPolicy({ locale = 'en' }: { locale?: Locale }) {
   }
 
   return (
-    <div className="overflow-hidden rounded-2xl bg-[#f6f4ff] text-left ring-1 ring-border/70">
+    <div className="overflow-hidden rounded-2xl bg-[#f6f4ff] text-left ring-1 ring-primary/15 shadow-lift">
       <div className="flex h-11 items-center gap-3 border-b border-primary/10 bg-white/70 px-4">
-        <Mark />
+        <span className="hidden sm:block">
+          <PixelOtarie />
+        </span>
         <div className="flex rounded-md border bg-white p-0.5">
           {(['visual', 'code'] as const).map((v) => (
             <button
@@ -293,7 +289,7 @@ export function AgentPolicy({ locale = 'en' }: { locale?: Locale }) {
               type="button"
               aria-pressed={view === v}
               onClick={() => setView(v)}
-              className={`rounded px-2.5 py-1 font-mono text-[11px] font-medium transition-colors ${
+              className={`rounded px-2.5 py-1 font-mono text-micro font-medium transition-colors ${
                 view === v ? 'bg-primary text-primary-foreground' : 'text-muted-foreground hover:text-foreground'
               }`}
             >
@@ -301,7 +297,7 @@ export function AgentPolicy({ locale = 'en' }: { locale?: Locale }) {
             </button>
           ))}
         </div>
-        <span className="hidden font-mono text-[11px] text-muted-foreground sm:block">{t.sameRule}</span>
+        <span className="hidden font-mono text-micro text-muted-foreground sm:block">{t.sameRule}</span>
         <button
           type="button"
           aria-pressed={cut}
@@ -309,22 +305,93 @@ export function AgentPolicy({ locale = 'en' }: { locale?: Locale }) {
             setCut((c) => !c)
             setStep(0)
           }}
-          className={`ml-auto inline-flex items-center gap-1.5 rounded-md px-2.5 py-1 text-xs font-semibold transition-colors ${
+          className={`ml-auto inline-flex items-center gap-1.5 whitespace-nowrap rounded-md px-2.5 py-1 text-xs font-semibold transition-colors ${
             cut ? 'bg-zinc-200 text-zinc-700 hover:bg-zinc-300' : 'bg-red-600 text-white hover:bg-red-700'
           }`}
         >
           <span className="size-2 rounded-full bg-current" aria-hidden="true" />
-          {cut ? t.resume : t.cut}
+          {cut ? (
+            t.resume
+          ) : (
+            <>
+              <span className="sm:hidden">{t.cutShort}</span>
+              <span className="hidden sm:inline">{t.cut}</span>
+            </>
+          )}
         </button>
-        <span className="hidden rounded-sm border border-primary/20 px-1.5 py-0.5 font-mono text-[10px] uppercase tracking-[0.2em] text-primary md:block">
+        <span className="rounded-sm border border-primary/20 px-1.5 py-0.5 font-mono text-micro uppercase tracking-[0.2em] text-primary">
           {t.preview}
         </span>
       </div>
 
       {view === 'visual' ? (
-        <div className="overflow-x-auto" aria-hidden="true">
+        <>
+        <div className="space-y-3 p-4 md:hidden" aria-hidden="true">
+          <p className="font-mono text-micro font-semibold uppercase tracking-[0.2em] text-primary">{t.columns.who}</p>
+          <div className={`rounded-lg border bg-white px-4 py-3 shadow-resting transition-all ${NODE_RING[node.agent ?? 'idle']}`}>
+            <span className="flex items-center justify-between gap-2">
+              <span className="font-mono text-micro font-semibold uppercase tracking-[0.18em] text-ink">{t.agent[0]}</span>
+              {statusPill(node.agent, t.cutLabel)}
+            </span>
+            <span className="mt-0.5 block font-semibold">{t.agent[1]}</span>
+            <span className="block text-xs text-muted-foreground">{t.agent[2]}</span>
+          </div>
+          <p className="pt-2 font-mono text-micro font-semibold uppercase tracking-[0.2em] text-primary">{t.columns.if}</p>
+          <div className={`rounded-xl border bg-white p-3 shadow-resting transition-all ${NODE_RING[node.cond ?? 'idle']}`}>
+            <span className="px-1 text-xs font-semibold text-muted-foreground">{t.condTitle}</span>
+            <ul className="mt-2 space-y-1.5">
+              {(Object.keys(t.rows) as Row[]).map((row) => {
+                const status = rows[row] ?? 'idle'
+                const [lead, value] = t.rows[row]
+                return (
+                  <li
+                    key={row}
+                    className={`flex items-center justify-between gap-2 rounded-md border px-3 py-2 text-sm ${
+                      status === 'ok' ? 'border-emerald-200 bg-emerald-50/60' : status === 'fail' ? 'border-red-200 bg-red-50/70' : 'border-primary/10 bg-surface/60'
+                    }`}
+                  >
+                    <span>
+                      <span className="text-muted-foreground">{lead} </span>
+                      <span className="font-semibold">{value}</span>
+                    </span>
+                    {statusPill(status, status === 'ok' ? t.yes : t.no)}
+                  </li>
+                )
+              })}
+            </ul>
+          </div>
+          <p className="pt-2 font-mono text-micro font-semibold uppercase tracking-[0.2em] text-primary">{t.columns.then}</p>
+          {(['tool1', 'tool2'] as const).map((id) => {
+            const status = node[id] ?? 'idle'
+            const forbidden = id === 'tool2'
+            return (
+              <div
+                key={id}
+                className={`flex items-center justify-between gap-2 rounded-lg border px-4 py-3 text-sm font-medium transition-all ${
+                  forbidden && status === 'idle' ? 'border-dashed border-red-300 bg-red-50/40' : `bg-white shadow-resting ${NODE_RING[status]}`
+                }`}
+              >
+                <span>
+                  {forbidden && <span className="mr-2 rounded-sm bg-red-100 px-1.5 py-0.5 font-mono text-micro font-semibold uppercase text-red-700">{t.never}</span>}
+                  {id === 'tool1' ? t.tool1 : t.tool2}
+                </span>
+                {statusPill(status, status === 'ok' ? t.allowed : t.denied)}
+              </div>
+            )
+          })}
+          <div className={`mt-4 rounded-lg border bg-white px-4 py-3 shadow-resting transition-all ${NODE_RING[node.breaker ?? 'idle']}`}>
+            <span className="flex items-center justify-between gap-2">
+              <span className="font-mono text-micro font-semibold uppercase tracking-[0.18em] text-primary">{t.breaker[0]}</span>
+              {statusPill(node.breaker, t.tripped)}
+            </span>
+            <span className="mt-0.5 block text-sm">
+              <span className="font-semibold">{t.sub[1]}</span> · {subBurst ? <span className="font-semibold text-red-700">{t.burst}</span> : t.breaker[1]}
+            </span>
+          </div>
+        </div>
+        <div className="hidden overflow-x-auto md:block" aria-hidden="true">
           <div
-            className="relative min-w-[760px]"
+            className="relative min-w-[720px]"
             style={{
               aspectRatio: `${W} / ${H}`,
               backgroundImage: 'radial-gradient(rgb(99 78 207 / 0.18) 1px, transparent 1px)',
@@ -334,7 +401,7 @@ export function AgentPolicy({ locale = 'en' }: { locale?: Locale }) {
             {COLUMNS.map((c) => (
               <span
                 key={c.key}
-                className="absolute font-mono text-[11px] font-semibold uppercase tracking-[0.2em] text-primary"
+                className="absolute font-mono text-micro font-semibold uppercase tracking-[0.2em] text-primary"
                 style={{ left: `${(c.x / W) * 100}%`, top: `${(8 / H) * 100}%` }}
               >
                 {t.columns[c.key]}
@@ -391,31 +458,32 @@ export function AgentPolicy({ locale = 'en' }: { locale?: Locale }) {
 
             <div className={`absolute flex flex-col justify-center rounded-lg border bg-white px-4 shadow-sm transition-all duration-300 ${NODE_RING[node.breaker ?? 'idle']}`} style={box('breaker')}>
               <span className="flex items-center justify-between gap-2">
-                <span className="font-mono text-[9px] font-semibold uppercase tracking-[0.18em] text-primary">{t.breaker[0]}</span>
+                <span className="font-mono text-micro font-semibold uppercase tracking-[0.18em] text-primary">{t.breaker[0]}</span>
                 {statusPill(node.breaker, t.tripped)}
               </span>
               <span className="mt-0.5 truncate text-sm font-medium">{t.breaker[1]}</span>
             </div>
           </div>
         </div>
+        </>
       ) : (
-        <pre className="m-4 overflow-x-auto rounded-xl bg-[#1b1730] p-5 font-mono text-[13px] leading-6 text-white/90 sm:m-6" tabIndex={0}>
+        <pre className="m-4 overflow-x-auto rounded-xl bg-[#1b1730] p-5 font-mono text-sm leading-6 text-white/90 sm:m-6" tabIndex={0}>
           {CODE[locale]}
         </pre>
       )}
 
       <div className="border-t border-primary/10 bg-white/80 px-4 py-3 sm:px-6" aria-hidden="true">
-        <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground">{t.traceTitle}</p>
+        <p className="font-mono text-micro uppercase tracking-[0.2em] text-muted-foreground">{t.traceTitle}</p>
         <ol className="mt-2 space-y-1">
           {t.trace.map(([time, path, result, kind], i) => (
             <li
               key={i}
-              className="grid grid-cols-[4.5rem_1fr_auto] items-center gap-3 font-mono text-[11px] transition-opacity duration-500 sm:text-xs"
-              style={{ opacity: i < traced ? 1 : 0.15 }}
+              className="grid grid-cols-[4.5rem_1fr] items-baseline gap-x-3 gap-y-0.5 font-mono text-micro transition-opacity duration-500 sm:grid-cols-[4.5rem_1fr_auto] sm:text-xs"
+              style={{ opacity: i < traced ? 1 : 0.4 }}
             >
               <span className="text-muted-foreground">{time}</span>
-              <span className="truncate">{path}</span>
-              <span className={kind === 'ok' ? 'text-emerald-700' : 'text-red-700'}>{result}</span>
+              <span className="min-w-0 sm:truncate">{path}</span>
+              <span className={`col-start-2 sm:col-start-auto ${kind === 'ok' ? 'text-emerald-700' : 'text-red-700'}`}>{result}</span>
             </li>
           ))}
         </ol>

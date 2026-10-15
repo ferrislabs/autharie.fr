@@ -23,12 +23,10 @@ const copy = {
     title: 'Technology: Rust, Kubernetes and open source | Autharie',
     description:
       'Rust, Kubernetes, open source and a data plane you can place anywhere. How Autharie is built.',
-    eyebrow: 'Technology',
     h1a: 'Boring where it counts,',
     h1b: 'built to last.',
     lead: 'You do not need any of this to use Autharie. It is here for the engineers and auditors who want to know what runs their sign in.',
     nav: ['Rust', 'Kubernetes and CRDs', 'Data plane', 'Open source'],
-    rustEyebrow: 'Rust',
     rustTitle: 'Written in Rust',
     rustLead:
       'Ferriskey is written in Rust, and so is everything Autharie adds on top of it. A control plane that exposes the API, an operator that looks after instances, and the agent that runs in your cluster.',
@@ -52,7 +50,6 @@ const copy = {
           'A query that does not match the schema fails the build instead of failing in production.',
       },
     ],
-    osEyebrow: 'Open source',
     osTitle: 'Nothing here you cannot take with you',
     osLead: 'You are paying for the operating, not for access to the software.',
     openSource: [
@@ -81,12 +78,10 @@ const copy = {
     title: 'Technologie : Rust, Kubernetes et open source | Autharie',
     description:
       'Rust, Kubernetes, open source et un data plane que vous placez où vous voulez. Comment Autharie est construit.',
-    eyebrow: 'Technologie',
     h1a: 'Sobre là où ça compte,',
     h1b: 'conçu pour durer.',
     lead: 'Vous n’avez besoin de rien de tout cela pour utiliser Autharie. C’est là pour les ingénieurs et les auditeurs qui veulent savoir ce qui fait tourner leur connexion.',
     nav: ['Rust', 'Kubernetes et CRDs', 'Data plane', 'Open source'],
-    rustEyebrow: 'Rust',
     rustTitle: 'Écrit en Rust',
     rustLead:
       'Ferriskey est écrit en Rust, comme tout ce qu’Autharie ajoute par-dessus. Un control plane qui expose l’API, un opérateur qui s’occupe des instances, et l’agent qui tourne dans votre cluster.',
@@ -110,7 +105,6 @@ const copy = {
           'Une requête qui ne correspond pas au schéma fait échouer le build, pas la production.',
       },
     ],
-    osEyebrow: 'Open source',
     osTitle: 'Rien ici que vous ne puissiez emporter',
     osLead: 'Vous payez l’exploitation, pas l’accès au logiciel.',
     openSource: [
@@ -148,8 +142,7 @@ const anchors = ['#rust', '#kubernetes', '#dataplane', '#open-source']
       <div class="bg-grid pointer-events-none absolute inset-0 -z-10 h-[460px]" aria-hidden="true">
       </div>
       <div class="mx-auto max-w-4xl px-5 text-center">
-        <p class="eyebrow">{t.eyebrow}</p>
-        <h1 class="mt-4 text-balance text-4xl leading-[1.05] sm:text-[3.4rem] sm:leading-[1.04]">
+        <h1 class="text-balance text-4xl leading-[1.05] sm:text-[4rem] sm:leading-[1.04]">
           <span class="block">{t.h1a}</span>
           <span class="block text-primary">{t.h1b}</span>
         </h1>
@@ -176,8 +169,7 @@ const anchors = ['#rust', '#kubernetes', '#dataplane', '#open-source']
     <section id="rust" class="scroll-mt-20">
       <div class="mx-auto max-w-6xl px-5 py-20 sm:py-28">
         <div class="max-w-2xl">
-          <p class="eyebrow">{t.rustEyebrow}</p>
-          <h2 class="mt-4 text-3xl sm:text-[2.6rem] sm:leading-[1.1]">{t.rustTitle}</h2>
+          <h2 class="text-3xl sm:text-[2.6rem] sm:leading-[1.1]">{t.rustTitle}</h2>
           <p class="mt-5 text-lg text-muted-foreground">{t.rustLead}</p>
         </div>
         <div class="mt-12 grid gap-8 md:grid-cols-3">
@@ -205,8 +197,7 @@ const anchors = ['#rust', '#kubernetes', '#dataplane', '#open-source']
     <section id="open-source" class="scroll-mt-20">
       <div class="mx-auto max-w-6xl px-5 py-20 sm:py-28">
         <div class="max-w-2xl">
-          <p class="eyebrow">{t.osEyebrow}</p>
-          <h2 class="mt-4 text-3xl sm:text-[2.6rem] sm:leading-[1.1]">{t.osTitle}</h2>
+          <h2 class="text-3xl sm:text-[2.6rem] sm:leading-[1.1]">{t.osTitle}</h2>
           <p class="mt-5 text-lg text-muted-foreground">{t.osLead}</p>
         </div>
         <div class="mt-12 grid gap-8 md:grid-cols-3">

@@ -103,7 +103,7 @@ export function SiteHeader({
             <path fill={logoColors.belly} d={logoPaths.belly} />
             <path fill={logoColors.outline} d={logoPaths.outline} />
           </svg>
-          <span className="text-[17px] font-semibold tracking-tight">Autharie</span>
+          <span className="text-lg font-semibold tracking-tight">Autharie</span>
         </a>
 
         <nav aria-label={t('mainNav')} className="hidden items-center gap-0.5 lg:flex">
@@ -123,9 +123,10 @@ export function SiteHeader({
           <a
             href={cta.href}
             aria-current={isCurrent(cta.href) ? 'page' : undefined}
-            className="inline-flex h-9 items-center rounded-full bg-primary px-4 text-sm font-medium text-primary-foreground shadow-sm shadow-primary/30 transition-all hover:bg-primary/90 hover:shadow-md hover:shadow-primary/30"
+            className="inline-flex h-9 items-center whitespace-nowrap rounded-full bg-primary px-4 text-sm font-medium text-primary-foreground shadow-sm shadow-primary/30 transition-all hover:bg-primary/90 hover:shadow-md hover:shadow-primary/30"
           >
-            {cta.label}
+            <span className="sm:hidden">{cta.label === t('earlyAccess') ? t('earlyAccessShort') : cta.label}</span>
+            <span className="hidden sm:inline">{cta.label}</span>
           </a>
           <a
             href={switchPath(pathname, otherLocale)}

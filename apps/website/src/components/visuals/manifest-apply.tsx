@@ -11,7 +11,7 @@ type S = { version: string; replicas: number; region: string }
 const start: S = { version: '1.4.2', replicas: 3, region: 'eu-paris' }
 
 const Chip = ({ on, children, onClick }: { on: boolean; children: React.ReactNode; onClick: () => void }) => (
-  <button type="button" onClick={onClick} className={cn('rounded-md border px-2 py-1 font-mono text-[11px] transition-colors', on ? 'border-primary/40 bg-primary/10 text-primary' : 'hover:bg-accent')}>
+  <button type="button" onClick={onClick} className={cn('rounded-md border px-2 py-1 font-mono text-micro transition-colors', on ? 'border-primary/40 bg-primary/10 text-primary' : 'hover:bg-accent')}>
     {children}
   </button>
 )
@@ -91,7 +91,7 @@ export default function ManifestApply({ locale = 'en' }: { locale?: 'en' | 'fr' 
             {step !== null && (
               <ol className="flex gap-1.5">
                 {t.steps.map((s, i) => (
-                  <li key={s} className={cn('flex-1 rounded border px-1 py-1 text-center text-[10px]', i <= step ? 'border-blue-300 bg-blue-100 text-blue-800' : 'text-muted-foreground')}>{s}</li>
+                  <li key={s} className={cn('flex-1 rounded border px-1 py-1 text-center text-micro', i <= step ? 'border-blue-300 bg-blue-100 text-blue-800' : 'text-muted-foreground')}>{s}</li>
                 ))}
               </ol>
             )}
@@ -102,7 +102,7 @@ export default function ManifestApply({ locale = 'en' }: { locale?: 'en' | 'fr' 
               </div>
             ))}
           </div>
-          <p className="text-[11px] text-muted-foreground">{step === null && !dirty ? t.applied : t.hint}</p>
+          <p className="text-micro text-muted-foreground">{step === null && !dirty ? t.applied : t.hint}</p>
         </div>
       </div>
     </ConsoleWindow>

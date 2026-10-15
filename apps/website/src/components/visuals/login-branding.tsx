@@ -56,7 +56,7 @@ export default function LoginBranding({ locale = 'en' }: { locale?: 'en' | 'fr' 
               <div className="rounded-md border px-3 py-2 text-muted-foreground">{t.pass}</div>
             </div>
             <span className="flex h-9 items-center justify-center rounded-md text-xs font-medium text-white transition-colors" style={{ background: accent }}>{t.cta}</span>
-            {(social || passkey) && <p className="text-center text-[11px] text-muted-foreground">{t.or}</p>}
+            {(social || passkey) && <p className="text-center text-micro text-muted-foreground">{t.or}</p>}
             {social && <span className="flex h-9 items-center justify-center gap-2 rounded-md border text-xs"><Icon name="building-2" className="h-3.5 w-3.5" />{t.dir}</span>}
             {passkey && <span className="flex h-9 items-center justify-center gap-2 rounded-md border text-xs"><Icon name="key-round" className="h-3.5 w-3.5" />{t.pk}</span>}
           </div>

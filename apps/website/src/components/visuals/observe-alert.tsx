@@ -37,7 +37,7 @@ export default function ObserveAlert({ locale = 'en' }: { locale?: 'en' | 'fr' }
           <div className="min-w-0 flex-1">
             <p className="flex flex-wrap items-center gap-2 text-sm">
               <span className="font-semibold">Autharie</span>
-              <span className="rounded bg-muted px-1.5 py-0.5 text-[11px] text-muted-foreground">{t.bot}</span>
+              <span className="rounded bg-muted px-1.5 py-0.5 text-micro text-muted-foreground">{t.bot}</span>
               <span className="text-xs text-muted-foreground">{t.now}</span>
             </p>
             <div className="mt-2 flex gap-3">

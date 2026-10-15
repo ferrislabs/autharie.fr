@@ -11,7 +11,6 @@ const { locale = 'en' } = Astro.props
 
 const copy = {
   en: {
-    eyebrow: 'Made in France',
     title: '100% European, from the code to the contract',
     lead: 'Who runs your sign in matters as much as how. Autharie is a French company with French governance, built and hosted in Europe, under European law.',
     badges: ['French company', 'Hosted at Scaleway', 'GDPR', 'Open source'],
@@ -43,7 +42,6 @@ const copy = {
     ],
   },
   fr: {
-    eyebrow: 'Made in France',
     title: '100 % européen, du code au contrat',
     lead: 'Qui exploite votre connexion compte autant que la manière dont elle l’est. Autharie est une société française, à la gouvernance française, conçue et hébergée en Europe, sous droit européen.',
     badges: ['Société française', 'Hébergé chez Scaleway', 'RGPD', 'Open source'],
@@ -92,15 +90,7 @@ const t = copy[locale]
 
   <div class="relative mx-auto max-w-6xl px-5 py-20 sm:py-28">
     <div class="max-w-2xl">
-      <p class="flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.14em] text-primary-soft">
-        <span class="inline-flex h-3 w-[18px] overflow-hidden rounded-[2px] ring-1 ring-white/30" aria-hidden="true">
-          <i class="w-1/3 bg-[#0055A4]"></i>
-          <i class="w-1/3 bg-white"></i>
-          <i class="w-1/3 bg-[#EF4135]"></i>
-        </span>
-        {t.eyebrow}
-      </p>
-      <h2 class="mt-4 text-3xl text-white sm:text-[2.6rem] sm:leading-[1.1]">{t.title}</h2>
+      <h2 class="text-3xl text-white sm:text-[2.6rem] sm:leading-[1.1]">{t.title}</h2>
       <p class="mt-5 text-lg text-white/70">{t.lead}</p>
       <ul class="mt-6 flex flex-wrap gap-2">
         {
@@ -113,10 +103,10 @@ const t = copy[locale]
       </ul>
     </div>
 
-    <div class="mt-14 grid gap-px overflow-hidden rounded-xl bg-white/10 sm:grid-cols-2 lg:grid-cols-4">
+    <div class="mt-14 grid divide-y divide-white/10 rounded-2xl border border-white/10 bg-white/[0.04] shadow-[0_24px_48px_-24px_rgb(0_0_0/0.6)] sm:grid-cols-2 sm:divide-y-0 lg:grid-cols-4 lg:divide-x">
       {
-        t.items.map((item) => (
-          <div class="bg-deep p-7">
+        t.items.map((item, i) => (
+          <div class:list={['p-7', i > 1 && 'sm:border-t sm:border-white/10 lg:border-t-0', i % 2 === 1 && 'sm:border-l sm:border-white/10 lg:border-l-0']}>
             <span class="flex size-9 items-center justify-center rounded-lg border border-white/15 bg-white/5 text-primary-soft">
               <Icon name={item.icon} class="size-[18px]" />
             </span>

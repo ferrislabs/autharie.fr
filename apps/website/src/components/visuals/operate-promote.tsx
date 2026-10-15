@@ -59,7 +59,7 @@ export default function OperatePromote({ locale = 'en' }: { locale?: 'en' | 'fr'
               {t.staging} <span className="font-normal text-muted-foreground">· acme-staging</span>
             </p>
             <span className="flex items-center gap-2">
-              <code className="rounded border bg-muted/40 px-1.5 py-0.5 font-mono text-[11px]">1.5.0</code>
+              <code className="rounded border bg-muted/40 px-1.5 py-0.5 font-mono text-micro">1.5.0</code>
               <StatusBadge tone="success">{t.running}</StatusBadge>
             </span>
           </div>
@@ -91,21 +91,21 @@ export default function OperatePromote({ locale = 'en' }: { locale?: 'en' | 'fr'
               {t.production} <span className="font-normal text-muted-foreground">· acme-production</span>
             </p>
             <span className="flex items-center gap-2">
-              <code className="rounded border bg-background px-1.5 py-0.5 font-mono text-[11px]">{version}</code>
+              <code className="rounded border bg-background px-1.5 py-0.5 font-mono text-micro">{version}</code>
               <StatusBadge tone={busy ? 'progress' : 'success'}>{busy ? t.promoting : t.running}</StatusBadge>
             </span>
           </div>
           {busy && (
             <ol className="mt-3 flex gap-1.5">
               {t.steps.map((s, i) => (
-                <li key={s} className={cn('flex-1 rounded border px-1.5 py-1 text-center text-[10px]', i <= step! ? 'border-blue-300 bg-blue-100 text-blue-800' : 'text-muted-foreground')}>
+                <li key={s} className={cn('flex-1 rounded border px-1.5 py-1 text-center text-micro', i <= step! ? 'border-blue-300 bg-blue-100 text-blue-800' : 'text-muted-foreground')}>
                   {s}
                 </li>
               ))}
             </ol>
           )}
           {done && !busy && (
-            <button type="button" onClick={() => setVersion('1.4.2')} className="mt-3 text-[11px] text-muted-foreground underline underline-offset-2">
+            <button type="button" onClick={() => setVersion('1.4.2')} className="mt-3 text-micro text-muted-foreground underline underline-offset-2">
               {t.again}
             </button>
           )}

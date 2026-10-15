@@ -1,5 +1,4 @@
 ---
-import Icon from './icon.astro'
 import type { Locale } from '../i18n'
 
 interface Props {
@@ -10,57 +9,39 @@ const { locale = 'en' } = Astro.props
 
 const copy = {
   en: {
-    eyebrow: 'The problem',
     title: 'Your agents move faster than your access rules',
     lead: 'AI is everywhere now: assistants, automations, in-house agents. Identity and access were designed for people who click, not for software that acts on its own.',
     items: [
       {
-        icon: 'key',
         title: 'Agents with far too many rights',
         description: 'To move fast, they get an admin API key. One mistake, and the agent can do anything.',
       },
       {
-        icon: 'activity',
         title: 'No idea what happened',
         description: 'When an agent acts, nobody knows who started it, on whose behalf, or with which right.',
       },
       {
-        icon: 'lock',
         title: 'No stop button',
         description: 'An agent that runs away keeps going until someone notices the damage.',
-      },
-      {
-        icon: 'clock',
-        title: 'Identity, one more project',
-        description: 'Sign in, roles, security, compliance: weeks of work before your first customer.',
-      },
+      }
     ],
   },
   fr: {
-    eyebrow: 'Le problème',
     title: 'Vos agents vont plus vite que vos règles d’accès',
     lead: 'L’IA entre partout : assistants, automatisations, agents maison. Mais l’identité et les accès ont été pensés pour des humains qui cliquent, pas pour des logiciels qui agissent seuls.',
     items: [
       {
-        icon: 'key',
         title: 'Des agents avec beaucoup trop de droits',
         description: 'Pour aller vite, on leur donne une clé API admin. Une erreur, et l’agent peut tout faire.',
       },
       {
-        icon: 'activity',
         title: 'Aucune idée de ce qui s’est passé',
         description: 'Quand un agent agit, personne ne sait qui l’a lancé, au nom de qui, ni avec quel droit.',
       },
       {
-        icon: 'lock',
         title: 'Pas de bouton stop',
         description: 'Un agent qui s’emballe continue jusqu’à ce que quelqu’un remarque les dégâts.',
-      },
-      {
-        icon: 'clock',
-        title: 'L’identité, un chantier de plus',
-        description: 'Connexion, rôles, sécurité, conformité : des semaines de travail avant le premier client.',
-      },
+      }
     ],
   },
 }
@@ -68,20 +49,16 @@ const t = copy[locale]
 ---
 
 <section id="problem" class="scroll-mt-20 border-y bg-surface/50">
-  <div class="mx-auto grid max-w-6xl gap-12 px-5 py-20 sm:py-28 lg:grid-cols-[0.9fr_1.1fr] lg:gap-16">
-    <div>
-      <p class="eyebrow">{t.eyebrow}</p>
-      <h2 class="mt-4 text-balance text-3xl sm:text-[2.6rem] sm:leading-[1.1]">{t.title}</h2>
+  <div class="mx-auto max-w-6xl px-5 py-16 sm:py-20">
+    <div class="max-w-3xl">
+      <h2 class="text-balance text-3xl sm:text-[2.6rem] sm:leading-[1.1]">{t.title}</h2>
       <p class="mt-5 text-lg text-muted-foreground">{t.lead}</p>
     </div>
-    <ul class="grid gap-4 sm:grid-cols-2">
+    <ul class="mt-12 grid gap-8 sm:grid-cols-3 sm:gap-10">
       {
         t.items.map((item) => (
-          <li class="rounded-2xl border bg-card p-6">
-            <span class="flex size-9 items-center justify-center rounded-lg bg-red-50 text-red-700">
-              <Icon name={item.icon} class="size-[18px]" />
-            </span>
-            <h3 class="mt-4 font-semibold">{item.title}</h3>
+          <li class="border-t-2 border-ink pt-5">
+            <h3 class="font-semibold">{item.title}</h3>
             <p class="mt-1.5 text-sm leading-relaxed text-muted-foreground">{item.description}</p>
           </li>
         ))

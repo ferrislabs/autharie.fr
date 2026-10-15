@@ -23,7 +23,7 @@ export default function GrowthPath({ locale = 'en' }: { locale?: 'en' | 'fr' }) 
           <span className="text-2xl font-semibold tabular-nums">{nf.format(s.users)}</span>
         </div>
         <input type="range" min={0} max={stages.length - 1} step={1} value={i} onChange={(e) => setI(Number(e.target.value))} aria-label={t.users} aria-valuetext={`${nf.format(s.users)} ${t.users}`} className="slider w-full" />
-        <div className="flex justify-between text-[11px] text-muted-foreground">
+        <div className="flex justify-between text-micro text-muted-foreground">
           {stages.map((x) => <span key={x.users}>{nf.format(x.users)}</span>)}
         </div>
       </div>

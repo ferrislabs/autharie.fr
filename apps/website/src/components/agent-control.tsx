@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { PixelOtarie } from './pixel-otarie'
 import type { Locale } from '../i18n'
 
 const STEP_MS = 3200
@@ -49,11 +50,19 @@ const copy = {
       { time: '10:02', who: 'Accounting assistant', action: 'wants to read 12 invoices', verdict: 'allowed', label: 'Allowed', because: 'it can read invoices.', chip: 1 },
       { time: '10:04', who: 'Accounting assistant', action: 'wants to make a €4,800 transfer', verdict: 'blocked', label: 'Blocked', because: 'it can never make a bank transfer. Lea is notified.', chip: 7 },
       { time: '10:05', who: 'Its sub-agent', action: 'sends 48 emails in one minute', verdict: 'stopped', label: 'Stopped', because: 'it went over 30 actions a minute.', chip: 9 },
-      { time: '20:01', who: 'Accounting assistant', action: 'wants to read the invoices again', verdict: 'blocked', label: 'Refused', because: 'its access ended at 8 pm.', chip: 5 },
+      { time: '20:01', who: 'Accounting assistant', action: 'wants to read the invoices again', verdict: 'blocked', label: 'Blocked', because: 'its access ended at 8 pm.', chip: 5 },
     ] as Event[],
     stoppedTitle: 'You stopped the accounting assistant.',
     stoppedBody: 'Nothing it asks for goes through any more, starting now.',
     historyTitle: 'History',
+    watch: {
+      idle: 'Autharie is watching this agent.',
+      allowed: 'Autharie checked the rule: nothing to report.',
+      blocked: 'Autharie blocked the action and told Lea.',
+      stopped: 'Autharie cut the sub-agent before it did any damage.',
+      ended: 'Autharie closed its access at 8 pm, as planned.',
+      byYou: 'You cut access. Autharie refuses everything it asks for.',
+    },
   },
   fr: {
     agent: 'Assistant compta',
@@ -83,11 +92,19 @@ const copy = {
       { time: '10:02', who: 'Assistant compta', action: 'veut lire 12 factures', verdict: 'allowed', label: 'Autorisé', because: 'il peut lire les factures.', chip: 1 },
       { time: '10:04', who: 'Assistant compta', action: 'veut faire un virement de 4 800 €', verdict: 'blocked', label: 'Bloqué', because: 'il ne peut jamais faire de virement. Léa est prévenue.', chip: 7 },
       { time: '10:05', who: 'Son sous-agent', action: 'envoie 48 e-mails en une minute', verdict: 'stopped', label: 'Arrêté', because: 'il a dépassé 30 actions par minute.', chip: 9 },
-      { time: '20:01', who: 'Assistant compta', action: 'veut relire les factures', verdict: 'blocked', label: 'Refusé', because: 'son accès s’est terminé à 20 h.', chip: 5 },
+      { time: '20:01', who: 'Assistant compta', action: 'veut relire les factures', verdict: 'blocked', label: 'Bloqué', because: 'son accès s’est terminé à 20 h.', chip: 5 },
     ] as Event[],
     stoppedTitle: 'Vous avez arrêté l’assistant compta.',
     stoppedBody: 'Plus rien de ce qu’il demande ne passe, dès maintenant.',
     historyTitle: 'Historique',
+    watch: {
+      idle: 'Autharie veille sur cet agent.',
+      allowed: 'Autharie a vérifié la règle : rien à signaler.',
+      blocked: 'Autharie a bloqué l’action et prévenu Léa.',
+      stopped: 'Autharie a coupé le sous-agent avant les dégâts.',
+      ended: 'Autharie a fermé son accès à 20 h, comme prévu.',
+      byYou: 'Vous avez coupé l’accès. Autharie refuse tout ce qu’il demande.',
+    },
   },
 }
 
@@ -124,9 +141,12 @@ export function AgentControl({ locale = 'en' }: { locale?: Locale }) {
 
   const current = !stopped && step > 0 ? t.events[step - 1] : null
   const history = stopped ? [] : t.events.slice(0, Math.max(0, step - 1)).reverse()
+  const watch = stopped ? t.watch.byYou : current ? t.watch[current.chip === 5 ? 'ended' : current.verdict] : t.watch.idle
+  const alert = stopped || (current !== null && current.verdict !== 'allowed')
+  const watchKey = stopped ? 'you' : String(step)
 
   return (
-    <div className="overflow-hidden rounded-2xl border bg-card text-left shadow-xl shadow-primary/5">
+    <div className="overflow-hidden rounded-2xl border bg-card text-left shadow-lift">
       <div className="flex flex-wrap items-center gap-3 border-b px-5 py-4">
         <span className="flex size-10 items-center justify-center rounded-xl bg-ink text-sm font-semibold text-white" aria-hidden="true">
           {t.agent
@@ -139,7 +159,7 @@ export function AgentControl({ locale = 'en' }: { locale?: Locale }) {
           <span className="flex items-center gap-2">
             <span className="font-semibold">{t.agent}</span>
             <span
-              className={`rounded-full px-2 py-0.5 text-[11px] font-medium ${
+              className={`rounded-full px-2 py-0.5 text-micro font-medium ${
                 stopped ? 'bg-zinc-100 text-zinc-700' : 'bg-emerald-50 text-emerald-700'
               }`}
             >
@@ -219,13 +239,20 @@ export function AgentControl({ locale = 'en' }: { locale?: Locale }) {
           {history.map((e) => (
             <li key={e.time} className="flex gap-3">
               <span className="w-11 shrink-0 tabular-nums text-muted-foreground">{e.time}</span>
-              <span className="min-w-0 flex-1 truncate">
+              <span className="min-w-0 flex-1 leading-snug">
                 {e.who} {e.action}
               </span>
               <span className={`shrink-0 font-medium ${HISTORY_TEXT[e.verdict]}`}>{e.label}</span>
             </li>
           ))}
         </ul>
+      </div>
+
+      <div className="flex items-center gap-3 border-t bg-primary/[0.04] px-5 py-3">
+        <span key={watchKey} className={`shrink-0 ${alert ? 'otarie-alert' : ''}`}>
+          <PixelOtarie className="size-7" />
+        </span>
+        <p className={`text-sm ${alert ? 'font-medium text-ink' : 'text-muted-foreground'}`}>{watch}</p>
       </div>
     </div>
   )

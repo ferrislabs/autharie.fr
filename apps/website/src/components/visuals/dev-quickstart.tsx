@@ -49,10 +49,10 @@ export default function DevQuickstart({ locale = 'en' }: { locale?: 'en' | 'fr' 
             {t.rows.map(([pr, host]) => (
               <div key={pr} className="rounded-lg border p-2.5">
                 <div className="flex items-center justify-between">
-                  <code className="font-mono text-[11px]">{pr}</code>
+                  <code className="font-mono text-micro">{pr}</code>
                   <StatusBadge tone="success">OK</StatusBadge>
                 </div>
-                <p className="mt-1 truncate text-[11px] text-muted-foreground">{host}</p>
+                <p className="mt-1 truncate text-micro text-muted-foreground">{host}</p>
               </div>
             ))}
           </div>

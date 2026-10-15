@@ -10,7 +10,6 @@ const { locale = 'en' } = Astro.props
 
 const copy = {
   en: {
-    eyebrow: 'How it works',
     title: 'Agents under control in three steps',
     lead: 'No server, nothing to install, no security expert to hire. You decide, Autharie applies.',
     steps: [
@@ -42,7 +41,6 @@ const copy = {
     stop: 'Stop',
   },
   fr: {
-    eyebrow: 'Comment ça se passe',
     title: 'Des agents sous contrôle, en trois étapes',
     lead: 'Pas de serveur, rien à installer, pas d’expert sécurité à recruter. Vous décidez, Autharie applique.',
     steps: [
@@ -80,19 +78,18 @@ const t = copy[locale]
 <section id="how" class="scroll-mt-20">
   <div class="mx-auto max-w-6xl px-5 py-20 sm:py-28">
     <div class="mx-auto max-w-2xl text-center">
-      <p class="eyebrow">{t.eyebrow}</p>
-      <h2 class="mt-4 text-balance text-3xl sm:text-[2.6rem] sm:leading-[1.1]">{t.title}</h2>
+      <h2 class="text-balance text-3xl sm:text-[2.6rem] sm:leading-[1.1]">{t.title}</h2>
       <p class="mt-5 text-lg text-muted-foreground">{t.lead}</p>
     </div>
 
     <ol class="mt-14 grid gap-5 md:grid-cols-3">
       {
         t.steps.map((step, i) => (
-          <li class="flex flex-col overflow-hidden rounded-2xl border bg-surface">
-            <div class="flex h-60 items-center justify-center bg-gradient-to-br from-violet-100 via-white to-white px-6" aria-hidden="true">
+          <li class="flex flex-col overflow-hidden rounded-2xl border bg-card shadow-resting">
+            <div class="flex h-60 items-center justify-center border-b border-primary/10 bg-gradient-to-br from-violet-100/80 via-violet-50 to-surface px-6" aria-hidden="true">
               {i === 0 && (
-                <div class="w-full max-w-[15rem] rounded-xl border bg-card p-4 shadow-md">
-                  <p class="text-[11px] font-medium text-muted-foreground">{t.create.field}</p>
+                <div class="w-full max-w-[15rem] rounded-xl border bg-card p-4 shadow-raised">
+                  <p class="text-micro font-medium text-muted-foreground">{t.create.field}</p>
                   <div class="mt-1.5 flex gap-2">
                     <span class="flex-1 rounded-md border px-2.5 py-1.5 font-mono text-xs">{t.create.value}</span>
                     <span class="rounded-md bg-primary px-2.5 py-1.5 text-xs font-medium text-primary-foreground">{t.create.button}</span>
@@ -109,22 +106,22 @@ const t = copy[locale]
               {i === 1 && (
                 <ul class="w-full max-w-[16rem] space-y-2">
                   {t.apps.map(([name, how, icon]) => (
-                    <li class="flex items-center gap-2.5 rounded-lg border bg-card px-3 py-2 shadow-sm">
+                    <li class="flex items-center gap-2.5 rounded-lg border bg-card px-3 py-2 shadow-raised">
                       <span class:list={['flex size-6 items-center justify-center rounded-md', icon === 'users' ? 'bg-primary/10 text-primary' : 'bg-ink text-white']}>
                         <Icon name={icon} class="size-3.5" />
                       </span>
-                      <span class="flex-1 truncate text-xs font-medium">{name}</span>
-                      <span class="rounded-full bg-surface px-2 py-0.5 text-[10px] font-medium text-muted-foreground">{how}</span>
+                      <span class="flex-1 text-xs font-medium leading-tight">{name}</span>
+                      <span class="rounded-full bg-surface px-2 py-0.5 text-micro font-medium text-muted-foreground">{how}</span>
                     </li>
                   ))}
                 </ul>
               )}
               {i === 2 && (
-                <div class="w-full max-w-[15rem] rounded-xl border bg-card p-4 shadow-md">
+                <div class="w-full max-w-[15rem] rounded-xl border bg-card p-4 shadow-raised">
                   <ul class="space-y-1.5">
                     {t.rules.map(([icon, text], i) => (
                       <li class="flex items-center gap-2.5 text-xs">
-                        <span class:list={['w-16 shrink-0 rounded px-1.5 py-0.5 text-center text-[10px] font-semibold', i === 0 ? 'bg-emerald-50 text-emerald-700' : i === 1 ? 'bg-red-50 text-red-700' : 'bg-primary/10 text-primary']}>{icon}</span>
+                        <span class:list={['w-16 shrink-0 rounded px-1.5 py-0.5 text-center text-micro font-semibold', i === 0 ? 'bg-emerald-50 text-emerald-700' : i === 1 ? 'bg-red-50 text-red-700' : 'bg-primary/10 text-primary']}>{icon}</span>
                         {text}
                       </li>
                     ))}

@@ -10,9 +10,8 @@ const { locale = 'en' } = Astro.props
 
 const copy = {
   en: {
-    eyebrow: 'The platform',
     title: 'Everything to run identity and agents, in one place',
-    lead: 'Seven building blocks that work together, so you never stitch tools again.',
+    lead: 'Five building blocks that work together, so you never stitch tools again.',
     policies: {
       title: 'Access policies',
       description: 'Write in plain sentences what each agent and each user may do. As blocks for everyone, as code for your tech team.',
@@ -41,43 +40,29 @@ const copy = {
       ],
     },
     observability: {
-      title: 'Logs, traces and metrics',
-      description: 'Follow every request end to end, from the person to the agent to the tool.',
+      title: 'Traces and alerts',
+      description: 'Follow every request end to end, from the person to the agent to the tool, and get the important events in Slack, Discord or by email.',
       trace: ['Lea', 'Assistant', 'Stripe'],
       metric: 'Requests today',
     },
     alerting: {
-      title: 'Alerts where you work',
-      description: 'Important events land in Slack, Discord or your inbox the moment they happen.',
       channel: '#security',
       message: 'Transfer blocked for Accounting assistant. Lea is notified.',
-      channels: ['Slack', 'Discord', 'Email', 'Webhook'],
     },
-    connectTitle: 'Connect the agents you already use',
-    connectLead: 'Assistants, automations, in-house agents: they sign in with the standards the AI world already speaks.',
-    protocols: ['MCP', 'OpenID Connect', 'Dynamic registration (DCR)', 'Client metadata (CIMD)', 'API keys', 'Identity delegation', 'Reduced scopes'],
     governance: {
       title: 'User governance',
       description: 'For organisations with several levels: group, subsidiaries, branches, teams. Each level manages its own users and apps, and nothing beyond.',
       tree: [
-        ['Acme Group', '4 apps · 1,200 users', 0],
-        ['Acme France', '3 apps · 640 users', 1],
-        ['Lyon branch', '2 apps · 85 users', 2],
-        ['Acme Spain', '2 apps · 410 users', 1],
+        ['Acme Group', '1,200 users', 0],
+        ['Acme France', '640 users', 1],
+        ['Lyon branch', '85 users', 2],
+        ['Acme Spain', '410 users', 1],
       ],
-    },
-    branding: {
-      title: 'Your sign in pages and emails',
-      description: 'Colours, logo, language and wording: sign in, sign up and emails look like your product.',
-      signIn: 'Sign in to Acme',
-      email: 'Confirm your email',
-      button: 'Continue',
     },
   },
   fr: {
-    eyebrow: 'La plateforme',
     title: 'Tout pour piloter l’identité et vos agents, au même endroit',
-    lead: 'Sept briques qui fonctionnent ensemble, pour ne plus jamais assembler des outils à la main.',
+    lead: 'Cinq briques qui fonctionnent ensemble, pour ne plus jamais assembler des outils à la main.',
     policies: {
       title: 'Gestion des règles d’accès',
       description: 'Écrivez en phrases simples ce que chaque agent et chaque utilisateur peut faire. En blocs pour tout le monde, en code pour votre équipe tech.',
@@ -106,37 +91,24 @@ const copy = {
       ],
     },
     observability: {
-      title: 'Journaux, traces et métriques',
-      description: 'Suivez chaque requête de bout en bout, de la personne à l’agent jusqu’à l’outil.',
+      title: 'Traces et alertes',
+      description: 'Suivez chaque requête de bout en bout, de la personne à l’agent jusqu’à l’outil, et recevez les événements importants dans Slack, Discord ou par e-mail.',
       trace: ['Léa', 'Assistant', 'Stripe'],
       metric: 'Requêtes aujourd’hui',
     },
     alerting: {
-      title: 'Des alertes là où vous travaillez',
-      description: 'Les événements importants arrivent dans Slack, Discord ou par e-mail, au moment où ils se produisent.',
       channel: '#securite',
       message: 'Virement bloqué pour Assistant compta. Léa est prévenue.',
-      channels: ['Slack', 'Discord', 'E-mail', 'Webhook'],
     },
-    connectTitle: 'Connectez les agents que vous utilisez déjà',
-    connectLead: 'Assistants, automatisations, agents maison : ils se connectent avec les standards que le monde de l’IA parle déjà.',
-    protocols: ['MCP', 'OpenID Connect', 'Enregistrement dynamique (DCR)', 'Métadonnées client (CIMD)', 'Clés API', 'Délégation d’identité', 'Droits réduits'],
     governance: {
       title: 'Gouvernance des utilisateurs',
       description: 'Pour les structures à plusieurs niveaux : groupe, filiales, agences, équipes. Chaque niveau gère ses utilisateurs et ses applications, et rien au-delà.',
       tree: [
-        ['Groupe Acme', '4 applis · 1 200 utilisateurs', 0],
-        ['Acme France', '3 applis · 640 utilisateurs', 1],
-        ['Agence de Lyon', '2 applis · 85 utilisateurs', 2],
-        ['Acme Espagne', '2 applis · 410 utilisateurs', 1],
+        ['Groupe Acme', '1 200 utilisateurs', 0],
+        ['Acme France', '640 utilisateurs', 1],
+        ['Agence de Lyon', '85 utilisateurs', 2],
+        ['Acme Espagne', '410 utilisateurs', 1],
       ],
-    },
-    branding: {
-      title: 'Vos pages de connexion et vos e-mails',
-      description: 'Couleurs, logo, langue et textes : connexion, inscription et e-mails ressemblent à votre produit.',
-      signIn: 'Connexion à Acme',
-      email: 'Confirmez votre e-mail',
-      button: 'Continuer',
     },
   },
 }
@@ -147,16 +119,15 @@ const alertTone: Record<string, string> = {
   amber: 'bg-amber-50 text-amber-900 border-amber-200',
   violet: 'bg-primary/5 text-primary border-primary/20',
 }
-const card = 'flex flex-col overflow-hidden rounded-2xl border bg-card'
-const art = 'flex h-52 items-center justify-center border-b bg-gradient-to-br from-violet-50 via-white to-white px-6'
+const card = 'flex flex-col overflow-hidden rounded-2xl border bg-card shadow-resting'
+const art = 'flex h-52 items-center justify-center border-b border-primary/10 bg-gradient-to-br from-violet-100/80 via-violet-50 to-surface px-6'
 const body = 'p-6'
 ---
 
 <section id="solutions" class="scroll-mt-20">
   <div class="mx-auto max-w-6xl px-5 py-20 sm:py-28">
     <div class="mx-auto max-w-2xl text-center">
-      <p class="eyebrow">{t.eyebrow}</p>
-      <h2 class="mt-4 text-balance text-3xl sm:text-[2.6rem] sm:leading-[1.1]">{t.title}</h2>
+      <h2 class="text-balance text-3xl sm:text-[2.6rem] sm:leading-[1.1]">{t.title}</h2>
       <p class="mt-5 text-lg text-muted-foreground">{t.lead}</p>
     </div>
 
@@ -164,7 +135,7 @@ const body = 'p-6'
       <!-- Policies -->
       <article class:list={[card, 'lg:col-span-2']}>
         <div class={art} aria-hidden="true">
-          <div class="w-full max-w-lg rounded-xl border bg-card p-4 shadow-sm">
+          <div class="w-full max-w-lg rounded-xl border bg-card p-4 shadow-raised">
             <p class="text-sm leading-8">
               {t.policies.rule[0]} <span class="whitespace-nowrap rounded-md bg-primary/10 px-1.5 py-0.5 font-medium text-primary">{t.policies.rule[1]}</span>
               {' '}{t.policies.rule[2]} <span class="whitespace-nowrap rounded-md bg-primary/10 px-1.5 py-0.5 font-medium text-primary">{t.policies.rule[3]}</span>
@@ -194,15 +165,15 @@ const body = 'p-6'
           <ul class="w-full max-w-[16rem] space-y-2">
             {
               t.identities.rows.map(([name, kind, how]) => (
-                <li class="flex items-center gap-2.5 rounded-lg border bg-card px-3 py-2 shadow-sm">
-                  <span class:list={['flex size-6 shrink-0 items-center justify-center rounded-full text-[10px] font-semibold', kind === 'Agent' ? 'bg-ink text-white' : 'bg-primary/10 text-primary']}>
+                <li class="flex items-center gap-2.5 rounded-lg border bg-card px-3 py-2 shadow-raised">
+                  <span class:list={['flex size-6 shrink-0 items-center justify-center rounded-full text-micro font-semibold', kind === 'Agent' ? 'bg-ink text-white' : 'bg-primary/10 text-primary']}>
                     {name[0]}
                   </span>
                   <span class="min-w-0 flex-1">
                     <span class="block truncate text-xs font-medium">{name}</span>
-                    <span class="block text-[10px] text-muted-foreground">{kind}</span>
+                    <span class="block text-micro text-muted-foreground">{kind}</span>
                   </span>
-                  <span class="rounded-full bg-surface px-2 py-0.5 text-[10px] text-muted-foreground">{how}</span>
+                  <span class="rounded-full bg-surface px-2 py-0.5 text-micro text-muted-foreground">{how}</span>
                 </li>
               ))
             }
@@ -237,8 +208,8 @@ const body = 'p-6'
       <!-- Observability -->
       <article class={card}>
         <div class={art} aria-hidden="true">
-          <div class="w-full max-w-[16rem] rounded-xl border bg-card p-4 shadow-sm">
-            <div class="flex items-center gap-1.5 text-[11px] font-medium">
+          <div class="w-full max-w-[16rem] rounded-xl border bg-card p-4 shadow-raised">
+            <div class="flex items-center gap-1.5 text-micro font-medium">
               {
                 t.observability.trace.map((step, i) => (
                   <>
@@ -248,9 +219,13 @@ const body = 'p-6'
                 ))
               }
             </div>
-            <p class="mt-4 text-[10px] font-medium text-muted-foreground">{t.observability.metric}</p>
-            <div class="mt-1.5 flex h-14 items-end gap-1">
+            <p class="mt-4 text-micro font-medium text-muted-foreground">{t.observability.metric}</p>
+            <div class="mt-1.5 flex h-9 items-end gap-1">
               {bars.map((h) => <span class="flex-1 rounded-sm bg-primary/70" style={`height:${h}%`} />)}
+            </div>
+            <div class="mt-3 flex items-center gap-2 rounded-lg border bg-surface/70 px-2.5 py-1.5">
+              <span class="flex size-5 shrink-0 items-center justify-center rounded bg-primary text-micro font-bold text-white">A</span>
+              <span class="line-clamp-2 text-micro">{t.alerting.channel} · {t.alerting.message}</span>
             </div>
           </div>
         </div>
@@ -260,43 +235,18 @@ const body = 'p-6'
         </div>
       </article>
 
-      <!-- Alerting -->
-      <article class={card}>
-        <div class={art} aria-hidden="true">
-          <div class="w-full max-w-[16rem]">
-            <div class="rounded-xl border bg-card p-3 shadow-sm">
-              <p class="text-[11px] font-semibold text-muted-foreground">{t.alerting.channel}</p>
-              <div class="mt-2 flex gap-2">
-                <span class="flex size-7 shrink-0 items-center justify-center rounded-md bg-primary text-[11px] font-bold text-white">A</span>
-                <p class="text-xs leading-relaxed">
-                  <span class="font-semibold">Autharie</span>
-                  <br />
-                  {t.alerting.message}
-                </p>
-              </div>
-            </div>
-            <div class="mt-3 flex flex-wrap justify-center gap-1.5">
-              {t.alerting.channels.map((c) => <span class="rounded-full border bg-card px-2.5 py-0.5 text-[10px] font-medium">{c}</span>)}
-            </div>
-          </div>
-        </div>
-        <div class={body}>
-          <h3 class="text-lg font-semibold">{t.alerting.title}</h3>
-          <p class="mt-1.5 text-sm leading-relaxed text-muted-foreground">{t.alerting.description}</p>
-        </div>
-      </article>
 
       <!-- Governance -->
-      <article class:list={[card, 'lg:col-span-2']}>
+      <article class={card}>
         <div class={art} aria-hidden="true">
           <ul class="w-full max-w-md space-y-1.5">
             {
               t.governance.tree.map(([name, meta, depth]) => (
-                <li class="flex items-center gap-3" style={`padding-left:${Number(depth) * 1.75}rem`}>
+                <li class="flex items-center gap-3" style={`padding-left:${Number(depth) * 1}rem`}>
                   {Number(depth) > 0 && <span class="h-px w-4 bg-primary/30" />}
-                  <span class="flex flex-1 items-center justify-between rounded-lg border bg-card px-3 py-2 shadow-sm">
+                  <span class="flex flex-1 items-center justify-between rounded-lg border bg-card px-3 py-2 shadow-raised">
                     <span class="text-xs font-semibold">{name}</span>
-                    <span class="text-[10px] text-muted-foreground">{meta}</span>
+                    <span class="text-micro text-muted-foreground">{meta}</span>
                   </span>
                 </li>
               ))
@@ -309,41 +259,7 @@ const body = 'p-6'
         </div>
       </article>
 
-      <!-- Branding -->
-      <article class={card}>
-        <div class={art} aria-hidden="true">
-          <div class="relative h-36 w-full max-w-[15rem]">
-            <div class="absolute left-0 top-0 w-40 rounded-xl border bg-card p-3 shadow-md">
-              <div class="flex items-center gap-1.5">
-                <span class="size-4 rounded bg-[#0f766e]" />
-                <span class="text-[11px] font-semibold">{t.branding.signIn}</span>
-              </div>
-              <div class="mt-2 h-5 rounded border" />
-              <div class="mt-1.5 rounded bg-[#0f766e] py-1 text-center text-[10px] font-medium text-white">{t.branding.button}</div>
-            </div>
-            <div class="absolute bottom-0 right-0 w-40 rounded-xl border bg-card p-3 shadow-lg">
-              <div class="h-1.5 w-10 rounded bg-[#0f766e]" />
-              <p class="mt-2 text-[11px] font-semibold">{t.branding.email}</p>
-              <div class="mt-1.5 h-1.5 w-full rounded bg-muted" />
-              <div class="mt-1 h-1.5 w-3/4 rounded bg-muted" />
-            </div>
-          </div>
-        </div>
-        <div class={body}>
-          <h3 class="text-lg font-semibold">{t.branding.title}</h3>
-          <p class="mt-1.5 text-sm leading-relaxed text-muted-foreground">{t.branding.description}</p>
-        </div>
-      </article>
     </div>
 
-    <div class="mt-5 flex flex-col gap-5 rounded-2xl border bg-surface/60 p-7 lg:flex-row lg:items-center lg:justify-between">
-      <div class="max-w-md">
-        <h3 class="font-semibold">{t.connectTitle}</h3>
-        <p class="mt-1.5 text-sm text-muted-foreground">{t.connectLead}</p>
-      </div>
-      <ul class="flex flex-wrap gap-2 lg:max-w-xl lg:justify-end">
-        {t.protocols.map((p) => <li class="rounded-full border bg-card px-3 py-1 text-xs font-medium">{p}</li>)}
-      </ul>
-    </div>
   </div>
 </section>

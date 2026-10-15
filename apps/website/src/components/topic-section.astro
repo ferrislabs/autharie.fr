@@ -47,8 +47,7 @@ const wide = !!topic.wide
   >
     <div class:list={[flip && !wide && 'lg:order-2', wide && 'grid gap-8 lg:grid-cols-[1fr_0.8fr] lg:items-end']}>
       <div>
-        <p class="eyebrow">{t.eyebrow}</p>
-        <h2 class="mt-4 text-balance text-3xl sm:text-[2.2rem] sm:leading-[1.1]">{t.title}</h2>
+        <h2 class="text-balance text-3xl sm:text-[2.6rem] sm:leading-[1.1]">{t.title}</h2>
         <p class="mt-5 max-w-2xl text-lg text-muted-foreground">{t.description}</p>
       </div>
       <ul class:list={['space-y-3', !wide && 'mt-7']}>

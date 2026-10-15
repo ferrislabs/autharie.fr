@@ -53,7 +53,7 @@ export default function ObserveLoad({ locale = 'en' }: { locale?: 'en' | 'fr' })
       <div className="grid grid-cols-3 divide-x border-b">
         {t.stats.map(([label, value]) => (
           <div key={label} className="p-3">
-            <p className="text-[11px] leading-tight text-muted-foreground">{label}</p>
+            <p className="text-micro leading-tight text-muted-foreground">{label}</p>
             <p className="mt-1 text-lg font-semibold">{value}</p>
           </div>
         ))}
@@ -62,13 +62,13 @@ export default function ObserveLoad({ locale = 'en' }: { locale?: 'en' | 'fr' })
         <p className="text-sm font-semibold">{t.replicas}</p>
         {replicas.map((r) => (
           <div key={r.name} className="grid grid-cols-[1fr_auto] items-center gap-x-4 gap-y-1 sm:grid-cols-[7.5rem_1fr_1fr]">
-            <span className="truncate font-mono text-[11px] text-muted-foreground">{r.name}</span>
-            <span className="col-span-2 flex items-center gap-2 text-[11px] sm:col-span-1">
+            <span className="truncate font-mono text-micro text-muted-foreground">{r.name}</span>
+            <span className="col-span-2 flex items-center gap-2 text-micro sm:col-span-1">
               <span className="w-14 shrink-0 text-muted-foreground">{t.cpu}</span>
               <Bar value={r.cpu} warn={r.cpu > 65} />
               <span className="w-8 text-right tabular-nums">{r.cpu}%</span>
             </span>
-            <span className="col-span-2 flex items-center gap-2 text-[11px] sm:col-span-1">
+            <span className="col-span-2 flex items-center gap-2 text-micro sm:col-span-1">
               <span className="w-14 shrink-0 text-muted-foreground">{t.mem}</span>
               <Bar value={r.mem} />
               <span className="w-8 text-right tabular-nums">{r.mem}%</span>
@@ -81,7 +81,7 @@ export default function ObserveLoad({ locale = 'en' }: { locale?: 'en' | 'fr' })
           <p className="text-sm font-semibold">{t.byClient}</p>
           {clients.map(([name, share]) => (
             <div key={name} className="flex items-center gap-2 text-xs">
-              <span className="w-24 shrink-0 truncate font-mono text-[11px]">{name}</span>
+              <span className="w-24 shrink-0 truncate font-mono text-micro">{name}</span>
               <Bar value={share * 2} />
               <span className="w-8 text-right tabular-nums text-muted-foreground">{share}%</span>
             </div>

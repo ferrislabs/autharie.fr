@@ -13,13 +13,15 @@ const { locale = 'en' } = Astro.props
 
 const copy = {
   en: {
-    title: 'Get back to building your product',
-    body: 'Tell us what you are building. We set up your sign in, and identity stops being one more thing to carry.',
+    title: 'Put your first agent under control',
+    body: 'Tell us which agents you run. We open your space, and you write your first rule in a few minutes.',
+    next: 'We read every request ourselves and open spaces in small groups during the private beta.',
     talk: 'Talk to the founders',
   },
   fr: {
-    title: 'Retournez à votre produit',
-    body: "Dites-nous ce que vous construisez. Nous mettons en place votre connexion, et l'identité cesse d'être un poids de plus.",
+    title: 'Mettez votre premier agent sous contrôle',
+    body: "Dites-nous quels agents vous faites travailler. Nous ouvrons votre espace, et vous écrivez votre première règle en quelques minutes.",
+    next: 'Nous lisons chaque demande nous-mêmes et ouvrons les espaces par petits groupes pendant la bêta privée.',
     talk: 'Parler aux fondateurs',
   },
 }
@@ -29,7 +31,7 @@ const cta = primaryCta(locale, consoleUrl)
 
 <section class="bg-deep text-white">
   <div class="mx-auto max-w-6xl px-5 py-20 text-center sm:py-28">
-    <h2 class="mx-auto max-w-2xl text-3xl text-white sm:text-[2.7rem] sm:leading-[1.1]">
+    <h2 class="mx-auto max-w-2xl text-3xl text-white sm:text-[2.6rem] sm:leading-[1.1]">
       {t.title}
     </h2>
     <p class="mx-auto mt-5 max-w-xl text-lg text-white/70">
@@ -50,5 +52,6 @@ const cta = primaryCta(locale, consoleUrl)
         <span>{t.talk}</span>
       </a>
     </div>
+    <p class="mx-auto mt-6 max-w-md text-sm text-white/70">{t.next}</p>
   </div>
 </section>

@@ -10,7 +10,6 @@ const { locale = 'en' } = Astro.props
 
 const copy = {
   en: {
-    eyebrow: 'Who it is for',
     title: 'From the first project to the growing company',
     people: [
       {
@@ -41,7 +40,6 @@ const copy = {
     },
   },
   fr: {
-    eyebrow: 'Pour qui',
     title: 'Du premier projet à l’entreprise qui accélère',
     people: [
       {
@@ -78,14 +76,13 @@ const t = copy[locale]
 <section id="for-who" class="scroll-mt-20">
   <div class="mx-auto max-w-6xl px-5 py-20 sm:py-28">
     <div class="mx-auto max-w-2xl text-center">
-      <p class="eyebrow">{t.eyebrow}</p>
-      <h2 class="mt-4 text-balance text-3xl sm:text-[2.6rem] sm:leading-[1.1]">{t.title}</h2>
+      <h2 class="text-balance text-3xl sm:text-[2.6rem] sm:leading-[1.1]">{t.title}</h2>
     </div>
 
     <div class="mt-14 grid gap-5 md:grid-cols-3">
       {
         t.people.map((p) => (
-          <div class="flex flex-col rounded-2xl border bg-card p-7">
+          <div class="flex flex-col rounded-2xl border bg-card p-7 shadow-resting">
             <span class="flex items-center gap-2 text-sm font-medium text-primary">
               <Icon name={p.icon} class="size-4" />
               {p.who}
@@ -104,7 +101,7 @@ const t = copy[locale]
           {t.platform.who}
         </span>
         <h3 class="mt-3 text-xl font-semibold text-white">{t.platform.title}</h3>
-        <p class="mt-2 text-sm leading-relaxed text-white/70">{t.platform.description}</p>
+        <p class="mt-2 max-w-[65ch] text-sm leading-relaxed text-white/70">{t.platform.description}</p>
       </div>
       <a
         href={`${localePath(locale, '/contact')}?topic=other`}
