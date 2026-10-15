@@ -1,6 +1,6 @@
 ---
 import { Code } from 'astro:components'
-import { localePath, type Locale } from '../i18n'
+import { localePath, ui, type Locale } from '../i18n'
 import Icon from './icon.astro'
 
 const manifest = `apiVersion: autharie.fr/v1alpha
@@ -133,17 +133,17 @@ const t = copy[locale]
               >autharie.fr/v1alpha</span
             >
           </div>
-          <div class="code-surface overflow-x-auto p-5 text-[12.5px] leading-[1.7]">
+          <div role="region" aria-label={ui[locale].codeExample} class="code-surface overflow-x-auto p-5 text-[12.5px] leading-[1.7]">
             <Code code={manifest} lang="yaml" theme="poimandres" />
           </div>
         </div>
 
         <div class="mt-4 overflow-hidden rounded-xl border bg-deep">
-          <pre class="overflow-x-auto px-5 py-4 font-mono text-[11.5px] leading-relaxed text-white/70"><code>$ kubectl get identityinstances
+          <pre tabindex="0" role="region" aria-label={ui[locale].codeExample} class="overflow-x-auto px-5 py-4 font-mono text-[11.5px] leading-relaxed text-white/70"><code>$ kubectl get identityinstances
 NAME              PROVIDER    VERSION   PHASE     READY   AGE
 acme-production   ferriskey   1.4.2     Running   true    97d
 acme-staging      ferriskey   1.4.2     Running   true    97d
-legacy-sso        keycloak    26.0.7    Upgrading false   41d</code></pre>
+internal-sso      ferriskey   1.4.1     Upgrading false   41d</code></pre>
         </div>
       </div>
     </div>

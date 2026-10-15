@@ -1,0 +1,349 @@
+---
+import Icon from './icon.astro'
+import type { Locale } from '../i18n'
+
+interface Props {
+  locale?: Locale
+}
+
+const { locale = 'en' } = Astro.props
+
+const copy = {
+  en: {
+    eyebrow: 'The platform',
+    title: 'Everything to run identity and agents, in one place',
+    lead: 'Seven building blocks that work together, so you never stitch tools again.',
+    policies: {
+      title: 'Access policies',
+      description: 'Write in plain sentences what each agent and each user may do. As blocks for everyone, as code for your tech team.',
+      rule: ['Accounting assistant can', 'read invoices', 'for', 'Lea', 'until', '8 pm'],
+      verdicts: [
+        ['Read 12 invoices', 'Allowed'],
+        ['€4,800 transfer', 'Blocked'],
+      ],
+    },
+    identities: {
+      title: 'Identity management',
+      description: 'People, agents and apps each get their own identity, reduced rights and clear delegation. Sign in with Google or the identity providers you already use.',
+      rows: [
+        ['Lea Martin', 'Person', 'Google'],
+        ['Accounting assistant', 'Agent', 'for Lea'],
+        ['Billing service', 'App', 'API key'],
+      ],
+    },
+    security: {
+      title: 'Account security',
+      description: 'Event analysis, privilege escalation prevention and permission audits with Seawatch.',
+      alerts: [
+        ['Privilege escalation blocked', 'red'],
+        ['Unusual sign in, Lisbon', 'amber'],
+        ['Role unused for 90 days', 'violet'],
+      ],
+    },
+    observability: {
+      title: 'Logs, traces and metrics',
+      description: 'Follow every request end to end, from the person to the agent to the tool.',
+      trace: ['Lea', 'Assistant', 'Stripe'],
+      metric: 'Requests today',
+    },
+    alerting: {
+      title: 'Alerts where you work',
+      description: 'Important events land in Slack, Discord or your inbox the moment they happen.',
+      channel: '#security',
+      message: 'Transfer blocked for Accounting assistant. Lea is notified.',
+      channels: ['Slack', 'Discord', 'Email', 'Webhook'],
+    },
+    connectTitle: 'Connect the agents you already use',
+    connectLead: 'Assistants, automations, in-house agents: they sign in with the standards the AI world already speaks.',
+    protocols: ['MCP', 'OpenID Connect', 'Dynamic registration (DCR)', 'Client metadata (CIMD)', 'API keys', 'Identity delegation', 'Reduced scopes'],
+    governance: {
+      title: 'User governance',
+      description: 'For organisations with several levels: group, subsidiaries, branches, teams. Each level manages its own users and apps, and nothing beyond.',
+      tree: [
+        ['Acme Group', '4 apps · 1,200 users', 0],
+        ['Acme France', '3 apps · 640 users', 1],
+        ['Lyon branch', '2 apps · 85 users', 2],
+        ['Acme Spain', '2 apps · 410 users', 1],
+      ],
+    },
+    branding: {
+      title: 'Your sign in pages and emails',
+      description: 'Colours, logo, language and wording: sign in, sign up and emails look like your product.',
+      signIn: 'Sign in to Acme',
+      email: 'Confirm your email',
+      button: 'Continue',
+    },
+  },
+  fr: {
+    eyebrow: 'La plateforme',
+    title: 'Tout pour piloter l’identité et vos agents, au même endroit',
+    lead: 'Sept briques qui fonctionnent ensemble, pour ne plus jamais assembler des outils à la main.',
+    policies: {
+      title: 'Gestion des règles d’accès',
+      description: 'Écrivez en phrases simples ce que chaque agent et chaque utilisateur peut faire. En blocs pour tout le monde, en code pour votre équipe tech.',
+      rule: ['Assistant compta peut', 'lire les factures', 'pour', 'Léa', 'jusqu’à', '20 h'],
+      verdicts: [
+        ['Lecture de 12 factures', 'Autorisé'],
+        ['Virement de 4 800 €', 'Bloqué'],
+      ],
+    },
+    identities: {
+      title: 'Gestion des identités',
+      description: 'Humains, agents et applications ont chacun leur identité, des droits réduits et une délégation claire. Connexion par Google ou les fournisseurs d’identité que vous utilisez déjà.',
+      rows: [
+        ['Léa Martin', 'Humain', 'Google'],
+        ['Assistant compta', 'Agent', 'pour Léa'],
+        ['Service facturation', 'Appli', 'Clé API'],
+      ],
+    },
+    security: {
+      title: 'Sécurisation de vos comptes',
+      description: 'Analyse des événements, prévention des élévations de privilèges et audit des permissions avec Seawatch.',
+      alerts: [
+        ['Élévation de privilège bloquée', 'red'],
+        ['Connexion inhabituelle, Lisbonne', 'amber'],
+        ['Rôle inutilisé depuis 90 jours', 'violet'],
+      ],
+    },
+    observability: {
+      title: 'Journaux, traces et métriques',
+      description: 'Suivez chaque requête de bout en bout, de la personne à l’agent jusqu’à l’outil.',
+      trace: ['Léa', 'Assistant', 'Stripe'],
+      metric: 'Requêtes aujourd’hui',
+    },
+    alerting: {
+      title: 'Des alertes là où vous travaillez',
+      description: 'Les événements importants arrivent dans Slack, Discord ou par e-mail, au moment où ils se produisent.',
+      channel: '#securite',
+      message: 'Virement bloqué pour Assistant compta. Léa est prévenue.',
+      channels: ['Slack', 'Discord', 'E-mail', 'Webhook'],
+    },
+    connectTitle: 'Connectez les agents que vous utilisez déjà',
+    connectLead: 'Assistants, automatisations, agents maison : ils se connectent avec les standards que le monde de l’IA parle déjà.',
+    protocols: ['MCP', 'OpenID Connect', 'Enregistrement dynamique (DCR)', 'Métadonnées client (CIMD)', 'Clés API', 'Délégation d’identité', 'Droits réduits'],
+    governance: {
+      title: 'Gouvernance des utilisateurs',
+      description: 'Pour les structures à plusieurs niveaux : groupe, filiales, agences, équipes. Chaque niveau gère ses utilisateurs et ses applications, et rien au-delà.',
+      tree: [
+        ['Groupe Acme', '4 applis · 1 200 utilisateurs', 0],
+        ['Acme France', '3 applis · 640 utilisateurs', 1],
+        ['Agence de Lyon', '2 applis · 85 utilisateurs', 2],
+        ['Acme Espagne', '2 applis · 410 utilisateurs', 1],
+      ],
+    },
+    branding: {
+      title: 'Vos pages de connexion et vos e-mails',
+      description: 'Couleurs, logo, langue et textes : connexion, inscription et e-mails ressemblent à votre produit.',
+      signIn: 'Connexion à Acme',
+      email: 'Confirmez votre e-mail',
+      button: 'Continuer',
+    },
+  },
+}
+const t = copy[locale]
+const bars = [38, 52, 44, 61, 57, 72, 66, 80, 74, 88, 70, 92]
+const alertTone: Record<string, string> = {
+  red: 'bg-red-50 text-red-800 border-red-200',
+  amber: 'bg-amber-50 text-amber-900 border-amber-200',
+  violet: 'bg-primary/5 text-primary border-primary/20',
+}
+const card = 'flex flex-col overflow-hidden rounded-2xl border bg-card'
+const art = 'flex h-52 items-center justify-center border-b bg-gradient-to-br from-violet-50 via-white to-white px-6'
+const body = 'p-6'
+---
+
+<section id="solutions" class="scroll-mt-20">
+  <div class="mx-auto max-w-6xl px-5 py-20 sm:py-28">
+    <div class="mx-auto max-w-2xl text-center">
+      <p class="eyebrow">{t.eyebrow}</p>
+      <h2 class="mt-4 text-balance text-3xl sm:text-[2.6rem] sm:leading-[1.1]">{t.title}</h2>
+      <p class="mt-5 text-lg text-muted-foreground">{t.lead}</p>
+    </div>
+
+    <div class="mt-14 grid gap-5 lg:grid-cols-3">
+      <!-- Policies -->
+      <article class:list={[card, 'lg:col-span-2']}>
+        <div class={art} aria-hidden="true">
+          <div class="w-full max-w-lg rounded-xl border bg-card p-4 shadow-sm">
+            <p class="text-sm leading-8">
+              {t.policies.rule[0]} <span class="whitespace-nowrap rounded-md bg-primary/10 px-1.5 py-0.5 font-medium text-primary">{t.policies.rule[1]}</span>
+              {' '}{t.policies.rule[2]} <span class="whitespace-nowrap rounded-md bg-primary/10 px-1.5 py-0.5 font-medium text-primary">{t.policies.rule[3]}</span>
+              {' '}{t.policies.rule[4]} <span class="whitespace-nowrap rounded-md bg-primary/10 px-1.5 py-0.5 font-medium text-primary">{t.policies.rule[5]}</span>
+            </p>
+            <ul class="mt-3 space-y-1.5 border-t pt-3">
+              {
+                t.policies.verdicts.map(([what, verdict], i) => (
+                  <li class="flex items-center justify-between text-xs">
+                    <span>{what}</span>
+                    <span class:list={['rounded px-2 py-0.5 font-semibold', i === 0 ? 'bg-emerald-50 text-emerald-700' : 'bg-red-50 text-red-700']}>{verdict}</span>
+                  </li>
+                ))
+              }
+            </ul>
+          </div>
+        </div>
+        <div class={body}>
+          <h3 class="text-lg font-semibold">{t.policies.title}</h3>
+          <p class="mt-1.5 text-sm leading-relaxed text-muted-foreground">{t.policies.description}</p>
+        </div>
+      </article>
+
+      <!-- Identities -->
+      <article class={card}>
+        <div class={art} aria-hidden="true">
+          <ul class="w-full max-w-[16rem] space-y-2">
+            {
+              t.identities.rows.map(([name, kind, how]) => (
+                <li class="flex items-center gap-2.5 rounded-lg border bg-card px-3 py-2 shadow-sm">
+                  <span class:list={['flex size-6 shrink-0 items-center justify-center rounded-full text-[10px] font-semibold', kind === 'Agent' ? 'bg-ink text-white' : 'bg-primary/10 text-primary']}>
+                    {name[0]}
+                  </span>
+                  <span class="min-w-0 flex-1">
+                    <span class="block truncate text-xs font-medium">{name}</span>
+                    <span class="block text-[10px] text-muted-foreground">{kind}</span>
+                  </span>
+                  <span class="rounded-full bg-surface px-2 py-0.5 text-[10px] text-muted-foreground">{how}</span>
+                </li>
+              ))
+            }
+          </ul>
+        </div>
+        <div class={body}>
+          <h3 class="text-lg font-semibold">{t.identities.title}</h3>
+          <p class="mt-1.5 text-sm leading-relaxed text-muted-foreground">{t.identities.description}</p>
+        </div>
+      </article>
+
+      <!-- Security -->
+      <article class={card}>
+        <div class={art} aria-hidden="true">
+          <ul class="w-full max-w-[16rem] space-y-2">
+            {
+              t.security.alerts.map(([text, tone]) => (
+                <li class:list={['flex items-center gap-2 rounded-lg border px-3 py-2 text-xs font-medium', alertTone[tone]]}>
+                  <Icon name="shield" class="size-3.5 shrink-0" />
+                  {text}
+                </li>
+              ))
+            }
+          </ul>
+        </div>
+        <div class={body}>
+          <h3 class="text-lg font-semibold">{t.security.title}</h3>
+          <p class="mt-1.5 text-sm leading-relaxed text-muted-foreground">{t.security.description}</p>
+        </div>
+      </article>
+
+      <!-- Observability -->
+      <article class={card}>
+        <div class={art} aria-hidden="true">
+          <div class="w-full max-w-[16rem] rounded-xl border bg-card p-4 shadow-sm">
+            <div class="flex items-center gap-1.5 text-[11px] font-medium">
+              {
+                t.observability.trace.map((step, i) => (
+                  <>
+                    {i > 0 && <span class="h-px flex-1 bg-primary/30" />}
+                    <span class="rounded-md bg-primary/10 px-2 py-0.5 text-primary">{step}</span>
+                  </>
+                ))
+              }
+            </div>
+            <p class="mt-4 text-[10px] font-medium text-muted-foreground">{t.observability.metric}</p>
+            <div class="mt-1.5 flex h-14 items-end gap-1">
+              {bars.map((h) => <span class="flex-1 rounded-sm bg-primary/70" style={`height:${h}%`} />)}
+            </div>
+          </div>
+        </div>
+        <div class={body}>
+          <h3 class="text-lg font-semibold">{t.observability.title}</h3>
+          <p class="mt-1.5 text-sm leading-relaxed text-muted-foreground">{t.observability.description}</p>
+        </div>
+      </article>
+
+      <!-- Alerting -->
+      <article class={card}>
+        <div class={art} aria-hidden="true">
+          <div class="w-full max-w-[16rem]">
+            <div class="rounded-xl border bg-card p-3 shadow-sm">
+              <p class="text-[11px] font-semibold text-muted-foreground">{t.alerting.channel}</p>
+              <div class="mt-2 flex gap-2">
+                <span class="flex size-7 shrink-0 items-center justify-center rounded-md bg-primary text-[11px] font-bold text-white">A</span>
+                <p class="text-xs leading-relaxed">
+                  <span class="font-semibold">Autharie</span>
+                  <br />
+                  {t.alerting.message}
+                </p>
+              </div>
+            </div>
+            <div class="mt-3 flex flex-wrap justify-center gap-1.5">
+              {t.alerting.channels.map((c) => <span class="rounded-full border bg-card px-2.5 py-0.5 text-[10px] font-medium">{c}</span>)}
+            </div>
+          </div>
+        </div>
+        <div class={body}>
+          <h3 class="text-lg font-semibold">{t.alerting.title}</h3>
+          <p class="mt-1.5 text-sm leading-relaxed text-muted-foreground">{t.alerting.description}</p>
+        </div>
+      </article>
+
+      <!-- Governance -->
+      <article class:list={[card, 'lg:col-span-2']}>
+        <div class={art} aria-hidden="true">
+          <ul class="w-full max-w-md space-y-1.5">
+            {
+              t.governance.tree.map(([name, meta, depth]) => (
+                <li class="flex items-center gap-3" style={`padding-left:${Number(depth) * 1.75}rem`}>
+                  {Number(depth) > 0 && <span class="h-px w-4 bg-primary/30" />}
+                  <span class="flex flex-1 items-center justify-between rounded-lg border bg-card px-3 py-2 shadow-sm">
+                    <span class="text-xs font-semibold">{name}</span>
+                    <span class="text-[10px] text-muted-foreground">{meta}</span>
+                  </span>
+                </li>
+              ))
+            }
+          </ul>
+        </div>
+        <div class={body}>
+          <h3 class="text-lg font-semibold">{t.governance.title}</h3>
+          <p class="mt-1.5 text-sm leading-relaxed text-muted-foreground">{t.governance.description}</p>
+        </div>
+      </article>
+
+      <!-- Branding -->
+      <article class={card}>
+        <div class={art} aria-hidden="true">
+          <div class="relative h-36 w-full max-w-[15rem]">
+            <div class="absolute left-0 top-0 w-40 rounded-xl border bg-card p-3 shadow-md">
+              <div class="flex items-center gap-1.5">
+                <span class="size-4 rounded bg-[#0f766e]" />
+                <span class="text-[11px] font-semibold">{t.branding.signIn}</span>
+              </div>
+              <div class="mt-2 h-5 rounded border" />
+              <div class="mt-1.5 rounded bg-[#0f766e] py-1 text-center text-[10px] font-medium text-white">{t.branding.button}</div>
+            </div>
+            <div class="absolute bottom-0 right-0 w-40 rounded-xl border bg-card p-3 shadow-lg">
+              <div class="h-1.5 w-10 rounded bg-[#0f766e]" />
+              <p class="mt-2 text-[11px] font-semibold">{t.branding.email}</p>
+              <div class="mt-1.5 h-1.5 w-full rounded bg-muted" />
+              <div class="mt-1 h-1.5 w-3/4 rounded bg-muted" />
+            </div>
+          </div>
+        </div>
+        <div class={body}>
+          <h3 class="text-lg font-semibold">{t.branding.title}</h3>
+          <p class="mt-1.5 text-sm leading-relaxed text-muted-foreground">{t.branding.description}</p>
+        </div>
+      </article>
+    </div>
+
+    <div class="mt-5 flex flex-col gap-5 rounded-2xl border bg-surface/60 p-7 lg:flex-row lg:items-center lg:justify-between">
+      <div class="max-w-md">
+        <h3 class="font-semibold">{t.connectTitle}</h3>
+        <p class="mt-1.5 text-sm text-muted-foreground">{t.connectLead}</p>
+      </div>
+      <ul class="flex flex-wrap gap-2 lg:max-w-xl lg:justify-end">
+        {t.protocols.map((p) => <li class="rounded-full border bg-card px-3 py-1 text-xs font-medium">{p}</li>)}
+      </ul>
+    </div>
+  </div>
+</section>

@@ -1,5 +1,5 @@
 ---
-import { localePath, type Locale } from '../i18n'
+import { localePath, ui, type Locale } from '../i18n'
 import Icon from './icon.astro'
 import { Button, ConsoleWindow, Icon as ConsoleIcon, NavTabs, Page, PageTitle, StatusBadge, TopBar } from './console/ui'
 
@@ -180,7 +180,7 @@ const command = `helm upgrade --install autharie-dataplane charts/autharie-datap
           </div>
 
           <div class="border-t bg-deep px-5 py-4">
-            <pre class="overflow-x-auto font-mono text-[11px] leading-relaxed text-white/80"><code>{command}</code></pre>
+            <pre tabindex="0" role="region" aria-label={ui[locale].codeExample} class="overflow-x-auto font-mono text-[11px] leading-relaxed text-white/80"><code>{command}</code></pre>
           </div>
         </div>
       </div>

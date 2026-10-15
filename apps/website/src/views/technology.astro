@@ -4,6 +4,7 @@ import Base from '../layouts/base.astro'
 import { SiteHeader } from '../components/site-header'
 import Icon from '../components/icon.astro'
 import TechSection from '../components/tech-section.astro'
+import AgentPolicySection from '../components/agent-policy-section.astro'
 import DeclarativeSection from '../components/declarative-section.astro'
 import DataplaneSection from '../components/dataplane-section.astro'
 import CtaSection from '../components/cta-section.astro'
@@ -30,7 +31,7 @@ const copy = {
     rustEyebrow: 'Rust',
     rustTitle: 'Written in Rust',
     rustLead:
-      'Everything Autharie adds on top of the identity providers is Rust. A control plane that exposes the API, an operator that looks after instances, and the agent that runs in your cluster.',
+      'Ferriskey is written in Rust, and so is everything Autharie adds on top of it. A control plane that exposes the API, an operator that looks after instances, and the agent that runs in your cluster.',
     rust: [
       {
         icon: 'zap',
@@ -57,9 +58,9 @@ const copy = {
     openSource: [
       {
         icon: 'branch',
-        title: 'Ferriskey and Keycloak',
+        title: 'Ferriskey',
         description:
-          'Both identity providers are open source. You can read the code that handles your users’ sign in.',
+          'The identity provider is open source. You can read the code that handles your users’ sign in.',
       },
       {
         icon: 'archive',
@@ -88,7 +89,7 @@ const copy = {
     rustEyebrow: 'Rust',
     rustTitle: 'Écrit en Rust',
     rustLead:
-      'Tout ce qu’Autharie ajoute aux fournisseurs d’identité est écrit en Rust. Un control plane qui expose l’API, un opérateur qui s’occupe des instances, et l’agent qui tourne dans votre cluster.',
+      'Ferriskey est écrit en Rust, comme tout ce qu’Autharie ajoute par-dessus. Un control plane qui expose l’API, un opérateur qui s’occupe des instances, et l’agent qui tourne dans votre cluster.',
     rust: [
       {
         icon: 'zap',
@@ -115,9 +116,9 @@ const copy = {
     openSource: [
       {
         icon: 'branch',
-        title: 'Ferriskey et Keycloak',
+        title: 'Ferriskey',
         description:
-          'Les deux fournisseurs d’identité sont open source. Vous pouvez lire le code qui gère la connexion de vos utilisateurs.',
+          'Le fournisseur d’identité est open source. Vous pouvez lire le code qui gère la connexion de vos utilisateurs.',
       },
       {
         icon: 'archive',
@@ -142,7 +143,7 @@ const anchors = ['#rust', '#kubernetes', '#dataplane', '#open-source']
 <Base title={t.title} description={t.description}>
   <SiteHeader docsUrl={docsUrl} consoleUrl={consoleUrl} locale={locale} pathname={Astro.url.pathname} client:load transition:persist={`site-header-${locale}`} />
 
-  <main>
+  <main id="main" tabindex="-1">
     <section class="relative overflow-hidden pb-16 pt-14 sm:pb-20 sm:pt-20">
       <div class="bg-grid pointer-events-none absolute inset-0 -z-10 h-[460px]" aria-hidden="true">
       </div>
@@ -169,6 +170,8 @@ const anchors = ['#rust', '#kubernetes', '#dataplane', '#open-source']
     </section>
 
     <TechSection locale={locale} />
+
+    <AgentPolicySection locale={locale} />
 
     <section id="rust" class="scroll-mt-20">
       <div class="mx-auto max-w-6xl px-5 py-20 sm:py-28">

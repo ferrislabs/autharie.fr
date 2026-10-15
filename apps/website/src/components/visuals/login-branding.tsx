@@ -3,8 +3,8 @@ import { cn } from '@explainer/ui'
 import { ConsoleWindow, Icon } from '../console/ui'
 
 const copy = {
-  en: { controls: 'Appearance', accent: 'Accent', lang: 'Language', social: 'Sign in with a company directory', passkey: 'Passkey sign in', title: 'Sign in to Acme', email: 'Email', pass: 'Password', cta: 'Continue', or: 'or', dir: 'Company directory', pk: 'Use a passkey', note: 'Your login, your colours. The service behind it stays ours to run.' },
-  fr: { controls: 'Apparence', accent: 'Couleur', lang: 'Langue', social: 'Connexion par annuaire d’entreprise', passkey: 'Connexion par passkey', title: 'Connexion à Acme', email: 'E-mail', pass: 'Mot de passe', cta: 'Continuer', or: 'ou', dir: 'Annuaire d’entreprise', pk: 'Utiliser une passkey', note: 'Votre connexion, vos couleurs. Le service derrière reste à nous d’exploiter.' },
+  en: { controls: 'Appearance', accent: 'Accent', lang: 'Language', social: 'Sign in with a company directory', passkey: 'Passkey sign in', title: 'Sign in to Acme', email: 'Email', pass: 'Password', cta: 'Continue', or: 'or', dir: 'Company directory', pk: 'Use a passkey', colors: ['Violet', 'Teal', 'Orange', 'Blue'], note: 'Your login, your colours. The service behind it stays ours to run.' },
+  fr: { controls: 'Apparence', accent: 'Couleur', lang: 'Langue', social: 'Connexion par annuaire d’entreprise', passkey: 'Connexion par passkey', title: 'Connexion à Acme', email: 'E-mail', pass: 'Mot de passe', cta: 'Continuer', or: 'ou', dir: 'Annuaire d’entreprise', pk: 'Utiliser une passkey', colors: ['Violet', 'Sarcelle', 'Orange', 'Bleu'], note: 'Votre connexion, vos couleurs. Le service derrière reste à nous d’exploiter.' },
 }
 const accents = ['#634ecf', '#0f766e', '#c2410c', '#1d4ed8']
 
@@ -31,8 +31,8 @@ export default function LoginBranding({ locale = 'en' }: { locale?: 'en' | 'fr' 
           <div className="space-y-2">
             <p className="text-xs text-muted-foreground">{ui.accent}</p>
             <div className="flex gap-2">
-              {accents.map((c) => (
-                <button key={c} type="button" aria-label={c} onClick={() => setAccent(c)} className={cn('h-6 w-6 rounded-full ring-offset-2 transition-shadow', accent === c && 'ring-2 ring-foreground/60')} style={{ background: c }} />
+              {accents.map((c, ci) => (
+                <button key={c} type="button" aria-label={ui.colors[ci]} aria-pressed={accent === c} onClick={() => setAccent(c)} className={cn('h-6 w-6 rounded-full ring-offset-2 transition-shadow', accent === c && 'ring-2 ring-foreground/60')} style={{ background: c }} />
               ))}
             </div>
           </div>
@@ -40,7 +40,7 @@ export default function LoginBranding({ locale = 'en' }: { locale?: 'en' | 'fr' 
             <p className="text-xs text-muted-foreground">{ui.lang}</p>
             <div className="flex gap-1.5">
               {(['en', 'fr'] as const).map((l) => (
-                <button key={l} type="button" onClick={() => setLang(l)} className={cn('rounded-md border px-2.5 py-1 text-xs uppercase', lang === l ? 'border-primary/40 bg-primary/10 font-medium text-primary' : 'hover:bg-accent')}>{l}</button>
+                <button key={l} type="button" aria-pressed={lang === l} onClick={() => setLang(l)} className={cn('rounded-md border px-2.5 py-1 text-xs uppercase', lang === l ? 'border-primary/40 bg-primary/10 font-medium text-primary' : 'hover:bg-accent')}>{l}</button>
               ))}
             </div>
           </div>

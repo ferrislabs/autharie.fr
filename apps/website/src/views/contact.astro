@@ -22,14 +22,13 @@ const copy = {
     eyebrow: 'Contact',
     h1a: 'Tell us what you run,',
     h1b: 'we will take it from there.',
-    lead: 'Early access, pricing, a migration, a question about security. A few lines are enough to start.',
+    lead: 'The beta, a migration, a question about security. A few lines are enough to start.',
     points: [
       'You write to people who run identity providers for a living.',
       'We answer with a proposal, not a sales sequence.',
       'Your details are used to answer you and for nothing else.',
     ],
     direct: 'Prefer email?',
-    simulator: 'Compare with running it yourself',
   },
   fr: {
     title: 'Nous contacter | Autharie',
@@ -37,14 +36,13 @@ const copy = {
     eyebrow: 'Contact',
     h1a: 'Dites-nous ce que vous faites tourner,',
     h1b: 'nous nous occupons du reste.',
-    lead: 'Accès anticipé, tarifs, une migration, une question de sécurité. Quelques lignes suffisent pour commencer.',
+    lead: 'La bêta, une migration, une question de sécurité. Quelques lignes suffisent pour commencer.',
     points: [
       'Vous écrivez à des personnes dont le métier est d’exploiter des fournisseurs d’identité.',
       'Nous répondons par une proposition, pas par une séquence commerciale.',
       'Vos informations servent à vous répondre, et à rien d’autre.',
     ],
     direct: 'Vous préférez l’e-mail ?',
-    simulator: 'Comparer avec une gestion en interne',
   },
 }
 const t = copy[locale]
@@ -53,7 +51,7 @@ const t = copy[locale]
 <Base title={t.title} description={t.description}>
   <SiteHeader docsUrl={docsUrl} consoleUrl={consoleUrl} locale={locale} pathname={Astro.url.pathname} client:load transition:persist={`site-header-${locale}`} />
 
-  <main>
+  <main id="main" tabindex="-1">
     <section class="relative overflow-hidden pb-20 pt-14 sm:pb-28 sm:pt-20">
       <div class="bg-grid pointer-events-none absolute inset-0 -z-10 h-[460px]" aria-hidden="true"></div>
       <div class="mx-auto grid max-w-6xl items-start gap-12 px-5 lg:grid-cols-[0.9fr_1.1fr] lg:gap-16">
@@ -82,13 +80,6 @@ const t = copy[locale]
             {t.direct}
             <a href="mailto:contact@ferrislabs.fr" class="font-medium text-primary hover:underline">contact@ferrislabs.fr</a>
           </p>
-          <a
-            href={localePath(locale, '/pricing#compare')}
-            class="mt-3 inline-flex items-center gap-2 text-sm font-medium text-primary"
-          >
-            {t.simulator}
-            <Icon name="arrow" class="size-4" />
-          </a>
         </div>
 
         <ContactForm client:load locale={locale} endpoint={endpoint} />

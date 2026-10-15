@@ -1,8 +1,6 @@
 ---
 import FooterMascot from './footer-mascot.astro'
 import Logo from './logo.astro'
-import { getProducts } from '../data/products'
-import { solutionCopy, solutionsIn } from '../data/solutions'
 import { localePath, switchPath, useUi, type Locale } from '../i18n'
 import { platformOpen } from '../platform'
 
@@ -18,23 +16,6 @@ const consoleUrl = import.meta.env.PUBLIC_CONSOLE_URL || 'https://console.authar
 
 const columns = [
   {
-    title: t('footerProduct'),
-    links: [
-      ...getProducts(locale).map((p) => ({
-        label: p.name,
-        href: localePath(locale, `/products/${p.slug}`),
-      })),
-      { label: t('pricing'), href: localePath(locale, '/pricing') },
-    ],
-  },
-  {
-    title: t('footerSolutions'),
-    links: [...solutionsIn('role'), ...solutionsIn('stage').filter((s) => s.slug !== 'associations')].map((s) => ({
-      label: solutionCopy(s, locale).menu,
-      href: localePath(locale, `/solutions/${s.slug}`),
-    })),
-  },
-  {
     title: t('footerTechnology'),
     links: [
       { label: t('rust'), href: localePath(locale, '/technology#rust') },
@@ -47,17 +28,15 @@ const columns = [
   {
     title: t('footerResources'),
     links: [
-      { label: t('documentation'), href: docsUrl || '#' },
-      { label: t('simulator'), href: localePath(locale, '/pricing#compare') },
-      { label: t('blog'), href: blogUrl || '#' },
-      { label: t('apiReference'), href: docsUrl ? `${docsUrl}/api` : '#' },
+      { label: t('documentation'), href: docsUrl },
+      { label: t('blog'), href: blogUrl },
+      { label: t('apiReference'), href: docsUrl && `${docsUrl}/api` },
       { label: t('status'), href: 'https://status.autharie.fr' },
-    ],
+    ].filter((link) => link.href),
   },
   {
     title: t('footerOpenSource'),
     links: [
-      { label: t('about'), href: localePath(locale, '/about') },
       { label: 'Ferriskey', href: 'https://github.com/ferriskey' },
       { label: 'GitHub', href: 'https://github.com/ferriskey' },
       { label: t('contact'), href: localePath(locale, '/contact') },
@@ -82,8 +61,8 @@ const pathname = Astro.url.pathname
   </div>
 
   <div class="relative mx-auto max-w-6xl px-5 pt-16">
-    <div class="grid gap-12 sm:grid-cols-2 lg:grid-cols-[1.3fr_repeat(5,1fr)]">
-      <div class="sm:col-span-2 lg:col-span-1 lg:pr-8">
+    <div class="grid gap-12 sm:grid-cols-3 lg:grid-cols-[1.6fr_repeat(3,1fr)]">
+      <div class="sm:col-span-3 lg:col-span-1 lg:pr-8">
         <a href={localePath(locale, '/')} class="inline-flex items-center gap-2.5">
           <Logo size={36} />
           <span class="text-[17px] font-semibold tracking-tight">Autharie</span>
@@ -94,7 +73,7 @@ const pathname = Astro.url.pathname
       {
         columns.map((column) => (
           <div>
-            <h3 class="text-sm font-semibold text-white">{column.title}</h3>
+            <h2 class="text-sm font-semibold text-white">{column.title}</h2>
             <ul class="mt-5 space-y-3">
               {column.links.map((link) => (
                 <li>

@@ -300,7 +300,8 @@ export default function AuthFlow({ locale = 'en' }: { locale?: L }) {
           <div key={g.title.en} className="flex flex-wrap items-center gap-1.5">
             <span className="text-[11px] font-medium uppercase tracking-wide text-muted-foreground">{g.title[locale]}</span>
             {g.ids.map((id) => (
-              <span
+              <button
+                type="button"
                 key={id}
                 draggable
                 onClick={() => add(id)}
@@ -309,7 +310,7 @@ export default function AuthFlow({ locale = 'en' }: { locale?: L }) {
               >
                 <Icon name={types[id].icon} className="h-3 w-3" />
                 {types[id].label[locale]}
-              </span>
+              </button>
             ))}
           </div>
         ))}
@@ -320,7 +321,7 @@ export default function AuthFlow({ locale = 'en' }: { locale?: L }) {
           <div
             ref={box}
             tabIndex={0}
-            className="relative touch-none select-none outline-none [background-image:radial-gradient(circle,var(--color-border)_1px,transparent_1px)] [background-size:16px_16px]"
+            className="relative touch-none select-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset [background-image:radial-gradient(circle,var(--color-border)_1px,transparent_1px)] [background-size:16px_16px]"
             style={{ width: W * scale, height: H * scale }}
             onPointerMove={onMove}
             onPointerUp={onUp}

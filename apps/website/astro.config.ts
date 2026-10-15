@@ -8,13 +8,48 @@ import { thumbnailPages } from './src/seo/thumbnail-pages'
 /** Absolute URLs (canonical, Open Graph, sitemap) need the real origin. */
 export const SITE = process.env.PUBLIC_WEBSITE_URL || 'https://autharie.fr'
 
+/**
+ * The product and solution pages are gone. A dynamic redirect needs the same
+ * params on both sides, so each old slug is listed and sent to the home page.
+ */
+const retiredPages = {
+  products: ['deploy', 'identity', 'operate', 'observe', 'secure', 'regions'],
+  solutions: [
+    'platform-engineers',
+    'developers',
+    'security-compliance',
+    'product-teams',
+    'startups',
+    'associations',
+    'enterprise',
+    'financial-services',
+    'healthcare',
+    'public-sector',
+    'b2b-saas',
+  ],
+}
+
+const retiredRedirects = Object.fromEntries(
+  Object.entries(retiredPages).flatMap(([section, slugs]) =>
+    slugs.flatMap((slug) => [
+      [`/${section}/${slug}`, '/'],
+      [`/fr/${section}/${slug}`, '/fr'],
+    ]),
+  ),
+)
+
 export default defineConfig({
   site: SITE,
   redirects: {
-    '/europe': '/about',
-    '/fr/europe': '/fr/about',
-    '/simulator': '/pricing',
-    '/fr/simulator': '/fr/pricing',
+    ...retiredRedirects,
+    '/about': '/',
+    '/fr/about': '/fr',
+    '/europe': '/',
+    '/fr/europe': '/fr',
+    '/pricing': '/',
+    '/fr/pricing': '/fr',
+    '/simulator': '/',
+    '/fr/simulator': '/fr',
   },
   integrations: [
     react(),

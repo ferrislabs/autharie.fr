@@ -140,13 +140,12 @@ export default function IdentityFederation({ locale = 'en' }: { locale?: 'en' | 
 
   return (
     <ConsoleWindow className="shadow-sm">
-      <div className="flex flex-wrap gap-1.5 border-b p-3" role="tablist" aria-label={t.signedInAs}>
+      <div className="flex flex-wrap gap-1.5 border-b p-3" role="group" aria-label={t.signedInAs}>
         {personas.map((p) => (
           <button
             key={p.id}
             type="button"
-            role="tab"
-            aria-selected={p.id === active}
+            aria-pressed={p.id === active}
             onClick={() => setActive(p.id)}
             className={cn(
               'rounded-md border px-3 py-1.5 text-left text-xs transition-colors',
@@ -185,7 +184,7 @@ export default function IdentityFederation({ locale = 'en' }: { locale?: 'en' | 
                             'flex items-center justify-between gap-2 rounded-md border px-2.5 py-1.5 text-sm transition-all duration-300',
                             visible
                               ? 'border-primary/30 bg-primary/5 font-medium'
-                              : 'border-transparent bg-muted/40 text-muted-foreground/50',
+                              : 'border-transparent bg-muted/40 text-muted-foreground',
                           )}
                         >
                           <span className="truncate">{h.name}</span>

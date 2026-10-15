@@ -62,7 +62,7 @@ export default function OperateEphemeral({ locale = 'en' }: { locale?: 'en' | 'f
           </div>
         </div>
 
-        <div className="ml-[22px] flex h-6 items-center text-muted-foreground/60">
+        <div className="ml-[22px] flex h-6 items-center text-muted-foreground/60" aria-hidden="true">
           <Icon name="arrow-down" className="h-4 w-4" />
         </div>
 

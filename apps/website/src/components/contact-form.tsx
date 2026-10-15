@@ -21,8 +21,8 @@ const copy = {
     optional: 'optional',
     topic: 'What is it about?',
     topics: [
-      ['access', 'Early access'],
-      ['pricing', 'Pricing'],
+      ['access', 'Free access to the beta'],
+      ['premium', 'Premium'],
       ['migration', 'Migrating from another provider'],
       ['other', 'Something else'],
     ],
@@ -52,8 +52,8 @@ const copy = {
     optional: 'facultatif',
     topic: 'De quoi s’agit-il ?',
     topics: [
-      ['access', 'Accès anticipé'],
-      ['pricing', 'Tarifs'],
+      ['access', 'Accès gratuit à la bêta'],
+      ['premium', 'Premium'],
       ['migration', 'Migrer depuis un autre fournisseur'],
       ['other', 'Autre chose'],
     ],
@@ -82,14 +82,19 @@ type Status = 'idle' | 'sending' | 'sent' | 'mail' | 'failed'
 type Field = 'name' | 'email' | 'message' | 'consent'
 
 const input =
-  'h-11 w-full rounded-md border bg-card px-3 text-sm outline-none transition-colors placeholder:text-muted-foreground/70 focus:border-primary focus:ring-2 focus:ring-primary/20 aria-[invalid=true]:border-red-400'
+  'h-11 w-full rounded-md border bg-card px-3 text-sm outline-none transition-colors placeholder:text-muted-foreground focus:border-primary focus:ring-2 focus:ring-primary/20 aria-[invalid=true]:border-red-400'
 
 export function ContactForm({ locale = 'en', endpoint = '' }: { locale?: Locale; endpoint?: string }) {
   const t = copy[locale]
   const [status, setStatus] = useState<Status>('idle')
   const [errors, setErrors] = useState<Partial<Record<Field, string>>>({})
   const shownAt = useRef(Date.now())
-  // The pricing page sends people here with their configuration already written.
+  const resultHeading = useRef<HTMLHeadingElement>(null)
+  const done = status === 'sent' || status === 'mail' || status === 'failed'
+  useEffect(() => {
+    if (done) resultHeading.current?.focus()
+  }, [done, status])
+  // Links can preselect a topic and prefill the message through the query string.
   const [prefill, setPrefill] = useState<{ topic?: string; message?: string }>({})
   useEffect(() => {
     const query = new URLSearchParams(window.location.search)
@@ -111,7 +116,11 @@ export function ContactForm({ locale = 'en', endpoint = '' }: { locale?: Locale;
     if (value('message').length < 10) next.message = t.errors.message
     if (form.get('consent') !== 'on') next.consent = t.errors.consent
     setErrors(next)
-    if (Object.keys(next).length > 0) return
+    const firstInvalid = Object.keys(next)[0]
+    if (firstInvalid) {
+      document.getElementById(`contact-${firstInvalid}`)?.focus()
+      return
+    }
 
     // A bot fills the hidden field too: pretend it worked and send nothing.
     if (value('website')) {
@@ -163,10 +172,10 @@ export function ContactForm({ locale = 'en', endpoint = '' }: { locale?: Locale;
     }
   }
 
-  if (status === 'sent' || status === 'mail' || status === 'failed') {
+  if (done) {
     const ok = status !== 'failed'
     return (
-      <div role="status" className="rounded-2xl border bg-card p-8 text-center">
+      <div role={ok ? 'status' : 'alert'} className="rounded-2xl border bg-card p-8 text-center">
         <span
           className={cn(
             'mx-auto flex size-12 items-center justify-center rounded-full',
@@ -177,7 +186,7 @@ export function ContactForm({ locale = 'en', endpoint = '' }: { locale?: Locale;
             {ok ? <path d="M20 6 9 17l-5-5" /> : <path d="M18 6 6 18M6 6l12 12" />}
           </svg>
         </span>
-        <h2 className="mt-5 text-xl font-semibold">
+        <h2 ref={resultHeading} tabIndex={-1} className="mt-5 text-xl font-semibold">
           {status === 'sent' ? t.sentTitle : status === 'mail' ? t.mailTitle : t.failTitle}
         </h2>
         <p className="mt-2 text-sm text-muted-foreground">
@@ -262,7 +271,7 @@ export function ContactForm({ locale = 'en', endpoint = '' }: { locale?: Locale;
 
       <div>
         <label className="flex cursor-pointer items-start gap-3 text-sm text-muted-foreground">
-          <input type="checkbox" name="consent" className="mt-0.5 size-4 shrink-0 accent-[var(--color-primary)]" {...aria('consent')} />
+          <input id="contact-consent" type="checkbox" name="consent" className="mt-0.5 size-4 shrink-0 accent-[var(--color-primary)]" {...aria('consent')} />
           <span>{t.consent}</span>
         </label>
         {error('consent')}
@@ -273,7 +282,7 @@ export function ContactForm({ locale = 'en', endpoint = '' }: { locale?: Locale;
         disabled={status === 'sending'}
         className="inline-flex h-11 w-full items-center justify-center rounded-md bg-primary px-6 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90 disabled:opacity-60 sm:w-auto"
       >
-        {status === 'sending' ? t.sending : t.send}
+        <span aria-live="polite">{status === 'sending' ? t.sending : t.send}</span>
       </button>
     </form>
   )

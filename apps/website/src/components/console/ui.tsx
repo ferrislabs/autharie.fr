@@ -66,7 +66,7 @@ export function TopBar({ org = 'Acme', crumbs = [] }: { org?: string; crumbs?: C
       <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-primary text-sm font-semibold text-primary-foreground">
         A
       </span>
-      <span className="text-muted-foreground/60">/</span>
+      <span className="text-muted-foreground/60" aria-hidden="true">/</span>
       <span className="flex items-center gap-2 rounded-md px-1.5 py-1 text-sm font-medium">
         <Initial label={org} />
         <span className="max-w-40 truncate">{org}</span>
@@ -74,7 +74,7 @@ export function TopBar({ org = 'Acme', crumbs = [] }: { org?: string; crumbs?: C
       </span>
       {crumbs.map((crumb, i) => (
         <span key={i} className="flex min-w-0 items-center gap-3">
-          <span className="text-muted-foreground/60">/</span>
+          <span className="text-muted-foreground/60" aria-hidden="true">/</span>
           <span
             className={cn(
               'flex min-w-0 items-center gap-1.5 truncate text-sm',

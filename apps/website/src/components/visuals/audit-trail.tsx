@@ -34,9 +34,9 @@ export default function AuditTrail({ locale = 'en' }: { locale?: 'en' | 'fr' }) 
           {t.export}
         </button>
       </div>
-      <div className="flex flex-wrap gap-1.5 border-b p-3" role="tablist">
+      <div className="flex flex-wrap gap-1.5 border-b p-3">
         {(Object.keys(t.filters) as ('all' | Kind)[]).map((k) => (
-          <button key={k} type="button" role="tab" aria-selected={filter === k} onClick={() => setFilter(k)} className={cn('rounded-md border px-2.5 py-1 text-xs transition-colors', filter === k ? 'border-primary/40 bg-primary/10 font-medium text-primary' : 'text-muted-foreground hover:bg-accent')}>
+          <button key={k} type="button" aria-pressed={filter === k} onClick={() => setFilter(k)} className={cn('rounded-md border px-2.5 py-1 text-xs transition-colors', filter === k ? 'border-primary/40 bg-primary/10 font-medium text-primary' : 'text-muted-foreground hover:bg-accent')}>
             {t.filters[k]}
           </button>
         ))}

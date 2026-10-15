@@ -30,6 +30,24 @@
 }
 
 @layer base {
+  html {
+    scroll-padding-top: 5rem;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+  }
+
+  .bg-deep :focus-visible {
+    outline-color: var(--color-primary-soft);
+  }
+
+  /* Programmatic focus targets (skip link destination, result headings). */
+  [tabindex='-1']:focus {
+    outline: none;
+  }
+
   /* A grid item sizes to its content by default, which lets one wide child push
      a whole column past the screen. Utilities such as min-w-* still win. */
   .grid > * {
@@ -231,9 +249,25 @@ html:not(.dark) .astro-code span:not(.highlighted, .highlighted-word, .diff) * {
 }
 
 .slider:focus-visible::-webkit-slider-thumb {
-  box-shadow: 0 0 0 4px color-mix(in oklab, var(--color-primary) 30%, transparent);
+  box-shadow: 0 0 0 2px #fff, 0 0 0 4px var(--color-primary);
 }
 
 .slider:focus-visible::-moz-range-thumb {
-  box-shadow: 0 0 0 4px color-mix(in oklab, var(--color-primary) 30%, transparent);
+  box-shadow: 0 0 0 2px #fff, 0 0 0 4px var(--color-primary);
+}
+
+/* Edges of the policy flow: dashes that travel along an active connection. */
+@keyframes autharie-edge-flow {
+  to {
+    stroke-dashoffset: -20;
+  }
+}
+.edge-flow {
+  stroke-dasharray: 6 4;
+  animation: autharie-edge-flow 0.8s linear infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .edge-flow {
+    animation: none;
+  }
 }

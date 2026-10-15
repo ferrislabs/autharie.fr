@@ -16,10 +16,12 @@ export interface TeamMember {
 export const team: TeamMember[] = [
   {
     name: 'Baptiste Parmantier',
+    role: { fr: 'Co-fondateur & CEO', en: 'Co-founder & CEO' },
     links: [{ label: 'LinkedIn', href: 'https://www.linkedin.com/in/baptiste-parmantier' }],
   },
   {
     name: 'Nathaël Bonnal',
+    role: { fr: 'Co-fondateur & CTO', en: 'Co-founder & CTO' },
     links: [{ label: 'LinkedIn', href: 'https://www.linkedin.com/in/nathael-bonnal' }],
   },
 ]

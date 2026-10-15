@@ -36,7 +36,7 @@ export default function FourEyes({ locale = 'en' }: { locale?: 'en' | 'fr' }) {
             return (
               <li key={s} className="relative flex gap-3 pb-3 last:pb-0">
                 {i < t.steps.length - 1 && <span className="absolute left-[9px] top-5 h-[calc(100%-8px)] w-px bg-border" aria-hidden="true" />}
-                <span className={cn('z-10 mt-0.5 flex h-[19px] w-[19px] shrink-0 items-center justify-center rounded-full border bg-background', done ? 'border-green-400 text-green-600' : 'text-muted-foreground/50')}>
+                <span aria-hidden="true" className={cn('z-10 mt-0.5 flex h-[19px] w-[19px] shrink-0 items-center justify-center rounded-full border bg-background', done ? 'border-green-400 text-green-600' : 'text-muted-foreground/50')}>
                   {done && <Icon name="check" className="h-2.5 w-2.5" />}
                 </span>
                 <span className={cn('text-sm', done ? 'font-medium' : 'text-muted-foreground')}>{s}</span>
