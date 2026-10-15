@@ -1,0 +1,389 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-15T17:42:48.522929+00:00",
+  "title": "Design System: Autharie",
+  "extensions": {
+    "colorMeta": {
+      "autharie-violet": {
+        "role": "primary",
+        "displayName": "Autharie Violet",
+        "canonical": "oklch(0.52 0.19 285)",
+        "tonalRamp": [
+          "oklch(0.15 0.19 285)",
+          "oklch(0.25 0.19 285)",
+          "oklch(0.35 0.19 285)",
+          "oklch(0.45 0.19 285)",
+          "oklch(0.55 0.19 285)",
+          "oklch(0.7 0.19 285)",
+          "oklch(0.85 0.19 285)",
+          "oklch(0.95 0.19 285)"
+        ]
+      },
+      "violet-soft": {
+        "role": "primary",
+        "displayName": "Violet Soft",
+        "canonical": "oklch(0.78 0.13 285)",
+        "tonalRamp": [
+          "oklch(0.15 0.13 285)",
+          "oklch(0.25 0.13 285)",
+          "oklch(0.35 0.13 285)",
+          "oklch(0.45 0.13 285)",
+          "oklch(0.55 0.13 285)",
+          "oklch(0.7 0.13 285)",
+          "oklch(0.85 0.13 285)",
+          "oklch(0.95 0.13 285)"
+        ]
+      },
+      "ink": {
+        "role": "neutral",
+        "displayName": "Ink",
+        "canonical": "oklch(0.17 0.012 285)",
+        "tonalRamp": [
+          "oklch(0.15 0.012 285)",
+          "oklch(0.25 0.012 285)",
+          "oklch(0.35 0.012 285)",
+          "oklch(0.45 0.012 285)",
+          "oklch(0.55 0.012 285)",
+          "oklch(0.7 0.012 285)",
+          "oklch(0.85 0.012 285)",
+          "oklch(0.95 0.012 285)"
+        ]
+      },
+      "deep-night": {
+        "role": "neutral",
+        "displayName": "Deep Night",
+        "canonical": "oklch(0.19 0.024 285)",
+        "tonalRamp": [
+          "oklch(0.15 0.024 285)",
+          "oklch(0.25 0.024 285)",
+          "oklch(0.35 0.024 285)",
+          "oklch(0.45 0.024 285)",
+          "oklch(0.55 0.024 285)",
+          "oklch(0.7 0.024 285)",
+          "oklch(0.85 0.024 285)",
+          "oklch(0.95 0.024 285)"
+        ]
+      },
+      "paper": {
+        "role": "neutral",
+        "displayName": "Paper",
+        "canonical": "oklch(0.994 0.002 285)",
+        "tonalRamp": [
+          "oklch(0.15 0.004 285)",
+          "oklch(0.25 0.004 285)",
+          "oklch(0.35 0.004 285)",
+          "oklch(0.45 0.004 285)",
+          "oklch(0.55 0.004 285)",
+          "oklch(0.7 0.004 285)",
+          "oklch(0.85 0.004 285)",
+          "oklch(0.95 0.004 285)"
+        ]
+      },
+      "lavender-surface": {
+        "role": "neutral",
+        "displayName": "Lavender Surface",
+        "canonical": "oklch(0.975 0.004 285)",
+        "tonalRamp": [
+          "oklch(0.15 0.006 285)",
+          "oklch(0.25 0.006 285)",
+          "oklch(0.35 0.006 285)",
+          "oklch(0.45 0.006 285)",
+          "oklch(0.55 0.006 285)",
+          "oklch(0.7 0.006 285)",
+          "oklch(0.85 0.006 285)",
+          "oklch(0.95 0.006 285)"
+        ]
+      },
+      "quiet-grey": {
+        "role": "neutral",
+        "displayName": "Quiet Grey",
+        "canonical": "oklch(0.52 0.014 285)",
+        "tonalRamp": [
+          "oklch(0.15 0.014 285)",
+          "oklch(0.25 0.014 285)",
+          "oklch(0.35 0.014 285)",
+          "oklch(0.45 0.014 285)",
+          "oklch(0.55 0.014 285)",
+          "oklch(0.7 0.014 285)",
+          "oklch(0.85 0.014 285)",
+          "oklch(0.95 0.014 285)"
+        ]
+      },
+      "hairline": {
+        "role": "neutral",
+        "displayName": "Hairline",
+        "canonical": "oklch(0.905 0.005 285)",
+        "tonalRamp": [
+          "oklch(0.15 0.005 285)",
+          "oklch(0.25 0.005 285)",
+          "oklch(0.35 0.005 285)",
+          "oklch(0.45 0.005 285)",
+          "oklch(0.55 0.005 285)",
+          "oklch(0.7 0.005 285)",
+          "oklch(0.85 0.005 285)",
+          "oklch(0.95 0.005 285)"
+        ]
+      },
+      "verdict-allowed": {
+        "role": "tertiary",
+        "displayName": "Allowed",
+        "canonical": "oklch(0.508 0.118 165.612)",
+        "tonalRamp": [
+          "oklch(0.15 0.118 165.6)",
+          "oklch(0.25 0.118 165.6)",
+          "oklch(0.35 0.118 165.6)",
+          "oklch(0.45 0.118 165.6)",
+          "oklch(0.55 0.118 165.6)",
+          "oklch(0.7 0.118 165.6)",
+          "oklch(0.85 0.118 165.6)",
+          "oklch(0.95 0.118 165.6)"
+        ]
+      },
+      "verdict-blocked": {
+        "role": "tertiary",
+        "displayName": "Blocked",
+        "canonical": "oklch(0.505 0.213 27.518)",
+        "tonalRamp": [
+          "oklch(0.15 0.2 27.5)",
+          "oklch(0.25 0.2 27.5)",
+          "oklch(0.35 0.2 27.5)",
+          "oklch(0.45 0.2 27.5)",
+          "oklch(0.55 0.2 27.5)",
+          "oklch(0.7 0.2 27.5)",
+          "oklch(0.85 0.2 27.5)",
+          "oklch(0.95 0.2 27.5)"
+        ]
+      },
+      "verdict-stopped": {
+        "role": "tertiary",
+        "displayName": "Stopped",
+        "canonical": "oklch(0.769 0.188 70.08)",
+        "tonalRamp": [
+          "oklch(0.15 0.17 70)",
+          "oklch(0.25 0.17 70)",
+          "oklch(0.35 0.17 70)",
+          "oklch(0.45 0.17 70)",
+          "oklch(0.55 0.17 70)",
+          "oklch(0.7 0.17 70)",
+          "oklch(0.85 0.17 70)",
+          "oklch(0.95 0.17 70)"
+        ]
+      },
+      "otarie-light": {
+        "role": "tertiary",
+        "displayName": "Otarie Light",
+        "canonical": "#8f7ef5",
+        "tonalRamp": [
+          "oklch(0.15 0.15 285)",
+          "oklch(0.25 0.15 285)",
+          "oklch(0.35 0.15 285)",
+          "oklch(0.45 0.15 285)",
+          "oklch(0.55 0.15 285)",
+          "oklch(0.7 0.15 285)",
+          "oklch(0.85 0.15 285)",
+          "oklch(0.95 0.15 285)"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Display",
+        "purpose": "The h1 of full-width page heroes."
+      },
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "One per section."
+      },
+      "title": {
+        "displayName": "Title",
+        "purpose": "Card and step titles."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Descriptions, about 65ch."
+      },
+      "lead": {
+        "displayName": "Lead",
+        "purpose": "Section intros in Quiet Grey."
+      },
+      "label": {
+        "displayName": "Label",
+        "purpose": "Small uppercase labels inside product mock-ups. Never above a page heading."
+      },
+      "mono": {
+        "displayName": "Mono",
+        "purpose": "Times, traces, tags, code."
+      },
+      "micro": {
+        "displayName": "Micro",
+        "purpose": "Metadata inside product mock-ups only; the size floor."
+      }
+    },
+    "shadows": [
+      {
+        "name": "shadow-resting",
+        "value": "0 1px 2px oklch(0.17 0.012 285 / 0.04), 0 2px 6px -2px oklch(0.17 0.012 285 / 0.06)",
+        "purpose": "Cards resting on the page."
+      },
+      {
+        "name": "shadow-raised",
+        "value": "0 2px 4px -1px oklch(0.17 0.012 285 / 0.06), 0 10px 24px -8px oklch(0.52 0.19 285 / 0.18)",
+        "purpose": "Mock-ups floating inside their cards."
+      },
+      {
+        "name": "shadow-lift",
+        "value": "0 2px 6px -2px oklch(0.17 0.012 285 / 0.08), 0 24px 48px -16px oklch(0.52 0.19 285 / 0.28), 0 48px 96px -32px oklch(0.17 0.012 285 / 0.18)",
+        "purpose": "The product moment, highest object on its screen."
+      }
+    ],
+    "motion": [
+      {
+        "name": "ease-out-expo",
+        "value": "cubic-bezier(0.16, 1, 0.3, 1)",
+        "purpose": "Menus and entering panels."
+      },
+      {
+        "name": "ease-in-out",
+        "value": "cubic-bezier(0.65, 0, 0.35, 1)",
+        "purpose": "Product canvas transitions."
+      },
+      {
+        "name": "edge-flow",
+        "value": "stroke-dashoffset 0.8s linear infinite",
+        "purpose": "Travelling dashes on active connectors."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "sm",
+        "value": "640px"
+      },
+      {
+        "name": "md",
+        "value": "768px"
+      },
+      {
+        "name": "lg",
+        "value": "1024px"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Main call to action.",
+      "html": "<button class=\"ds-btn-primary\">Request free access <svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"><path d=\"M5 12h14M13 6l6 6-6 6\"/></svg></button>",
+      "css": ".ds-btn-primary{display:inline-flex;align-items:center;gap:8px;height:44px;padding:0 24px;border:0;border-radius:6px;background:var(--color-primary, oklch(0.52 0.19 285));color:#fff;font:500 14px/1 'Instrument Sans',system-ui,sans-serif;cursor:pointer;transition:background .2s}.ds-btn-primary:hover{background:oklch(0.52 0.19 285 / .9)}.ds-btn-primary:focus-visible{outline:2px solid oklch(0.52 0.19 285);outline-offset:2px}"
+    },
+    {
+      "name": "Secondary Button",
+      "kind": "button",
+      "refersTo": "button-secondary",
+      "description": "Second action next to the primary.",
+      "html": "<button class=\"ds-btn-secondary\">See how it works</button>",
+      "css": ".ds-btn-secondary{height:44px;padding:0 24px;border:1px solid oklch(0.905 0.005 285);border-radius:6px;background:#fff;color:oklch(0.17 0.012 285);font:500 14px/1 'Instrument Sans',system-ui,sans-serif;cursor:pointer;transition:background .2s}.ds-btn-secondary:hover{background:oklch(0.975 0.004 285)}.ds-btn-secondary:focus-visible{outline:2px solid oklch(0.52 0.19 285);outline-offset:2px}"
+    },
+    {
+      "name": "Stop Button",
+      "kind": "button",
+      "refersTo": "button-stop",
+      "description": "Stops an agent; only use for that.",
+      "html": "<button class=\"ds-btn-stop\">Stop this agent</button>",
+      "css": ".ds-btn-stop{height:36px;padding:0 16px;border:0;border-radius:6px;background:oklch(0.577 0.245 27.325);color:#fff;font:600 14px/1 'Instrument Sans',system-ui,sans-serif;cursor:pointer;transition:background .2s}.ds-btn-stop:hover{background:oklch(0.505 0.213 27.518)}.ds-btn-stop:focus-visible{outline:2px solid oklch(0.52 0.19 285);outline-offset:2px}"
+    },
+    {
+      "name": "Navigation",
+      "kind": "nav",
+      "description": "Header pill links.",
+      "html": "<nav class=\"ds-nav\"><a href=\"#\">Product</a><a href=\"#\" aria-current=\"page\">Plans</a><a href=\"#\">Vision</a></nav>",
+      "css": ".ds-nav{display:flex;gap:4px;font:400 14px 'Instrument Sans',system-ui,sans-serif}.ds-nav a{padding:6px 14px;border-radius:9999px;color:oklch(0.52 0.014 285);text-decoration:none;transition:background .2s,color .2s}.ds-nav a:hover,.ds-nav a[aria-current]{background:oklch(0.975 0.004 285);color:oklch(0.17 0.012 285)}.ds-nav a:focus-visible{outline:2px solid oklch(0.52 0.19 285);outline-offset:2px}"
+    },
+    {
+      "name": "Protocol Chip",
+      "kind": "chip",
+      "refersTo": "chip",
+      "description": "Protocols and channels.",
+      "html": "<span class=\"ds-chip\">MCP</span>",
+      "css": ".ds-chip{display:inline-block;padding:4px 12px;border:1px solid oklch(0.905 0.005 285);border-radius:9999px;background:#fff;color:oklch(0.17 0.012 285);font:500 12px 'Instrument Sans',system-ui,sans-serif}"
+    },
+    {
+      "name": "Rule Sentence",
+      "kind": "custom",
+      "refersTo": "rule-chip",
+      "description": "A rule written as a sentence with inline chips.",
+      "html": "<p class=\"ds-rule\">Accounting assistant can <span class=\"ds-rule-chip\">read invoices</span> until <span class=\"ds-rule-chip\">8 pm</span>. It can never <span class=\"ds-rule-chip ds-rule-chip--deny\">make a transfer</span>.</p>",
+      "css": ".ds-rule{font:400 17px/2.2 'Instrument Sans',system-ui,sans-serif;color:oklch(0.17 0.012 285);margin:0}.ds-rule-chip{white-space:nowrap;padding:4px 8px;border-radius:6px;background:oklch(0.52 0.19 285 / .1);color:oklch(0.52 0.19 285);font-weight:500;box-shadow:inset 0 0 0 1px oklch(0.52 0.19 285 / .2)}.ds-rule-chip--deny{background:oklch(0.971 0.013 17.38);color:oklch(0.444 0.177 26.899);box-shadow:inset 0 0 0 1px oklch(0.885 0.062 18.334)}"
+    },
+    {
+      "name": "Solution Card",
+      "kind": "card",
+      "refersTo": "card",
+      "description": "Illustrated band on top, title and description below.",
+      "html": "<article class=\"ds-card\"><div class=\"ds-card-art\"><span class=\"ds-chip\">Allowed</span></div><div class=\"ds-card-body\"><h3>Access policies</h3><p>Write in plain sentences what each agent may do.</p></div></article>",
+      "css": ".ds-card{width:320px;overflow:hidden;border:1px solid oklch(0.905 0.005 285);border-radius:16px;background:#fff;box-shadow:0 1px 2px 0 rgb(0 0 0 / .05);font-family:'Instrument Sans',system-ui,sans-serif}.ds-card-art{display:flex;align-items:center;justify-content:center;height:140px;border-bottom:1px solid oklch(0.905 0.005 285);background:linear-gradient(135deg,oklch(0.969 0.016 293.756),#fff)}.ds-card-body{padding:24px}.ds-card-body h3{margin:0;font-size:18px;font-weight:600;letter-spacing:-.028em;color:oklch(0.17 0.012 285)}.ds-card-body p{margin:6px 0 0;font-size:14px;line-height:1.6;color:oklch(0.52 0.014 285)}.ds-chip{padding:4px 12px;border:1px solid oklch(0.905 0.005 285);border-radius:9999px;background:#fff;font-size:12px}"
+    },
+    {
+      "name": "Verdict Badge",
+      "kind": "custom",
+      "description": "Decision label, always with a word.",
+      "html": "<span class=\"ds-verdict ds-verdict--ok\">Allowed</span> <span class=\"ds-verdict ds-verdict--no\">Blocked</span> <span class=\"ds-verdict ds-verdict--stop\">Stopped</span>",
+      "css": ".ds-verdict{display:inline-block;padding:4px 10px;border-radius:6px;font:600 13px 'Instrument Sans',system-ui,sans-serif}.ds-verdict--ok{background:oklch(0.596 0.145 163.225);color:#fff}.ds-verdict--no{background:oklch(0.577 0.245 27.325);color:#fff}.ds-verdict--stop{background:oklch(0.769 0.188 70.08);color:oklch(0.17 0.012 285)}"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Watchful Sea Lion",
+    "overview": "Autharie watches over what your agents do so you do not have to. The system is attentive and kind rather than alarmist: calm lavender paper, one confident violet, and a pixel-art sea lion that signs every surface. Vigilance shows through precision (every decision has a verdict and a reason, every action has a time) and warmth shows through the mascot, plain language and rounded, friendly forms.\n\nThe interface explains itself by showing the product at work. Hero and section visuals are live product moments (a rule written as a sentence, a decision with \"because\", a stop button that works), never abstract illustrations. Light sections carry the story; a few deep-night sections (Europe, Premium, final call to action) mark moments of trust and commitment.\n\nDepth is moving from flat toward layered: the incumbent system relies on hairline borders and light shadows, and the confirmed direction is to give surfaces more relief, so product mock-ups feel like real objects resting on the page.",
+    "keyCharacteristics": [
+      "One accent (Autharie Violet) on light lavender paper, with deep-night bands for trust moments.",
+      "Product moments instead of illustrations; every animated visual can be read without motion.",
+      "Verdict colours (allowed, blocked, stopped) are semantic and never decorative.",
+      "The pixel sea lion is the signature: crisp pixels, never blurred, never redrawn.",
+      "Plain type, tight headlines, mono only for data (times, traces, code, tags)."
+    ],
+    "rules": [
+      {
+        "name": "The One Voice Rule",
+        "body": "Autharie Violet is the only accent. Green, red and amber exist only to say what happened to an action.",
+        "section": "colors"
+      },
+      {
+        "name": "The Verdict Rule",
+        "body": "A verdict colour always comes with a word (Allowed, Blocked, Stopped). Colour alone never carries the meaning.",
+        "section": "colors"
+      },
+      {
+        "name": "The Sentence Rule",
+        "body": "Rules and decisions are set as readable sentences in the body face; mono is never used to write a rule a manager must understand.",
+        "section": "typography"
+      },
+      {
+        "name": "The Heading Speaks Alone Rule",
+        "body": "A section headline carries its own weight. No eyebrow, kicker or label sits above it.",
+        "section": "typography"
+      },
+      {
+        "name": "The Lifted Product Rule",
+        "body": "The product moment is the highest object on its screen; nothing decorative sits above it.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "Do keep Autharie Violet as the single accent and use verdict colours only for decisions, always with a word.",
+      "Do show the product working (rule, decision, reason, stop) instead of describing infrastructure.",
+      "Do write rules as sentences in Instrument Sans; reserve JetBrains Mono for times, traces, tags and code.",
+      "Do give every animation a readable static state and honour `prefers-reduced-motion`.",
+      "Do render the sea lion with crisp pixels."
+    ],
+    "donts": [
+      "Don't use emojis or decorative symbols (ticks, crosses, stars, clocks) in place of words or icons.",
+      "Don't add a second brand accent or use gradients on text.",
+      "Don't put an eyebrow or kicker label above a heading.",
+      "Don't set text below 0.6875rem (Micro).",
+      "Don't put technical identifiers (scopes, IP ranges, API method names) on home page visuals; they belong in code views and on /technology.",
+      "Don't show founder names or faces as a headline, customer logos, testimonials or numbers that do not exist.",
+      "Don't blur, recolour or redraw the sea lion."
+    ]
+  }
+}
