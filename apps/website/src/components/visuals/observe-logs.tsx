@@ -51,7 +51,7 @@ export default function ObserveLogs({ locale = 'en' }: { locale?: 'en' | 'fr' })
           <Icon name="chevron-down" className="h-3.5 w-3.5 text-muted-foreground" />
         </div>
       </div>
-      <div className="divide-y font-mono text-[11px] leading-relaxed">
+      <div className="divide-y font-mono text-micro leading-relaxed">
         {logs.map((l, i) => (
           <div key={i} className={'flex items-start gap-3 py-2 pr-3 ' + row[l.lvl]}>
             <span className={'w-1 self-stretch ' + bar[l.lvl]} />

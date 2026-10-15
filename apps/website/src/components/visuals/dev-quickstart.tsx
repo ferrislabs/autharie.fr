@@ -10,8 +10,8 @@ const tabs = {
 type Tab = keyof typeof tabs
 
 const copy = {
-  en: { env: 'Environments', sandbox: 'Sandbox per pull request', endpoints: 'Standard endpoints', note: 'Any library that speaks OpenID Connect works. No SDK to adopt.', rows: [['pr-482', 'sandbox-482.acme.dev'], ['pr-479', 'sandbox-479.acme.dev']], eps: ['Authorization', 'Token', 'JWKS', 'Userinfo'] },
-  fr: { env: 'Environnements', sandbox: 'Bac à sable par pull request', endpoints: 'Points d’accès standard', note: 'Toute bibliothèque OpenID Connect convient. Aucun SDK à adopter.', rows: [['pr-482', 'sandbox-482.acme.dev'], ['pr-479', 'sandbox-479.acme.dev']], eps: ['Autorisation', 'Jeton', 'JWKS', 'Userinfo'] },
+  en: { env: 'Environments', sandbox: 'Sandbox per pull request', endpoints: 'Standard endpoints', code: 'Code example', note: 'Any library that speaks OpenID Connect works. No SDK to adopt.', rows: [['pr-482', 'sandbox-482.acme.dev'], ['pr-479', 'sandbox-479.acme.dev']], eps: ['Authorization', 'Token', 'JWKS', 'Userinfo'] },
+  fr: { env: 'Environnements', sandbox: 'Bac à sable par pull request', endpoints: 'Points d’accès standard', code: 'Exemple de code', note: 'Toute bibliothèque OpenID Connect convient. Aucun SDK à adopter.', rows: [['pr-482', 'sandbox-482.acme.dev'], ['pr-479', 'sandbox-479.acme.dev']], eps: ['Autorisation', 'Jeton', 'JWKS', 'Userinfo'] },
 }
 
 export default function DevQuickstart({ locale = 'en' }: { locale?: 'en' | 'fr' }) {
@@ -21,14 +21,14 @@ export default function DevQuickstart({ locale = 'en' }: { locale?: 'en' | 'fr' 
     <ConsoleWindow className="shadow-sm">
       <div className="grid md:grid-cols-[1.3fr_0.7fr]">
         <div className="min-w-0 border-b md:border-b-0 md:border-r">
-          <div className="flex gap-1 border-b px-3 pt-2" role="tablist">
+          <div className="flex gap-1 border-b px-3 pt-2">
             {(Object.keys(tabs) as Tab[]).map((k) => (
-              <button key={k} role="tab" aria-selected={tab === k} type="button" onClick={() => setTab(k)} className={cn('-mb-px border-b-2 px-3 py-2 text-xs transition-colors', tab === k ? 'border-primary font-medium text-primary' : 'border-transparent text-muted-foreground hover:text-foreground')}>
+              <button key={k} aria-pressed={tab === k} type="button" onClick={() => setTab(k)} className={cn('-mb-px border-b-2 px-3 py-2 text-xs transition-colors', tab === k ? 'border-primary font-medium text-primary' : 'border-transparent text-muted-foreground hover:text-foreground')}>
                 {tabs[k].label}
               </button>
             ))}
           </div>
-          <pre className="overflow-x-auto bg-[#14131f] p-4 font-mono text-[11.5px] leading-6 text-slate-300"><code>{tabs[tab].code}</code></pre>
+          <pre tabIndex={0} role="region" aria-label={t.code} className="overflow-x-auto bg-[#14131f] p-4 font-mono text-[11.5px] leading-6 text-slate-300"><code>{tabs[tab].code}</code></pre>
           <p className="flex items-center gap-2 border-t px-4 py-2.5 text-xs text-muted-foreground">
             <Icon name="info" className="h-3.5 w-3.5" />
             {t.note}
@@ -49,10 +49,10 @@ export default function DevQuickstart({ locale = 'en' }: { locale?: 'en' | 'fr' 
             {t.rows.map(([pr, host]) => (
               <div key={pr} className="rounded-lg border p-2.5">
                 <div className="flex items-center justify-between">
-                  <code className="font-mono text-[11px]">{pr}</code>
+                  <code className="font-mono text-micro">{pr}</code>
                   <StatusBadge tone="success">OK</StatusBadge>
                 </div>
-                <p className="mt-1 truncate text-[11px] text-muted-foreground">{host}</p>
+                <p className="mt-1 truncate text-micro text-muted-foreground">{host}</p>
               </div>
             ))}
           </div>

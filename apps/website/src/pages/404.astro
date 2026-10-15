@@ -10,9 +10,8 @@ const consoleUrl = import.meta.env.PUBLIC_CONSOLE_URL || 'https://console.authar
 <Base title="Page not found" noindex thumbnail="/thumbnail.png">
   <SiteHeader docsUrl={docsUrl} consoleUrl={consoleUrl} client:load transition:persist />
 
-  <main class="flex flex-1 flex-col items-center justify-center px-6 py-32 text-center">
-    <p class="eyebrow">404</p>
-    <h1 class="mt-4 text-4xl sm:text-5xl">This page is not here</h1>
+  <main id="main" tabindex="-1" class="flex flex-1 flex-col items-center justify-center px-6 py-32 text-center">
+    <h1 class="text-4xl sm:text-5xl">This page is not here</h1>
     <p class="mt-4 max-w-md text-lg text-muted-foreground">
       The link may be old, or the page may have moved. The home page is a good place to pick up
       from.

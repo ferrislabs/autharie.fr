@@ -1,5 +1,5 @@
 ---
-import { localePath, type Locale } from '../i18n'
+import type { Locale } from '../i18n'
 
 interface Props {
   locale?: Locale
@@ -9,86 +9,60 @@ const { locale = 'en' } = Astro.props
 
 const copy = {
   en: {
-    eyebrow: 'The reason this exists',
-    title: 'Running your own identity provider is a second job',
-    lead: 'Keycloak and Ferriskey are good software. The work is not writing the deployment, it is everything that happens in the years after it.',
-    points: [
+    title: 'Your agents move faster than your access rules',
+    lead: 'AI is everywhere now: assistants, automations, in-house agents. Identity and access were designed for people who click, not for software that acts on its own.',
+    items: [
       {
-        n: '01',
-        title: 'Upgrades arrive whether you are ready or not',
-        description:
-          'Every release brings a schema migration and a window during which sign in still has to work. Somebody has to read the notes, pick the night, and stay up for it.',
+        title: 'Agents with far too many rights',
+        description: 'To move fast, they get an admin API key. One mistake, and the agent can do anything.',
       },
       {
-        n: '02',
-        title: 'A backup is only real once it has been restored',
-        description:
-          'An archive nobody has ever restored is a file. Finding that out during an incident is the expensive way to learn it.',
+        title: 'No idea what happened',
+        description: 'When an agent acts, nobody knows who started it, on whose behalf, or with which right.',
       },
       {
-        n: '03',
-        title: 'When it goes down, everything goes with it',
-        description:
-          "The identity provider sits in front of every application you run. Its bad day turns into everybody else's bad day.",
-      },
+        title: 'No stop button',
+        description: 'An agent that runs away keeps going until someone notices the damage.',
+      }
     ],
   },
   fr: {
-    eyebrow: "La raison d'être du projet",
-    title: 'Exploiter son propre fournisseur d\'identité, c\'est un deuxième métier',
-    lead: "Keycloak et Ferriskey sont de bons logiciels. Le travail ne consiste pas à écrire le déploiement, mais à tout ce qui se passe dans les années qui suivent.",
-    points: [
+    title: 'Vos agents vont plus vite que vos règles d’accès',
+    lead: 'L’IA entre partout : assistants, automatisations, agents maison. Mais l’identité et les accès ont été pensés pour des humains qui cliquent, pas pour des logiciels qui agissent seuls.',
+    items: [
       {
-        n: '01',
-        title: 'Les mises à jour arrivent, que vous soyez prêt ou non',
-        description:
-          "Chaque version apporte une migration de schéma et une fenêtre pendant laquelle la connexion doit continuer à fonctionner. Il faut que quelqu'un lise les notes, choisisse la nuit et veille.",
+        title: 'Des agents avec beaucoup trop de droits',
+        description: 'Pour aller vite, on leur donne une clé API admin. Une erreur, et l’agent peut tout faire.',
       },
       {
-        n: '02',
-        title: "Une sauvegarde n'existe vraiment qu'une fois restaurée",
-        description:
-          "Une archive que personne n'a jamais restaurée n'est qu'un fichier. Le découvrir pendant un incident est la manière la plus coûteuse de l'apprendre.",
+        title: 'Aucune idée de ce qui s’est passé',
+        description: 'Quand un agent agit, personne ne sait qui l’a lancé, au nom de qui, ni avec quel droit.',
       },
       {
-        n: '03',
-        title: 'Quand il tombe, tout tombe avec lui',
-        description:
-          "Le fournisseur d'identité se trouve devant chaque application que vous exploitez. Sa mauvaise journée devient celle de tout le monde.",
-      },
+        title: 'Pas de bouton stop',
+        description: 'Un agent qui s’emballe continue jusqu’à ce que quelqu’un remarque les dégâts.',
+      }
     ],
   },
 }
 const t = copy[locale]
-const points = t.points
 ---
 
-<section class="border-y bg-surface/50">
-  <div class="mx-auto max-w-6xl px-5 py-20 sm:py-28">
-    <div class="max-w-2xl">
-      <p class="eyebrow">{t.eyebrow}</p>
-      <h2 class="mt-4 text-3xl sm:text-[2.6rem] sm:leading-[1.1]">
-        {t.title}
-      </h2>
-      <p class="mt-5 text-lg text-muted-foreground">
-        {t.lead}
-      </p>
+<section id="problem" class="scroll-mt-20 border-y bg-surface/50">
+  <div class="mx-auto max-w-6xl px-5 py-16 sm:py-20">
+    <div class="max-w-3xl">
+      <h2 class="text-balance text-3xl sm:text-[2.6rem] sm:leading-[1.1]">{t.title}</h2>
+      <p class="mt-5 text-lg text-muted-foreground">{t.lead}</p>
     </div>
-
-    <div class="mt-14 grid gap-px overflow-hidden rounded-xl border bg-border sm:grid-cols-3">
+    <ul class="mt-12 grid gap-8 sm:grid-cols-3 sm:gap-10">
       {
-        points.map((point) => (
-          <div class="bg-background p-7">
-            <span class="font-mono text-xs text-primary">{point.n}</span>
-            <h3 class="mt-4 text-lg font-semibold">
-              {point.title}
-            </h3>
-            <p class="mt-3 text-sm leading-relaxed text-muted-foreground">
-              {point.description}
-            </p>
-          </div>
+        t.items.map((item) => (
+          <li class="border-t-2 border-ink pt-5">
+            <h3 class="font-semibold">{item.title}</h3>
+            <p class="mt-1.5 text-sm leading-relaxed text-muted-foreground">{item.description}</p>
+          </li>
         ))
       }
-    </div>
+    </ul>
   </div>
 </section>

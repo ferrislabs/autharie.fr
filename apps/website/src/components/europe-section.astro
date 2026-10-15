@@ -1,19 +1,16 @@
 ---
 import Icon from './icon.astro'
-import { providerLogos } from '../data/provider-logos'
-import { localePath, type Locale } from '../i18n'
+import type { Locale } from '../i18n'
 
 interface Props {
   locale?: Locale
   /** Hide the link to the dedicated page when already on it. */
-  link?: boolean
 }
 
-const { locale = 'en', link = true } = Astro.props
+const { locale = 'en' } = Astro.props
 
 const copy = {
   en: {
-    eyebrow: 'Made in France',
     title: '100% European, from the code to the contract',
     lead: 'Who runs your sign in matters as much as how. Autharie is a French company with French governance, built and hosted in Europe, under European law.',
     badges: ['French company', 'Hosted at Scaleway', 'GDPR', 'Open source'],
@@ -40,14 +37,11 @@ const copy = {
         icon: 'branch',
         title: 'Open and reversible',
         description:
-          'Open source providers and plain Postgres. Sovereignty also means being able to leave, and taking everything with you.',
+          'An open source IAM and plain Postgres. Sovereignty also means being able to leave, and taking everything with you.',
       },
     ],
-    providersTitle: 'Your data plane, at OVHcloud or Scaleway',
-    more: 'Why it matters',
   },
   fr: {
-    eyebrow: 'Made in France',
     title: '100 % européen, du code au contrat',
     lead: 'Qui exploite votre connexion compte autant que la manière dont elle l’est. Autharie est une société française, à la gouvernance française, conçue et hébergée en Europe, sous droit européen.',
     badges: ['Société française', 'Hébergé chez Scaleway', 'RGPD', 'Open source'],
@@ -74,11 +68,9 @@ const copy = {
         icon: 'branch',
         title: 'Ouvert et réversible',
         description:
-          'Fournisseurs open source et Postgres ordinaire. La souveraineté, c’est aussi pouvoir partir, et emporter tout ce qui vous appartient.',
+          'Un IAM open source et du Postgres ordinaire. La souveraineté, c’est aussi pouvoir partir, et emporter tout ce qui vous appartient.',
       },
     ],
-    providersTitle: 'Votre data plane, chez OVHcloud ou Scaleway',
-    more: 'Pourquoi c’est important',
   },
 }
 const t = copy[locale]
@@ -98,15 +90,7 @@ const t = copy[locale]
 
   <div class="relative mx-auto max-w-6xl px-5 py-20 sm:py-28">
     <div class="max-w-2xl">
-      <p class="flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.14em] text-primary-soft">
-        <span class="inline-flex h-3 w-[18px] overflow-hidden rounded-[2px] ring-1 ring-white/30" aria-hidden="true">
-          <i class="w-1/3 bg-[#0055A4]"></i>
-          <i class="w-1/3 bg-white"></i>
-          <i class="w-1/3 bg-[#EF4135]"></i>
-        </span>
-        {t.eyebrow}
-      </p>
-      <h2 class="mt-4 text-3xl text-white sm:text-[2.6rem] sm:leading-[1.1]">{t.title}</h2>
+      <h2 class="text-3xl text-white sm:text-[2.6rem] sm:leading-[1.1]">{t.title}</h2>
       <p class="mt-5 text-lg text-white/70">{t.lead}</p>
       <ul class="mt-6 flex flex-wrap gap-2">
         {
@@ -119,10 +103,10 @@ const t = copy[locale]
       </ul>
     </div>
 
-    <div class="mt-14 grid gap-px overflow-hidden rounded-xl bg-white/10 sm:grid-cols-2 lg:grid-cols-4">
+    <div class="mt-14 grid divide-y divide-white/10 rounded-2xl border border-white/10 bg-white/[0.04] shadow-[0_24px_48px_-24px_rgb(0_0_0/0.6)] sm:grid-cols-2 sm:divide-y-0 lg:grid-cols-4 lg:divide-x">
       {
-        t.items.map((item) => (
-          <div class="bg-deep p-7">
+        t.items.map((item, i) => (
+          <div class:list={['p-7', i > 1 && 'sm:border-t sm:border-white/10 lg:border-t-0', i % 2 === 1 && 'sm:border-l sm:border-white/10 lg:border-l-0']}>
             <span class="flex size-9 items-center justify-center rounded-lg border border-white/15 bg-white/5 text-primary-soft">
               <Icon name={item.icon} class="size-[18px]" />
             </span>
@@ -132,41 +116,5 @@ const t = copy[locale]
         ))
       }
     </div>
-
-    <div class="mt-8 flex flex-col gap-4 rounded-xl border border-white/15 bg-white/5 p-6 sm:flex-row sm:items-center sm:justify-between">
-      <p class="text-sm font-medium text-white">{t.providersTitle}</p>
-      <ul class="flex flex-wrap items-center gap-3">
-        {
-          providerLogos.map((logo) => (
-            <li
-              class="flex h-11 items-center gap-2.5 rounded-lg border border-white/15 bg-white/5 px-4 text-white"
-              title={logo.name}
-            >
-              <svg
-                viewBox={logo.viewBox}
-                class={logo.wordmark ? 'h-4 w-auto' : 'size-5'}
-                fill="currentColor"
-                role="img"
-                aria-label={logo.name}
-                set:html={logo.inner}
-              />
-              {!logo.wordmark && <span class="text-sm font-semibold">{logo.name}</span>}
-            </li>
-          ))
-        }
-      </ul>
-    </div>
-
-    {
-      link && (
-        <a
-          href={localePath(locale, '/about#europe')}
-          class="mt-8 inline-flex items-center gap-2 text-sm font-medium text-primary-soft transition-opacity hover:opacity-80"
-        >
-          {t.more}
-          <Icon name="arrow" class="size-4" />
-        </a>
-      )
-    }
   </div>
 </section>

@@ -1,0 +1,34 @@
+---
+import { AgentPolicy } from './agent-policy'
+import type { Locale } from '../i18n'
+
+interface Props {
+  locale?: Locale
+}
+
+const { locale = 'en' } = Astro.props
+
+const copy = {
+  en: {
+    title: 'Rules for agents, as blocks or as code',
+    lead: 'Who, under which conditions, what it may do and what it may never do: a rule is checked on every action. Build it with blocks, or let your tech team keep it as code. Every decision is recorded end to end.',
+  },
+  fr: {
+    title: 'Des règles pour agents, en blocs ou en code',
+    lead: 'Qui, sous quelles conditions, ce qu’il peut faire et ce qu’il ne fera jamais : une règle se vérifie à chaque action. Construisez-la en blocs, ou laissez votre équipe tech la garder en code. Chaque décision est tracée de bout en bout.',
+  },
+}
+const t = copy[locale]
+---
+
+<section id="policies" class="scroll-mt-20 border-y bg-surface/50">
+  <div class="mx-auto max-w-6xl px-5 py-20 sm:py-28">
+    <div class="max-w-2xl">
+      <h2 class="text-3xl sm:text-[2.6rem] sm:leading-[1.1]">{t.title}</h2>
+      <p class="mt-5 text-lg text-muted-foreground">{t.lead}</p>
+    </div>
+    <div class="mt-12">
+      <AgentPolicy client:visible locale={locale} />
+    </div>
+  </div>
+</section>

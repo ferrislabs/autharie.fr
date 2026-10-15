@@ -1,0 +1,265 @@
+---
+import Icon from './icon.astro'
+import type { Locale } from '../i18n'
+
+interface Props {
+  locale?: Locale
+}
+
+const { locale = 'en' } = Astro.props
+
+const copy = {
+  en: {
+    title: 'Everything to run identity and agents, in one place',
+    lead: 'Five building blocks that work together, so you never stitch tools again.',
+    policies: {
+      title: 'Access policies',
+      description: 'Write in plain sentences what each agent and each user may do. As blocks for everyone, as code for your tech team.',
+      rule: ['Accounting assistant can', 'read invoices', 'for', 'Lea', 'until', '8 pm'],
+      verdicts: [
+        ['Read 12 invoices', 'Allowed'],
+        ['€4,800 transfer', 'Blocked'],
+      ],
+    },
+    identities: {
+      title: 'Identity management',
+      description: 'People, agents and apps each get their own identity, reduced rights and clear delegation. Sign in with Google or the identity providers you already use.',
+      rows: [
+        ['Lea Martin', 'Person', 'Google'],
+        ['Accounting assistant', 'Agent', 'for Lea'],
+        ['Billing service', 'App', 'API key'],
+      ],
+    },
+    security: {
+      title: 'Account security',
+      description: 'Event analysis, privilege escalation prevention and permission audits with Seawatch.',
+      alerts: [
+        ['Privilege escalation blocked', 'red'],
+        ['Unusual sign in, Lisbon', 'amber'],
+        ['Role unused for 90 days', 'violet'],
+      ],
+    },
+    observability: {
+      title: 'Traces and alerts',
+      description: 'Follow every request end to end, from the person to the agent to the tool, and get the important events in Slack, Discord or by email.',
+      trace: ['Lea', 'Assistant', 'Stripe'],
+      metric: 'Requests today',
+    },
+    alerting: {
+      channel: '#security',
+      message: 'Transfer blocked for Accounting assistant. Lea is notified.',
+    },
+    governance: {
+      title: 'User governance',
+      description: 'For organisations with several levels: group, subsidiaries, branches, teams. Each level manages its own users and apps, and nothing beyond.',
+      tree: [
+        ['Acme Group', '1,200 users', 0],
+        ['Acme France', '640 users', 1],
+        ['Lyon branch', '85 users', 2],
+        ['Acme Spain', '410 users', 1],
+      ],
+    },
+  },
+  fr: {
+    title: 'Tout pour piloter l’identité et vos agents, au même endroit',
+    lead: 'Cinq briques qui fonctionnent ensemble, pour ne plus jamais assembler des outils à la main.',
+    policies: {
+      title: 'Gestion des règles d’accès',
+      description: 'Écrivez en phrases simples ce que chaque agent et chaque utilisateur peut faire. En blocs pour tout le monde, en code pour votre équipe tech.',
+      rule: ['Assistant compta peut', 'lire les factures', 'pour', 'Léa', 'jusqu’à', '20 h'],
+      verdicts: [
+        ['Lecture de 12 factures', 'Autorisé'],
+        ['Virement de 4 800 €', 'Bloqué'],
+      ],
+    },
+    identities: {
+      title: 'Gestion des identités',
+      description: 'Humains, agents et applications ont chacun leur identité, des droits réduits et une délégation claire. Connexion par Google ou les fournisseurs d’identité que vous utilisez déjà.',
+      rows: [
+        ['Léa Martin', 'Humain', 'Google'],
+        ['Assistant compta', 'Agent', 'pour Léa'],
+        ['Service facturation', 'Appli', 'Clé API'],
+      ],
+    },
+    security: {
+      title: 'Sécurisation de vos comptes',
+      description: 'Analyse des événements, prévention des élévations de privilèges et audit des permissions avec Seawatch.',
+      alerts: [
+        ['Élévation de privilège bloquée', 'red'],
+        ['Connexion inhabituelle, Lisbonne', 'amber'],
+        ['Rôle inutilisé depuis 90 jours', 'violet'],
+      ],
+    },
+    observability: {
+      title: 'Traces et alertes',
+      description: 'Suivez chaque requête de bout en bout, de la personne à l’agent jusqu’à l’outil, et recevez les événements importants dans Slack, Discord ou par e-mail.',
+      trace: ['Léa', 'Assistant', 'Stripe'],
+      metric: 'Requêtes aujourd’hui',
+    },
+    alerting: {
+      channel: '#securite',
+      message: 'Virement bloqué pour Assistant compta. Léa est prévenue.',
+    },
+    governance: {
+      title: 'Gouvernance des utilisateurs',
+      description: 'Pour les structures à plusieurs niveaux : groupe, filiales, agences, équipes. Chaque niveau gère ses utilisateurs et ses applications, et rien au-delà.',
+      tree: [
+        ['Groupe Acme', '1 200 utilisateurs', 0],
+        ['Acme France', '640 utilisateurs', 1],
+        ['Agence de Lyon', '85 utilisateurs', 2],
+        ['Acme Espagne', '410 utilisateurs', 1],
+      ],
+    },
+  },
+}
+const t = copy[locale]
+const bars = [38, 52, 44, 61, 57, 72, 66, 80, 74, 88, 70, 92]
+const alertTone: Record<string, string> = {
+  red: 'bg-red-50 text-red-800 border-red-200',
+  amber: 'bg-amber-50 text-amber-900 border-amber-200',
+  violet: 'bg-primary/5 text-primary border-primary/20',
+}
+const card = 'flex flex-col overflow-hidden rounded-2xl border bg-card shadow-resting'
+const art = 'flex h-52 items-center justify-center border-b border-primary/10 bg-gradient-to-br from-violet-100/80 via-violet-50 to-surface px-6'
+const body = 'p-6'
+---
+
+<section id="solutions" class="scroll-mt-20">
+  <div class="mx-auto max-w-6xl px-5 py-20 sm:py-28">
+    <div class="mx-auto max-w-2xl text-center">
+      <h2 class="text-balance text-3xl sm:text-[2.6rem] sm:leading-[1.1]">{t.title}</h2>
+      <p class="mt-5 text-lg text-muted-foreground">{t.lead}</p>
+    </div>
+
+    <div class="mt-14 grid gap-5 lg:grid-cols-3">
+      <!-- Policies -->
+      <article class:list={[card, 'lg:col-span-2']}>
+        <div class={art} aria-hidden="true">
+          <div class="w-full max-w-lg rounded-xl border bg-card p-4 shadow-raised">
+            <p class="text-sm leading-8">
+              {t.policies.rule[0]} <span class="whitespace-nowrap rounded-md bg-primary/10 px-1.5 py-0.5 font-medium text-primary">{t.policies.rule[1]}</span>
+              {' '}{t.policies.rule[2]} <span class="whitespace-nowrap rounded-md bg-primary/10 px-1.5 py-0.5 font-medium text-primary">{t.policies.rule[3]}</span>
+              {' '}{t.policies.rule[4]} <span class="whitespace-nowrap rounded-md bg-primary/10 px-1.5 py-0.5 font-medium text-primary">{t.policies.rule[5]}</span>
+            </p>
+            <ul class="mt-3 space-y-1.5 border-t pt-3">
+              {
+                t.policies.verdicts.map(([what, verdict], i) => (
+                  <li class="flex items-center justify-between text-xs">
+                    <span>{what}</span>
+                    <span class:list={['rounded px-2 py-0.5 font-semibold', i === 0 ? 'bg-emerald-50 text-emerald-700' : 'bg-red-50 text-red-700']}>{verdict}</span>
+                  </li>
+                ))
+              }
+            </ul>
+          </div>
+        </div>
+        <div class={body}>
+          <h3 class="text-lg font-semibold">{t.policies.title}</h3>
+          <p class="mt-1.5 text-sm leading-relaxed text-muted-foreground">{t.policies.description}</p>
+        </div>
+      </article>
+
+      <!-- Identities -->
+      <article class={card}>
+        <div class={art} aria-hidden="true">
+          <ul class="w-full max-w-[16rem] space-y-2">
+            {
+              t.identities.rows.map(([name, kind, how]) => (
+                <li class="flex items-center gap-2.5 rounded-lg border bg-card px-3 py-2 shadow-raised">
+                  <span class:list={['flex size-6 shrink-0 items-center justify-center rounded-full text-micro font-semibold', kind === 'Agent' ? 'bg-ink text-white' : 'bg-primary/10 text-primary']}>
+                    {name[0]}
+                  </span>
+                  <span class="min-w-0 flex-1">
+                    <span class="block truncate text-xs font-medium">{name}</span>
+                    <span class="block text-micro text-muted-foreground">{kind}</span>
+                  </span>
+                  <span class="rounded-full bg-surface px-2 py-0.5 text-micro text-muted-foreground">{how}</span>
+                </li>
+              ))
+            }
+          </ul>
+        </div>
+        <div class={body}>
+          <h3 class="text-lg font-semibold">{t.identities.title}</h3>
+          <p class="mt-1.5 text-sm leading-relaxed text-muted-foreground">{t.identities.description}</p>
+        </div>
+      </article>
+
+      <!-- Security -->
+      <article class={card}>
+        <div class={art} aria-hidden="true">
+          <ul class="w-full max-w-[16rem] space-y-2">
+            {
+              t.security.alerts.map(([text, tone]) => (
+                <li class:list={['flex items-center gap-2 rounded-lg border px-3 py-2 text-xs font-medium', alertTone[tone]]}>
+                  <Icon name="shield" class="size-3.5 shrink-0" />
+                  {text}
+                </li>
+              ))
+            }
+          </ul>
+        </div>
+        <div class={body}>
+          <h3 class="text-lg font-semibold">{t.security.title}</h3>
+          <p class="mt-1.5 text-sm leading-relaxed text-muted-foreground">{t.security.description}</p>
+        </div>
+      </article>
+
+      <!-- Observability -->
+      <article class={card}>
+        <div class={art} aria-hidden="true">
+          <div class="w-full max-w-[16rem] rounded-xl border bg-card p-4 shadow-raised">
+            <div class="flex items-center gap-1.5 text-micro font-medium">
+              {
+                t.observability.trace.map((step, i) => (
+                  <>
+                    {i > 0 && <span class="h-px flex-1 bg-primary/30" />}
+                    <span class="rounded-md bg-primary/10 px-2 py-0.5 text-primary">{step}</span>
+                  </>
+                ))
+              }
+            </div>
+            <p class="mt-4 text-micro font-medium text-muted-foreground">{t.observability.metric}</p>
+            <div class="mt-1.5 flex h-9 items-end gap-1">
+              {bars.map((h) => <span class="flex-1 rounded-sm bg-primary/70" style={`height:${h}%`} />)}
+            </div>
+            <div class="mt-3 flex items-center gap-2 rounded-lg border bg-surface/70 px-2.5 py-1.5">
+              <span class="flex size-5 shrink-0 items-center justify-center rounded bg-primary text-micro font-bold text-white">A</span>
+              <span class="line-clamp-2 text-micro">{t.alerting.channel} · {t.alerting.message}</span>
+            </div>
+          </div>
+        </div>
+        <div class={body}>
+          <h3 class="text-lg font-semibold">{t.observability.title}</h3>
+          <p class="mt-1.5 text-sm leading-relaxed text-muted-foreground">{t.observability.description}</p>
+        </div>
+      </article>
+
+
+      <!-- Governance -->
+      <article class={card}>
+        <div class={art} aria-hidden="true">
+          <ul class="w-full max-w-md space-y-1.5">
+            {
+              t.governance.tree.map(([name, meta, depth]) => (
+                <li class="flex items-center gap-3" style={`padding-left:${Number(depth) * 1}rem`}>
+                  {Number(depth) > 0 && <span class="h-px w-4 bg-primary/30" />}
+                  <span class="flex flex-1 items-center justify-between rounded-lg border bg-card px-3 py-2 shadow-raised">
+                    <span class="text-xs font-semibold">{name}</span>
+                    <span class="text-micro text-muted-foreground">{meta}</span>
+                  </span>
+                </li>
+              ))
+            }
+          </ul>
+        </div>
+        <div class={body}>
+          <h3 class="text-lg font-semibold">{t.governance.title}</h3>
+          <p class="mt-1.5 text-sm leading-relaxed text-muted-foreground">{t.governance.description}</p>
+        </div>
+      </article>
+
+    </div>
+
+  </div>
+</section>

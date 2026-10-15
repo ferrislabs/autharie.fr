@@ -1,11 +1,10 @@
 ---
-import { ProductShowcase } from './product-showcase'
+import { AgentControl } from './agent-control'
 import Icon from './icon.astro'
-import { localePath, type Locale } from '../i18n'
+import type { Locale } from '../i18n'
 import { primaryCta } from '../platform'
 
 const consoleUrl = import.meta.env.PUBLIC_CONSOLE_URL || 'https://console.autharie.fr'
-const docsUrl = import.meta.env.PUBLIC_DOCS_URL || ''
 
 interface Props {
   locale?: Locale
@@ -15,27 +14,24 @@ const { locale = 'en' } = Astro.props
 
 const copy = {
   en: {
-    badge: 'Early access is open',
-    title1: 'An identity provider of your own,',
-    title2: 'operated for you.',
-    body: 'Autharie runs Ferriskey and Keycloak on Kubernetes and takes care of the parts nobody enjoys. Upgrades, archives, restores, certificates, access. On our clusters, or on a machine you already own.',
-    deploy: 'Deploy an instance',
-    docs: 'Read the docs',
-    note: 'Made in France. 100% European.',
+    badge: 'Private beta · limited spots · free to start',
+    title1: 'Your AI agents do the work.',
+    title2: 'You stay in control.',
+    body: 'Autharie gives each AI agent its own access, shows you everything it does and stops it at the first slip. Sign in for your users is included.',
+    how: 'See how it works',
+    note: 'Ready in 2 minutes · No credit card · Made in France',
   },
   fr: {
-    badge: "L'accès anticipé est ouvert",
-    title1: 'Un fournisseur d\'identité à vous,',
-    title2: 'exploité pour vous.',
-    body: "Autharie exploite Ferriskey et Keycloak sur Kubernetes et prend en charge les tâches dont personne ne veut. Mises à jour, archives, restaurations, certificats, accès. Sur nos clusters, ou sur une machine qui vous appartient déjà.",
-    deploy: 'Déployer une instance',
-    docs: 'Lire la documentation',
-    note: "Conçu en France. 100 % européen.",
+    badge: 'Bêta privée · places limitées · gratuit pour démarrer',
+    title1: 'Vos agents IA travaillent.',
+    title2: 'Vous gardez la main.',
+    body: "Autharie donne à chaque agent IA ses propres accès, vous montre tout ce qu'il fait et l'arrête au moindre écart. La connexion de vos utilisateurs est incluse.",
+    how: 'Voir comment ça marche',
+    note: 'Prêt en 2 minutes · Sans carte bancaire · Conçu en France',
   },
 }
 const t = copy[locale]
 const cta = primaryCta(locale, consoleUrl)
-const fallbackHref = docsUrl || localePath(locale, '/products/deploy')
 ---
 
 <section class="relative overflow-hidden pb-16 pt-14 sm:pb-24 sm:pt-20">
@@ -48,14 +44,10 @@ const fallbackHref = docsUrl || localePath(locale, '/products/deploy')
 
   <div class="mx-auto max-w-6xl px-5">
     <div class="mx-auto max-w-4xl text-center">
-      <a
-        href={fallbackHref}
-        class="inline-flex items-center gap-2 rounded-full border bg-card px-3 py-1 text-xs font-medium text-muted-foreground transition-colors hover:text-foreground"
-      >
-        <span class="live-dot size-1.5 rounded-full bg-primary"></span>
+      <p class="inline-flex items-center gap-2 rounded-full border bg-card px-3 py-1 text-xs font-medium text-muted-foreground">
+        <span class="live-dot size-1.5 rounded-full bg-primary" aria-hidden="true"></span>
         <span>{t.badge}</span>
-        <Icon name="arrow" class="size-3.5" />
-      </a>
+      </p>
 
       <h1 class="mt-6 text-balance text-4xl leading-[1.05] sm:text-[4rem] sm:leading-[1.04]">
         <span class="block">{t.title1}</span>
@@ -75,11 +67,10 @@ const fallbackHref = docsUrl || localePath(locale, '/products/deploy')
           <Icon name="arrow" class="size-4" />
         </a>
         <a
-          href={fallbackHref}
+          href="#how"
           class="inline-flex h-11 items-center gap-2 rounded-md border bg-card px-6 text-sm font-medium transition-colors hover:bg-accent"
         >
-          <Icon name="terminal" class="size-4" />
-          <span>{t.docs}</span>
+          <span>{t.how}</span>
         </a>
       </div>
 
@@ -93,8 +84,15 @@ const fallbackHref = docsUrl || localePath(locale, '/products/deploy')
       </p>
     </div>
 
-    <div class="mt-14 sm:mt-20">
-      <ProductShowcase client:load locale={locale} />
+    <div class="relative mx-auto mt-14 max-w-5xl sm:mt-20">
+      <div
+        class="pointer-events-none absolute -inset-x-3 -inset-y-3 rounded-[1.75rem] bg-primary/[0.06] ring-1 ring-primary/10 sm:-inset-x-5 sm:-inset-y-5"
+        aria-hidden="true"
+      >
+      </div>
+      <div class="relative">
+        <AgentControl client:visible locale={locale} />
+      </div>
     </div>
   </div>
 </section>

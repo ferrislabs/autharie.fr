@@ -24,12 +24,39 @@
   --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif;
   --font-mono: 'JetBrains Mono', ui-monospace, monospace;
 
+  /* Metadata inside product mock-ups only: tags, column labels, timestamps. */
+  --text-micro: 0.6875rem;
+  --text-micro--line-height: 1rem;
+
   --color-ink: oklch(0.17 0.012 285);
   --color-surface: oklch(0.975 0.004 285);
   --color-deep: oklch(0.19 0.024 285);
 }
 
 @layer base {
+  html {
+    scroll-padding-top: 5rem;
+  }
+
+  ::selection {
+    background: color-mix(in oklch, var(--color-primary) 18%, transparent);
+    color: var(--color-ink);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+  }
+
+  .bg-deep :focus-visible {
+    outline-color: var(--color-primary-soft);
+  }
+
+  /* Programmatic focus targets (skip link destination, result headings). */
+  [tabindex='-1']:focus {
+    outline: none;
+  }
+
   /* A grid item sizes to its content by default, which lets one wide child push
      a whole column past the screen. Utilities such as min-w-* still win. */
   .grid > * {
@@ -49,6 +76,53 @@
   }
 }
 
+/*
+ * Elevation. Three steps from DESIGN.md: cards rest on the page, mock-ups
+ * float inside their cards, and the product moment is the highest object on
+ * its screen. Shadows are tinted with the brand hue so they read as light on
+ * lavender paper rather than grey smudges.
+ */
+@utility shadow-resting {
+  box-shadow:
+    0 1px 2px oklch(0.17 0.012 285 / 0.04),
+    0 2px 6px -2px oklch(0.17 0.012 285 / 0.06);
+}
+
+@utility shadow-raised {
+  box-shadow:
+    0 2px 4px -1px oklch(0.17 0.012 285 / 0.06),
+    0 10px 24px -8px oklch(0.52 0.19 285 / 0.18);
+}
+
+@utility shadow-lift {
+  box-shadow:
+    0 2px 6px -2px oklch(0.17 0.012 285 / 0.08),
+    0 24px 48px -16px oklch(0.52 0.19 285 / 0.28),
+    0 48px 96px -32px oklch(0.17 0.012 285 / 0.18);
+}
+
+/*
+ * The watching sea lion hops when Autharie steps in. Stepped, so it moves like
+ * the pixel art it is drawn in.
+ */
+@keyframes otarie-alert {
+  0%, 100% { transform: translateY(0); }
+  30% { transform: translateY(-6px); }
+  55% { transform: translateY(0); }
+  75% { transform: translateY(-3px); }
+}
+
+.otarie-alert {
+  display: inline-block;
+  animation: otarie-alert 520ms steps(4, end) 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .otarie-alert {
+    animation: none;
+  }
+}
+
 /* A hairline grid, drawn rather than blurred. */
 .bg-grid {
   background-image:
@@ -58,13 +132,6 @@
   mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, black 20%, transparent 75%);
 }
 
-.eyebrow {
-  font-size: 0.75rem;
-  font-weight: 600;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--color-primary);
-}
 
 @keyframes autharie-pulse {
   0%, 100% { opacity: 1; }
@@ -231,9 +298,25 @@ html:not(.dark) .astro-code span:not(.highlighted, .highlighted-word, .diff) * {
 }
 
 .slider:focus-visible::-webkit-slider-thumb {
-  box-shadow: 0 0 0 4px color-mix(in oklab, var(--color-primary) 30%, transparent);
+  box-shadow: 0 0 0 2px #fff, 0 0 0 4px var(--color-primary);
 }
 
 .slider:focus-visible::-moz-range-thumb {
-  box-shadow: 0 0 0 4px color-mix(in oklab, var(--color-primary) 30%, transparent);
+  box-shadow: 0 0 0 2px #fff, 0 0 0 4px var(--color-primary);
+}
+
+/* Edges of the policy flow: dashes that travel along an active connection. */
+@keyframes autharie-edge-flow {
+  to {
+    stroke-dashoffset: -20;
+  }
+}
+.edge-flow {
+  stroke-dasharray: 6 4;
+  animation: autharie-edge-flow 0.8s linear infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .edge-flow {
+    animation: none;
+  }
 }

@@ -1,6 +1,6 @@
 ---
 import { Code } from 'astro:components'
-import { localePath, type Locale } from '../i18n'
+import { localePath, ui, type Locale } from '../i18n'
 import Icon from './icon.astro'
 
 const manifest = `apiVersion: autharie.fr/v1alpha
@@ -56,7 +56,6 @@ const copy = {
           'The control plane, the operator and the data plane agent. Compile time checked SQL, and a binary that starts in milliseconds.',
       },
     ],
-    eyebrow: 'Underneath',
     title: 'It is Kubernetes under there, and it shows',
     intro:
       'Every instance is a custom resource. If you already run clusters, nothing here is a surprise, and kubectl still works the way you expect.',
@@ -82,7 +81,6 @@ const copy = {
           'Le control plane, l\'operator et l\'agent du data plane. Du SQL vérifié à la compilation, et un binaire qui démarre en quelques millisecondes.',
       },
     ],
-    eyebrow: 'Sous le capot',
     title: 'C\'est du Kubernetes là-dessous, et ça se voit',
     intro:
       'Chaque instance est une ressource personnalisée. Si vous exploitez déjà des clusters, rien ici ne vous surprendra, et kubectl fonctionne comme vous l\'attendez.',
@@ -96,8 +94,7 @@ const t = copy[locale]
   <div class="mx-auto max-w-6xl px-5 py-20 sm:py-28">
     <div class="grid gap-12 lg:grid-cols-5 lg:gap-16">
       <div class="min-w-0 lg:col-span-2">
-        <p class="eyebrow">{t.eyebrow}</p>
-        <h2 class="mt-4 text-3xl sm:text-[2.6rem] sm:leading-[1.1]">
+        <h2 class="text-3xl sm:text-[2.6rem] sm:leading-[1.1]">
           {t.title}
         </h2>
         <p class="mt-5 text-lg text-muted-foreground">
@@ -128,22 +125,22 @@ const t = copy[locale]
       <div class="min-w-0 lg:col-span-3">
         <div class="overflow-hidden rounded-xl border bg-deep shadow-sm">
           <div class="flex items-center justify-between border-b border-white/10 px-4 py-2.5">
-            <span class="font-mono text-[11px] text-white/50">identityinstance.yaml</span>
-            <span class="rounded border border-white/15 px-1.5 py-px font-mono text-[10px] text-white/50"
+            <span class="font-mono text-micro text-white/50">identityinstance.yaml</span>
+            <span class="rounded border border-white/15 px-1.5 py-px font-mono text-micro text-white/50"
               >autharie.fr/v1alpha</span
             >
           </div>
-          <div class="code-surface overflow-x-auto p-5 text-[12.5px] leading-[1.7]">
+          <div role="region" aria-label={ui[locale].codeExample} class="code-surface overflow-x-auto p-5 text-[12.5px] leading-[1.7]">
             <Code code={manifest} lang="yaml" theme="poimandres" />
           </div>
         </div>
 
         <div class="mt-4 overflow-hidden rounded-xl border bg-deep">
-          <pre class="overflow-x-auto px-5 py-4 font-mono text-[11.5px] leading-relaxed text-white/70"><code>$ kubectl get identityinstances
+          <pre tabindex="0" role="region" aria-label={ui[locale].codeExample} class="overflow-x-auto px-5 py-4 font-mono text-[11.5px] leading-relaxed text-white/70"><code>$ kubectl get identityinstances
 NAME              PROVIDER    VERSION   PHASE     READY   AGE
 acme-production   ferriskey   1.4.2     Running   true    97d
 acme-staging      ferriskey   1.4.2     Running   true    97d
-legacy-sso        keycloak    26.0.7    Upgrading false   41d</code></pre>
+internal-sso      ferriskey   1.4.1     Upgrading false   41d</code></pre>
         </div>
       </div>
     </div>

@@ -1,0 +1,146 @@
+---
+import Icon from './icon.astro'
+import type { Locale } from '../i18n'
+
+interface Props {
+  locale?: Locale
+}
+
+const { locale = 'en' } = Astro.props
+
+const copy = {
+  en: {
+    title: 'Agents under control in three steps',
+    lead: 'No server, nothing to install, no security expert to hire. You decide, Autharie applies.',
+    steps: [
+      {
+        title: 'Create your space',
+        description: 'Pick a name. Your space is ready in under two minutes, hosted in Europe, with sign in for your users included.',
+      },
+      {
+        title: 'Connect your agents and apps',
+        description: 'Assistants, automations, in-house agents and your product: each one gets its own identity.',
+      },
+      {
+        title: 'Set the rules, keep control',
+        description: 'Say what each agent may do, in plain sentences. Follow what happens, and stop anything in one click.',
+      },
+    ],
+    create: { field: 'Space name', value: 'acme', button: 'Create', ready: 'Ready', time: '1 min 42 s' },
+    apps: [
+      ['Claude assistant', 'MCP', 'cpu'],
+      ['In-house agent', 'OpenID Connect', 'cpu'],
+      ['Automation', 'API key', 'zap'],
+      ['Your web app', 'Sign in', 'users'],
+    ],
+    rules: [
+      ['Allowed', 'Read invoices'],
+      ['Never', 'Make a transfer'],
+      ['Until', '8 pm'],
+    ],
+    stop: 'Stop',
+  },
+  fr: {
+    title: 'Des agents sous contrôle, en trois étapes',
+    lead: 'Pas de serveur, rien à installer, pas d’expert sécurité à recruter. Vous décidez, Autharie applique.',
+    steps: [
+      {
+        title: 'Créez votre espace',
+        description: 'Choisissez un nom. Votre espace est prêt en moins de deux minutes, hébergé en Europe, avec la connexion de vos utilisateurs incluse.',
+      },
+      {
+        title: 'Connectez vos agents et vos applications',
+        description: 'Assistants, automatisations, agents maison et votre produit : chacun reçoit sa propre identité.',
+      },
+      {
+        title: 'Fixez les règles, gardez la main',
+        description: 'Dites ce que chaque agent peut faire, en phrases simples. Suivez ce qui se passe, et arrêtez tout en un clic.',
+      },
+    ],
+    create: { field: 'Nom de l’espace', value: 'acme', button: 'Créer', ready: 'Prêt', time: '1 min 42 s' },
+    apps: [
+      ['Assistant Claude', 'MCP', 'cpu'],
+      ['Agent maison', 'OpenID Connect', 'cpu'],
+      ['Automatisation', 'Clé API', 'zap'],
+      ['Votre application web', 'Connexion', 'users'],
+    ],
+    rules: [
+      ['Autorisé', 'Lire les factures'],
+      ['Jamais', 'Faire un virement'],
+      ['Jusqu’à', '20 h'],
+    ],
+    stop: 'Arrêter',
+  },
+}
+const t = copy[locale]
+---
+
+<section id="how" class="scroll-mt-20">
+  <div class="mx-auto max-w-6xl px-5 py-20 sm:py-28">
+    <div class="mx-auto max-w-2xl text-center">
+      <h2 class="text-balance text-3xl sm:text-[2.6rem] sm:leading-[1.1]">{t.title}</h2>
+      <p class="mt-5 text-lg text-muted-foreground">{t.lead}</p>
+    </div>
+
+    <ol class="mt-14 grid gap-5 md:grid-cols-3">
+      {
+        t.steps.map((step, i) => (
+          <li class="flex flex-col overflow-hidden rounded-2xl border bg-card shadow-resting">
+            <div class="flex h-60 items-center justify-center border-b border-primary/10 bg-gradient-to-br from-violet-100/80 via-violet-50 to-surface px-6" aria-hidden="true">
+              {i === 0 && (
+                <div class="w-full max-w-[15rem] rounded-xl border bg-card p-4 shadow-raised">
+                  <p class="text-micro font-medium text-muted-foreground">{t.create.field}</p>
+                  <div class="mt-1.5 flex gap-2">
+                    <span class="flex-1 rounded-md border px-2.5 py-1.5 font-mono text-xs">{t.create.value}</span>
+                    <span class="rounded-md bg-primary px-2.5 py-1.5 text-xs font-medium text-primary-foreground">{t.create.button}</span>
+                  </div>
+                  <div class="mt-3 flex items-center justify-between rounded-md bg-emerald-50 px-2.5 py-1.5 text-xs">
+                    <span class="flex items-center gap-1.5 font-medium text-emerald-700">
+                      <Icon name="check" class="size-3.5" />
+                      {t.create.ready}
+                    </span>
+                    <span class="font-mono text-emerald-700">{t.create.time}</span>
+                  </div>
+                </div>
+              )}
+              {i === 1 && (
+                <ul class="w-full max-w-[16rem] space-y-2">
+                  {t.apps.map(([name, how, icon]) => (
+                    <li class="flex items-center gap-2.5 rounded-lg border bg-card px-3 py-2 shadow-raised">
+                      <span class:list={['flex size-6 items-center justify-center rounded-md', icon === 'users' ? 'bg-primary/10 text-primary' : 'bg-ink text-white']}>
+                        <Icon name={icon} class="size-3.5" />
+                      </span>
+                      <span class="flex-1 text-xs font-medium leading-tight">{name}</span>
+                      <span class="rounded-full bg-surface px-2 py-0.5 text-micro font-medium text-muted-foreground">{how}</span>
+                    </li>
+                  ))}
+                </ul>
+              )}
+              {i === 2 && (
+                <div class="w-full max-w-[15rem] rounded-xl border bg-card p-4 shadow-raised">
+                  <ul class="space-y-1.5">
+                    {t.rules.map(([icon, text], i) => (
+                      <li class="flex items-center gap-2.5 text-xs">
+                        <span class:list={['w-16 shrink-0 rounded px-1.5 py-0.5 text-center text-micro font-semibold', i === 0 ? 'bg-emerald-50 text-emerald-700' : i === 1 ? 'bg-red-50 text-red-700' : 'bg-primary/10 text-primary']}>{icon}</span>
+                        {text}
+                      </li>
+                    ))}
+                  </ul>
+                  <div class="mt-3 flex items-center justify-center gap-2 rounded-md bg-red-600 px-2.5 py-1.5 text-xs font-semibold text-white">
+                    <span class="size-2 rounded-[2px] bg-white"></span>
+                    {t.stop}
+                  </div>
+                </div>
+              )}
+            </div>
+            <div class="p-6">
+              <span class="font-mono text-sm font-semibold text-primary">{String(i + 1).padStart(2, '0')}</span>
+              <h3 class="mt-2 font-semibold">{step.title}</h3>
+              <p class="mt-1.5 text-sm leading-relaxed text-muted-foreground">{step.description}</p>
+            </div>
+          </li>
+        ))
+      }
+    </ol>
+  </div>
+</section>

@@ -34,9 +34,9 @@ export default function AuditTrail({ locale = 'en' }: { locale?: 'en' | 'fr' }) 
           {t.export}
         </button>
       </div>
-      <div className="flex flex-wrap gap-1.5 border-b p-3" role="tablist">
+      <div className="flex flex-wrap gap-1.5 border-b p-3">
         {(Object.keys(t.filters) as ('all' | Kind)[]).map((k) => (
-          <button key={k} type="button" role="tab" aria-selected={filter === k} onClick={() => setFilter(k)} className={cn('rounded-md border px-2.5 py-1 text-xs transition-colors', filter === k ? 'border-primary/40 bg-primary/10 font-medium text-primary' : 'text-muted-foreground hover:bg-accent')}>
+          <button key={k} type="button" aria-pressed={filter === k} onClick={() => setFilter(k)} className={cn('rounded-md border px-2.5 py-1 text-xs transition-colors', filter === k ? 'border-primary/40 bg-primary/10 font-medium text-primary' : 'text-muted-foreground hover:bg-accent')}>
             {t.filters[k]}
           </button>
         ))}
@@ -44,7 +44,7 @@ export default function AuditTrail({ locale = 'en' }: { locale?: 'en' | 'fr' }) 
       <ul className="divide-y">
         {shown.map((e) => (
           <li key={e.t + e.en} className="flex items-start gap-3 px-4 py-3">
-            <span className="w-10 shrink-0 pt-0.5 font-mono text-[11px] text-muted-foreground">{e.t}</span>
+            <span className="w-10 shrink-0 pt-0.5 font-mono text-micro text-muted-foreground">{e.t}</span>
             <div className="min-w-0 flex-1">
               <p className="text-sm">{e[locale]}</p>
               <p className="mt-0.5 text-xs text-muted-foreground">{t.who} {e.by}</p>

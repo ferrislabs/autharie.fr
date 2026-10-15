@@ -45,7 +45,7 @@ export default function SecureGovernance({ locale = 'en' }: { locale?: 'en' | 'f
       <div className="grid grid-cols-3 divide-x border-b">
         {t.stats.map(([label, value]) => (
           <div key={label} className="p-3">
-            <p className="text-[11px] leading-tight text-muted-foreground">{label}</p>
+            <p className="text-micro leading-tight text-muted-foreground">{label}</p>
             <p className="mt-1 text-lg font-semibold">{value}</p>
           </div>
         ))}

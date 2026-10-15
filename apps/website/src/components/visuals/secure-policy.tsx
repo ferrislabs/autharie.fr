@@ -63,7 +63,7 @@ export default function SecurePolicy({ locale = 'en' }: { locale?: 'en' | 'fr' }
             <span
               className={
                 'z-10 mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full border bg-background ' +
-                (r.result === 'match' ? 'border-amber-300 text-amber-600' : r.result === 'pass' ? 'border-green-300 text-green-600' : 'text-muted-foreground/60')
+                (r.result === 'match' ? 'border-amber-300 text-amber-600' : r.result === 'pass' ? 'border-green-300 text-green-600' : 'text-muted-foreground')
               }
             >
               <Icon name={r.result === 'match' ? 'shield-alert' : r.result === 'pass' ? 'check' : 'pause'} className="h-3 w-3" />
@@ -75,7 +75,7 @@ export default function SecurePolicy({ locale = 'en' }: { locale?: 'en' | 'fr' }
                   {t[r.result]}
                 </StatusBadge>
               </div>
-              <code className="mt-1 inline-block rounded border bg-muted/40 px-1.5 py-0.5 font-mono text-[11px] text-muted-foreground">{r.rule}</code>
+              <code className="mt-1 inline-block rounded border bg-muted/40 px-1.5 py-0.5 font-mono text-micro text-muted-foreground">{r.rule}</code>
             </div>
           </li>
         ))}

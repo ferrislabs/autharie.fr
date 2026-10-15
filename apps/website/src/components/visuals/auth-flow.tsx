@@ -285,7 +285,7 @@ export default function AuthFlow({ locale = 'en' }: { locale?: L }) {
         <p className="flex items-center gap-2 text-sm font-semibold">
           <Icon name="waypoints" className="h-4 w-4 text-muted-foreground" />
           {t.title}
-          <span className="rounded border bg-muted px-1.5 py-0.5 text-[10px] font-medium text-muted-foreground">{t.draft}</span>
+          <span className="rounded border bg-muted px-1.5 py-0.5 text-micro font-medium text-muted-foreground">{t.draft}</span>
         </p>
         <div className="flex items-center gap-2">
           <button type="button" onClick={reset} className="h-8 rounded-md border px-3 text-xs font-medium hover:bg-accent">
@@ -298,9 +298,10 @@ export default function AuthFlow({ locale = 'en' }: { locale?: L }) {
       <div className="flex flex-wrap items-center gap-x-5 gap-y-2 border-b bg-muted/30 px-3 py-2">
         {palette.map((g) => (
           <div key={g.title.en} className="flex flex-wrap items-center gap-1.5">
-            <span className="text-[11px] font-medium uppercase tracking-wide text-muted-foreground">{g.title[locale]}</span>
+            <span className="text-micro font-medium uppercase tracking-wide text-muted-foreground">{g.title[locale]}</span>
             {g.ids.map((id) => (
-              <span
+              <button
+                type="button"
                 key={id}
                 draggable
                 onClick={() => add(id)}
@@ -309,7 +310,7 @@ export default function AuthFlow({ locale = 'en' }: { locale?: L }) {
               >
                 <Icon name={types[id].icon} className="h-3 w-3" />
                 {types[id].label[locale]}
-              </span>
+              </button>
             ))}
           </div>
         ))}
@@ -320,7 +321,7 @@ export default function AuthFlow({ locale = 'en' }: { locale?: L }) {
           <div
             ref={box}
             tabIndex={0}
-            className="relative touch-none select-none outline-none [background-image:radial-gradient(circle,var(--color-border)_1px,transparent_1px)] [background-size:16px_16px]"
+            className="relative touch-none select-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset [background-image:radial-gradient(circle,var(--color-border)_1px,transparent_1px)] [background-size:16px_16px]"
             style={{ width: W * scale, height: H * scale }}
             onPointerMove={onMove}
             onPointerUp={onUp}
@@ -410,7 +411,7 @@ export default function AuthFlow({ locale = 'en' }: { locale?: L }) {
         <aside className="space-y-4 p-4 text-sm">
           {selNode ? (
             <div className="space-y-3">
-              <p className="text-[11px] font-medium uppercase tracking-wide text-muted-foreground">{t.inspector}</p>
+              <p className="text-micro font-medium uppercase tracking-wide text-muted-foreground">{t.inspector}</p>
               <div className="flex items-center gap-2 font-semibold">
                 <Icon name={types[selNode.type].icon} className="h-4 w-4" />
                 {types[selNode.type].label[locale]}
@@ -433,7 +434,7 @@ export default function AuthFlow({ locale = 'en' }: { locale?: L }) {
             </div>
           ) : selEdge ? (
             <div className="space-y-3">
-              <p className="text-[11px] font-medium uppercase tracking-wide text-muted-foreground">{t.link}</p>
+              <p className="text-micro font-medium uppercase tracking-wide text-muted-foreground">{t.link}</p>
               <p className="text-xs">
                 {types[byId[selEdge.from].type].label[locale]} → {types[byId[selEdge.to].type].label[locale]}
               </p>
@@ -447,7 +448,7 @@ export default function AuthFlow({ locale = 'en' }: { locale?: L }) {
           )}
 
           <div className="space-y-2 border-t pt-4">
-            <p className="text-[11px] font-medium uppercase tracking-wide text-muted-foreground">{t.checks}</p>
+            <p className="text-micro font-medium uppercase tracking-wide text-muted-foreground">{t.checks}</p>
             {[
               [checks.dead === 0, checks.dead === 0 ? t.okEnds : t.badEnds(checks.dead)],
               [checks.unreachable === 0, checks.unreachable === 0 ? t.okReach : t.badReach(checks.unreachable)],
@@ -460,7 +461,7 @@ export default function AuthFlow({ locale = 'en' }: { locale?: L }) {
           </div>
 
           <div className="space-y-2 border-t pt-4">
-            <p className="text-[11px] font-medium uppercase tracking-wide text-muted-foreground">{t.test}</p>
+            <p className="text-micro font-medium uppercase tracking-wide text-muted-foreground">{t.test}</p>
             <div className="space-y-1">
               {scenarios.map((s) => (
                 <button
@@ -473,7 +474,7 @@ export default function AuthFlow({ locale = 'en' }: { locale?: L }) {
                 </button>
               ))}
             </div>
-            <p className="text-[11px] text-muted-foreground">{sc.who[locale]}</p>
+            <p className="text-micro text-muted-foreground">{sc.who[locale]}</p>
             <button type="button" onClick={runTest} className="inline-flex h-8 w-full items-center justify-center gap-2 rounded-md bg-primary px-3 text-xs font-medium text-primary-foreground hover:opacity-90">
               <Icon name="play" className="h-3.5 w-3.5" />
               {t.run}
@@ -494,7 +495,7 @@ export default function AuthFlow({ locale = 'en' }: { locale?: L }) {
           </div>
         </aside>
       </div>
-      <p className="border-t bg-muted/30 px-4 py-2 text-[11px] text-muted-foreground">{t.hint}</p>
+      <p className="border-t bg-muted/30 px-4 py-2 text-micro text-muted-foreground">{t.hint}</p>
     </ConsoleWindow>
   )
 }

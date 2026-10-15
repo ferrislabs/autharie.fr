@@ -3,11 +3,14 @@ import { type Locale } from '../i18n'
 import Base from '../layouts/base.astro'
 import { SiteHeader } from '../components/site-header'
 import HeroSection from '../components/hero-section.astro'
-import CentralSection from '../components/central-section.astro'
-import SecuritySection from '../components/security-section.astro'
-import ExpertiseSection from '../components/expertise-section.astro'
+import ProblemSection from '../components/problem-section.astro'
+import SolutionsSection from '../components/solutions-section.astro'
+import AgentPolicySection from '../components/agent-policy-section.astro'
+import AudienceSection from '../components/audience-section.astro'
+import HowSection from '../components/how-section.astro'
+import PlansSection from '../components/plans-section.astro'
+import VisionSection from '../components/vision-section.astro'
 import EuropeSection from '../components/europe-section.astro'
-import OffersSection from '../components/offers-section.astro'
 import FaqSection from '../components/faq-section.astro'
 import CtaSection from '../components/cta-section.astro'
 import SiteFooter from '../components/site-footer.astro'
@@ -20,13 +23,13 @@ const { locale = 'en' } = Astro.props
 const docsUrl = import.meta.env.PUBLIC_DOCS_URL || ''
 const consoleUrl = import.meta.env.PUBLIC_CONSOLE_URL || 'https://console.autharie.fr'
 const title = {
-  en: 'Autharie: managed Keycloak and Ferriskey, made in France',
-  fr: 'Autharie : Keycloak et Ferriskey gérés, conçus en France',
+  en: 'Autharie: your AI agents do the work, you stay in control',
+  fr: 'Autharie : vos agents IA travaillent, vous gardez la main',
 }
 
 const description = {
-  en: 'Managed Ferriskey and Keycloak instances on Kubernetes. Upgrades, archives, restores and access control handled, on our clusters or on yours.',
-  fr: 'Des instances Ferriskey et Keycloak gérées sur Kubernetes. Mises à jour, archives et restaurations prises en charge, chez nous ou chez vous.',
+  en: 'Give each AI agent its access, see everything it does and stop it in one click. Sign in for your users included, hosted in Europe.',
+  fr: 'Donnez à chaque agent IA ses accès, voyez tout ce qu’il fait et arrêtez-le en un clic. Connexion de vos utilisateurs incluse, hébergé en Europe.',
 }
 ---
 
@@ -36,13 +39,16 @@ const description = {
 >
   <SiteHeader docsUrl={docsUrl} consoleUrl={consoleUrl} locale={locale} pathname={Astro.url.pathname} client:load transition:persist={`site-header-${locale}`} />
 
-  <main>
+  <main id="main" tabindex="-1">
     <HeroSection locale={locale} />
-    <CentralSection locale={locale} />
-    <SecuritySection locale={locale} />
-    <ExpertiseSection locale={locale} />
+    <ProblemSection locale={locale} />
+    <SolutionsSection locale={locale} />
+    <AgentPolicySection locale={locale} />
+    <AudienceSection locale={locale} />
+    <HowSection locale={locale} />
+    <VisionSection locale={locale} />
+    <PlansSection locale={locale} />
     <EuropeSection locale={locale} />
-    <OffersSection locale={locale} />
     <FaqSection locale={locale} />
     <CtaSection locale={locale} />
   </main>

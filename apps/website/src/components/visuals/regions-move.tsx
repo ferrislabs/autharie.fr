@@ -84,7 +84,7 @@ export default function RegionsMove({ locale = 'en' }: { locale?: 'en' | 'fr' })
                       {busy ? (
                         <ol className="mt-2 flex gap-1.5">
                           {t.steps.map((s, i) => (
-                            <li key={s} className={cn('flex-1 rounded border px-1.5 py-1 text-center text-[10px]', i <= moving!.step ? 'border-blue-300 bg-blue-100 text-blue-800' : 'text-muted-foreground')}>
+                            <li key={s} className={cn('flex-1 rounded border px-1.5 py-1 text-center text-micro', i <= moving!.step ? 'border-blue-300 bg-blue-100 text-blue-800' : 'text-muted-foreground')}>
                               {s}
                             </li>
                           ))}
@@ -96,7 +96,7 @@ export default function RegionsMove({ locale = 'en' }: { locale?: 'en' | 'fr' })
                             type="button"
                             onClick={() => move(n)}
                             disabled={!!moving}
-                            className="shrink-0 rounded-md border px-2 py-1 text-[11px] font-medium transition-colors hover:bg-accent disabled:opacity-40"
+                            className="shrink-0 rounded-md border px-2 py-1 text-micro font-medium transition-colors hover:bg-accent disabled:opacity-40"
                           >
                             {t.move} {target}
                           </button>

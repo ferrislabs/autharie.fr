@@ -27,7 +27,7 @@ export default function FourEyes({ locale = 'en' }: { locale?: 'en' | 'fr' }) {
       </div>
       <div className="space-y-3 p-4">
         <div className="rounded-lg border p-3 text-sm">
-          <p><span className="font-medium">{t.who}</span> <span className="text-muted-foreground">{t.ask}</span> <code className="rounded border bg-muted/40 px-1.5 py-0.5 font-mono text-[11px]">{t.role}</code> <span className="text-muted-foreground">{t.for}</span></p>
+          <p><span className="font-medium">{t.who}</span> <span className="text-muted-foreground">{t.ask}</span> <code className="rounded border bg-muted/40 px-1.5 py-0.5 font-mono text-micro">{t.role}</code> <span className="text-muted-foreground">{t.for}</span></p>
           <p className="mt-1.5 text-xs text-muted-foreground">{t.why}</p>
         </div>
         <ol className="space-y-0">
@@ -36,7 +36,7 @@ export default function FourEyes({ locale = 'en' }: { locale?: 'en' | 'fr' }) {
             return (
               <li key={s} className="relative flex gap-3 pb-3 last:pb-0">
                 {i < t.steps.length - 1 && <span className="absolute left-[9px] top-5 h-[calc(100%-8px)] w-px bg-border" aria-hidden="true" />}
-                <span className={cn('z-10 mt-0.5 flex h-[19px] w-[19px] shrink-0 items-center justify-center rounded-full border bg-background', done ? 'border-green-400 text-green-600' : 'text-muted-foreground/50')}>
+                <span aria-hidden="true" className={cn('z-10 mt-0.5 flex h-[19px] w-[19px] shrink-0 items-center justify-center rounded-full border bg-background', done ? 'border-green-400 text-green-600' : 'text-muted-foreground/50')}>
                   {done && <Icon name="check" className="h-2.5 w-2.5" />}
                 </span>
                 <span className={cn('text-sm', done ? 'font-medium' : 'text-muted-foreground')}>{s}</span>

@@ -1,0 +1,146 @@
+---
+import Icon from './icon.astro'
+import { primaryCta } from '../platform'
+import { localePath, type Locale } from '../i18n'
+
+const consoleUrl = import.meta.env.PUBLIC_CONSOLE_URL || 'https://console.autharie.fr'
+
+interface Props {
+  locale?: Locale
+}
+
+const { locale = 'en' } = Astro.props
+
+const copy = {
+  en: {
+    title: 'Start free. Upgrade when it matters.',
+    lead: 'Try Autharie on a real project at no cost. When your product grows, Premium gives you your own infrastructure and full visibility.',
+    free: {
+      name: 'Free',
+      tagline: 'To start and validate',
+      price: 'Free, no credit card',
+      next: 'We open free spaces in small groups during the private beta.',
+      items: [
+        'One space (realm) on our shared infrastructure in Europe',
+        'Sign in and user accounts, up to a user quota',
+        'A sign in page in your colours',
+        'OpenID Connect and OAuth 2 for all your apps',
+        'Your first agents, with limited AI usage',
+        'Upgrades and security fixes handled',
+      ],
+    },
+    premium: {
+      name: 'Premium',
+      tagline: 'When your product grows',
+      price: 'On request during the beta',
+      intro: 'Everything in Free, plus:',
+      items: [
+        'A dedicated instance, or on your own cluster',
+        'Several spaces (realms) and higher quotas',
+        'Detailed logs and metrics',
+        'Access audit and exportable evidence',
+        'Usage analytics',
+        'Extended AI usage for your agents',
+      ],
+    },
+    talk: 'Talk to us about Premium',
+  },
+  fr: {
+    title: 'Démarrez gratuitement. Passez en Premium quand ça compte.',
+    lead: 'Essayez Autharie sur un vrai projet, sans frais. Quand votre produit grandit, Premium vous donne votre propre infrastructure et une visibilité complète.',
+    free: {
+      name: 'Gratuit',
+      tagline: 'Pour démarrer et valider',
+      price: 'Gratuit, sans carte bancaire',
+      next: 'Nous ouvrons les espaces gratuits par petits groupes pendant la bêta privée.',
+      items: [
+        'Un espace (realm) sur notre infrastructure partagée en Europe',
+        'Connexion et comptes utilisateurs, jusqu’à un quota',
+        'Une page de connexion à vos couleurs',
+        'OpenID Connect et OAuth 2 pour toutes vos applications',
+        'Vos premiers agents, avec un usage IA limité',
+        'Mises à jour et correctifs de sécurité pris en charge',
+      ],
+    },
+    premium: {
+      name: 'Premium',
+      tagline: 'Quand votre produit grandit',
+      price: 'Sur demande pendant la bêta',
+      intro: 'Tout le Gratuit, et en plus :',
+      items: [
+        'Une instance dédiée, ou sur votre propre cluster',
+        'Plusieurs espaces (realms) et des quotas relevés',
+        'Journaux et métriques détaillés',
+        'Audit des accès et preuves exportables',
+        'Analyses d’usage',
+        'Usage IA étendu pour vos agents',
+      ],
+    },
+    talk: 'Parler du Premium',
+  },
+}
+const t = copy[locale]
+const cta = primaryCta(locale, consoleUrl)
+---
+
+<section id="plans" class="scroll-mt-20 border-y bg-surface/50">
+  <div class="mx-auto max-w-5xl px-5 py-20 sm:py-28">
+    <div class="mx-auto max-w-2xl text-center">
+      <h2 class="text-balance text-3xl sm:text-[2.6rem] sm:leading-[1.1]">{t.title}</h2>
+      <p class="mt-5 text-lg text-muted-foreground">{t.lead}</p>
+    </div>
+
+    <div class="mt-14 grid gap-5 md:grid-cols-2">
+      <div class="flex flex-col rounded-2xl border bg-card p-7 shadow-resting">
+        <h3 class="text-xl font-semibold">{t.free.name}</h3>
+        <p class="mt-1 text-sm text-muted-foreground">{t.free.tagline}</p>
+        <p class="mt-5 text-sm font-semibold text-primary">{t.free.price}</p>
+        <ul class="mt-6 space-y-3">
+          {
+            t.free.items.map((item) => (
+              <li class="flex items-start gap-3 text-sm">
+                <span class="mt-0.5 flex size-5 shrink-0 items-center justify-center rounded-full bg-primary/10 text-primary">
+                  <Icon name="check" class="size-3" />
+                </span>
+                {item}
+              </li>
+            ))
+          }
+        </ul>
+        <a
+          href={cta.href}
+          class="mt-8 inline-flex h-11 items-center justify-center gap-2 rounded-md bg-primary px-6 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
+        >
+          <span>{cta.label}</span>
+          <Icon name="arrow" class="size-4" />
+        </a>
+        <p class="mt-3 text-center text-xs text-muted-foreground">{t.free.next}</p>
+      </div>
+
+      <div class="flex flex-col rounded-2xl bg-deep p-7 text-white">
+        <h3 class="text-xl font-semibold text-white">{t.premium.name}</h3>
+        <p class="mt-1 text-sm text-white/70">{t.premium.tagline}</p>
+        <p class="mt-5 text-sm font-semibold text-primary-soft">{t.premium.price}</p>
+        <p class="mt-6 text-sm text-white/70">{t.premium.intro}</p>
+        <ul class="mt-3 space-y-3">
+          {
+            t.premium.items.map((item) => (
+              <li class="flex items-start gap-3 text-sm">
+                <span class="mt-0.5 flex size-5 shrink-0 items-center justify-center rounded-full bg-white/10 text-primary-soft">
+                  <Icon name="check" class="size-3" />
+                </span>
+                {item}
+              </li>
+            ))
+          }
+        </ul>
+        <a
+          href={`${localePath(locale, '/contact')}?topic=premium`}
+          class="mt-8 inline-flex h-11 items-center justify-center gap-2 rounded-md border border-white/25 px-6 text-sm font-medium text-white transition-colors hover:bg-white/10"
+        >
+          {t.talk}
+        </a>
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,91 @@
+---
+import Icon from './icon.astro'
+import IdentityFederation from './visuals/identity-federation'
+import SecurePolicy from './visuals/secure-policy'
+import ObserveAlert from './visuals/observe-alert'
+import ObserveLogs from './visuals/observe-logs'
+import RegionsMove from './visuals/regions-move'
+import OperateEphemeral from './visuals/operate-ephemeral'
+import IdentityRightsizing from './visuals/identity-rightsizing'
+import IdentityGrowth from './visuals/identity-growth'
+import SecureGovernance from './visuals/secure-governance'
+import AuthFlow from './visuals/auth-flow'
+import ObserveLoad from './visuals/observe-load'
+import OperatePromote from './visuals/operate-promote'
+import ManifestApply from './visuals/manifest-apply'
+import DevQuickstart from './visuals/dev-quickstart'
+import AuditTrail from './visuals/audit-trail'
+import LoginBranding from './visuals/login-branding'
+import GrowthPath from './visuals/growth-path'
+import MemberSso from './visuals/member-sso'
+import FourEyes from './visuals/four-eyes'
+import DataResidency from './visuals/data-residency'
+import TenantSso from './visuals/tenant-sso'
+import { topics, type TopicId } from '../data/topics'
+import type { Locale } from '../i18n'
+
+interface Props {
+  id: TopicId
+  locale?: Locale
+  /** Diagram on the left of the text. */
+  flip?: boolean
+}
+
+const { id, locale = 'en', flip = false } = Astro.props
+const topic = topics[id]
+const t = topic[locale]
+const wide = !!topic.wide
+---
+
+<section class="border-t">
+  <div
+    class:list={[
+      'mx-auto max-w-6xl gap-10 px-5 py-16 sm:py-24',
+      wide ? 'space-y-12' : 'grid items-center lg:gap-16',
+      !wide && (flip ? 'lg:grid-cols-[1.2fr_0.8fr]' : 'lg:grid-cols-[0.8fr_1.2fr]'),
+    ]}
+  >
+    <div class:list={[flip && !wide && 'lg:order-2', wide && 'grid gap-8 lg:grid-cols-[1fr_0.8fr] lg:items-end']}>
+      <div>
+        <h2 class="text-balance text-3xl sm:text-[2.6rem] sm:leading-[1.1]">{t.title}</h2>
+        <p class="mt-5 max-w-2xl text-lg text-muted-foreground">{t.description}</p>
+      </div>
+      <ul class:list={['space-y-3', !wide && 'mt-7']}>
+        {
+          t.points.map((point) => (
+            <li class="flex items-start gap-3 text-sm">
+              <span class="mt-0.5 flex size-5 shrink-0 items-center justify-center rounded-full bg-primary/10 text-primary">
+                <Icon name="check" class="size-3" />
+              </span>
+              {point}
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+
+    <div class:list={['min-w-0 rounded-2xl bg-gradient-to-br p-4 ring-1 ring-border/60 sm:p-8', topic.tint, flip && !wide && 'lg:order-1']}>
+      {id === 'identity' && <IdentityFederation client:visible locale={locale} />}
+      {id === 'secure' && <SecurePolicy locale={locale} />}
+      {id === 'observe-alerts' && <ObserveAlert locale={locale} />}
+      {id === 'observe-logs' && <ObserveLogs locale={locale} />}
+      {id === 'regions' && <RegionsMove client:visible locale={locale} />}
+      {id === 'identity-rightsizing' && <IdentityRightsizing client:visible locale={locale} />}
+      {id === 'identity-growth' && <IdentityGrowth locale={locale} />}
+      {id === 'secure-governance' && <SecureGovernance locale={locale} />}
+      {id === 'auth-flow' && <AuthFlow client:visible locale={locale} />}
+      {id === 'observe-load' && <ObserveLoad locale={locale} />}
+      {id === 'operate-promote' && <OperatePromote client:visible locale={locale} />}
+      {id === 'manifest-apply' && <ManifestApply client:visible locale={locale} />}
+      {id === 'dev-quickstart' && <DevQuickstart client:visible locale={locale} />}
+      {id === 'audit-trail' && <AuditTrail client:visible locale={locale} />}
+      {id === 'login-branding' && <LoginBranding client:visible locale={locale} />}
+      {id === 'growth-path' && <GrowthPath client:visible locale={locale} />}
+      {id === 'member-sso' && <MemberSso client:visible locale={locale} />}
+      {id === 'four-eyes' && <FourEyes client:visible locale={locale} />}
+      {id === 'data-residency' && <DataResidency locale={locale} />}
+      {id === 'tenant-sso' && <TenantSso client:visible locale={locale} />}
+      {id === 'operate' && <OperateEphemeral locale={locale} />}
+    </div>
+  </div>
+</section>

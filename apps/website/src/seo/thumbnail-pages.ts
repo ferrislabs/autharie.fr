@@ -1,6 +1,3 @@
-import { products } from '../data/products'
-import { productsFr } from '../data/products.fr'
-import { solutions } from '../data/solutions'
 import type { StaticPage } from '@explainer/thumbnail/integration'
 
 /**
@@ -10,18 +7,18 @@ import type { StaticPage } from '@explainer/thumbnail/integration'
 
 const home = {
   en: {
-    eyebrow: 'Early access',
-    title: 'An identity provider of your own,',
-    accent: 'operated for you.',
+    eyebrow: 'Beta',
+    title: 'Identity, without the weight.',
+    accent: 'Built for the agent era.',
     description:
-      'Managed Ferriskey and Keycloak, on our clusters or on yours.',
+      'The identity platform for startups, built on Ferriskey.',
   },
   fr: {
-    eyebrow: 'Accès anticipé',
-    title: 'Un fournisseur d’identité à vous,',
-    accent: 'exploité pour vous.',
+    eyebrow: 'Bêta',
+    title: 'L’identité, sans le poids.',
+    accent: 'Pensée pour l’ère des agents.',
     description:
-      'Ferriskey et Keycloak gérés, sur nos clusters ou sur les vôtres.',
+      'La plateforme d’identité des startups, construite sur Ferriskey.',
   },
 }
 
@@ -33,23 +30,11 @@ const fixed = {
       accent: 'built to last.',
       description: 'Rust, Kubernetes, open source and a data plane you can place anywhere.',
     },
-    about: {
-      eyebrow: 'About us',
-      title: 'Identity is a hard problem.',
-      accent: 'We make it ours, not yours.',
-      description: 'A French company that builds and operates identity providers.',
-    },
     contact: {
       eyebrow: 'Contact',
       title: 'Tell us what you run,',
       accent: 'we will take it from there.',
-      description: 'Early access, pricing, a migration or a security question.',
-    },
-    pricing: {
-      eyebrow: 'Pricing',
-      title: 'Clear pricing,',
-      accent: 'whichever way you deploy.',
-      description: 'Managed or BYOC, FerrisKey or Keycloak.',
+      description: 'The beta, a migration or a security question.',
     },
   },
   fr: {
@@ -59,60 +44,25 @@ const fixed = {
       accent: 'conçu pour durer.',
       description: 'Rust, Kubernetes, open source et un data plane que vous placez où vous voulez.',
     },
-    about: {
-      eyebrow: 'À propos',
-      title: 'L’identité est un problème difficile.',
-      accent: 'Nous le prenons à notre charge.',
-      description: 'Une société française qui construit et exploite des fournisseurs d’identité.',
-    },
     contact: {
       eyebrow: 'Contact',
       title: 'Dites-nous ce que vous faites tourner,',
       accent: 'nous nous occupons du reste.',
-      description: 'Accès anticipé, tarifs, une migration ou une question de sécurité.',
-    },
-    pricing: {
-      eyebrow: 'Tarifs',
-      title: 'Des tarifs lisibles,',
-      accent: 'quel que soit votre mode de déploiement.',
-      description: 'Managé ou BYOC, FerrisKey ou Keycloak.',
+      description: 'La bêta, une migration ou une question de sécurité.',
     },
   },
 }
 
 const prefix = { en: '', fr: '/fr' } as const
-const word = { en: { product: 'Product', solutions: 'Solutions' }, fr: { product: 'Produit', solutions: 'Solutions' } }
 
 export const thumbnailPages: StaticPage[] = (['en', 'fr'] as const).flatMap((locale) => {
   const p = prefix[locale]
   return [
     { path: locale === 'en' ? '/' : '/fr', locale, ...home[locale] },
-    ...(['technology', 'about', 'contact', 'pricing'] as const).map((slug) => ({
+    ...(['technology', 'contact'] as const).map((slug) => ({
       path: `${p}/${slug}`,
       locale,
       ...fixed[locale][slug],
     })),
-    ...products.map((product) => {
-      const copy = locale === 'fr' ? { ...product, ...productsFr[product.slug] } : product
-      return {
-        path: `${p}/products/${product.slug}`,
-        locale,
-        eyebrow: `${word[locale].product} · ${product.name}`,
-        title: copy.hero.title,
-        accent: copy.hero.accent,
-        description: copy.tagline,
-      }
-    }),
-    ...solutions.map((solution) => {
-      const c = solution.copy[locale]
-      return {
-        path: `${p}/solutions/${solution.slug}`,
-        locale,
-        eyebrow: `${word[locale].solutions} · ${c.name}`,
-        title: c.hero.title,
-        accent: c.hero.accent,
-        description: c.tagline,
-      }
-    }),
   ]
 })
