@@ -27,6 +27,8 @@ Success: a visitor requests free access, tries a space on a real project, likes 
 
 ## Positioning
 
+Autharie is an IAM, not an agent orchestrator: it never runs agents. It is the identity platform behind users, service accounts and AI agents, with an experience on top that simplifies identity, rights and authorization for all three, speeds up go-to-market, and keeps the high-security features demanding customers expect (two-factor, passkeys, SSO with SAML, identity providers, user federation, roles, clients, analytics). Agent control is the differentiator, not the whole product: the home page must show all three populations.
+
 Autharie is the managed experience layer on top of Ferriskey, the open source IAM written in Rust by the same team. It sells a next-generation, agentic AI experience and the trust you need when delegating identity, not an IAM and not identity-provider plumbing (managing a few apps or setting up TOTP is something most companies already handle).
 
 Direct competitor: BetterAuth, a TypeScript library developers install inside their app, with a light agent layer. BetterAuth's path is "install the library"; Autharie's path is "try a free space, like it, pay for premium features". Autharie operates, upgrades and audits the service; the customer writes rules, not infrastructure.

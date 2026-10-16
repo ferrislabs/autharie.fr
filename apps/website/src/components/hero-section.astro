@@ -1,5 +1,5 @@
 ---
-import { AgentControl } from './agent-control'
+import { IdentityPanel } from './identity-panel'
 import Icon from './icon.astro'
 import type { Locale } from '../i18n'
 import { primaryCta } from '../platform'
@@ -15,17 +15,17 @@ const { locale = 'en' } = Astro.props
 const copy = {
   en: {
     badge: 'Private beta · limited spots · free to start',
-    title1: 'Your AI agents do the work.',
-    title2: 'You stay in control.',
-    body: 'Autharie gives each AI agent its own access, shows you everything it does and stops it at the first slip. Sign in for your users is included.',
+    title1: 'Users, services, AI agents:',
+    title2: 'one identity platform.',
+    body: 'Secure sign in for your users, service accounts for your apps, limited rights and a stop button for your AI agents. Autharie does not run your agents; it gives them an identity and rules.',
     how: 'See how it works',
     note: 'Ready in 2 minutes · No credit card · Made in France',
   },
   fr: {
     badge: 'Bêta privée · places limitées · gratuit pour démarrer',
-    title1: 'Vos agents IA travaillent.',
-    title2: 'Vous gardez la main.',
-    body: "Autharie donne à chaque agent IA ses propres accès, vous montre tout ce qu'il fait et l'arrête au moindre écart. La connexion de vos utilisateurs est incluse.",
+    title1: 'Utilisateurs, services, agents IA :',
+    title2: 'une seule plateforme d’identité.',
+    body: "Connexion sécurisée pour vos utilisateurs, comptes de service pour vos applications, droits limités et bouton stop pour vos agents IA. Autharie ne fait pas tourner vos agents : il leur donne une identité et des règles.",
     how: 'Voir comment ça marche',
     note: 'Prêt en 2 minutes · Sans carte bancaire · Conçu en France',
   },
@@ -91,7 +91,7 @@ const cta = primaryCta(locale, consoleUrl)
       >
       </div>
       <div class="relative">
-        <AgentControl client:visible locale={locale} />
+        <IdentityPanel client:visible locale={locale} />
       </div>
     </div>
   </div>

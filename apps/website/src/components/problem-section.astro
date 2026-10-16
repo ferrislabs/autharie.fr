@@ -9,39 +9,39 @@ const { locale = 'en' } = Astro.props
 
 const copy = {
   en: {
-    title: 'Your agents move faster than your access rules',
-    lead: 'AI is everywhere now: assistants, automations, in-house agents. Identity and access were designed for people who click, not for software that acts on its own.',
+    title: 'Users, services, agents: three identities, often three patch jobs',
+    lead: 'Sign in built by hand for your users, API keys lying around for your services, and now AI agents acting on their own. Each one ends up with its own rules, and nobody sees the whole picture.',
     items: [
       {
-        title: 'Agents with far too many rights',
-        description: 'To move fast, they get an admin API key. One mistake, and the agent can do anything.',
+        title: 'Your users',
+        description: 'Two-factor, passkeys, company SSO: weeks of work before the first customer, then security fixes to keep up with.',
       },
       {
-        title: 'No idea what happened',
-        description: 'When an agent acts, nobody knows who started it, on whose behalf, or with which right.',
+        title: 'Your services',
+        description: 'Shared API keys, never rotated, that open far more than the service needs.',
       },
       {
-        title: 'No stop button',
-        description: 'An agent that runs away keeps going until someone notices the damage.',
-      }
+        title: 'Your AI agents',
+        description: 'Rights that are too broad, no record of who started them, and no stop button when they run away.',
+      },
     ],
   },
   fr: {
-    title: 'Vos agents vont plus vite que vos règles d’accès',
-    lead: 'L’IA entre partout : assistants, automatisations, agents maison. Mais l’identité et les accès ont été pensés pour des humains qui cliquent, pas pour des logiciels qui agissent seuls.',
+    title: 'Utilisateurs, services, agents : trois identités, souvent trois bricolages',
+    lead: 'Une connexion codée à la main pour vos utilisateurs, des clés API qui traînent pour vos services, et maintenant des agents IA qui agissent seuls. Chacun finit avec ses propres règles, et personne n’a la vue d’ensemble.',
     items: [
       {
-        title: 'Des agents avec beaucoup trop de droits',
-        description: 'Pour aller vite, on leur donne une clé API admin. Une erreur, et l’agent peut tout faire.',
+        title: 'Vos utilisateurs',
+        description: 'Double authentification, passkeys, SSO d’entreprise : des semaines de travail avant le premier client, puis des correctifs de sécurité à suivre.',
       },
       {
-        title: 'Aucune idée de ce qui s’est passé',
-        description: 'Quand un agent agit, personne ne sait qui l’a lancé, au nom de qui, ni avec quel droit.',
+        title: 'Vos services',
+        description: 'Des clés API partagées, jamais renouvelées, qui ouvrent bien plus que ce dont le service a besoin.',
       },
       {
-        title: 'Pas de bouton stop',
-        description: 'Un agent qui s’emballe continue jusqu’à ce que quelqu’un remarque les dégâts.',
-      }
+        title: 'Vos agents IA',
+        description: 'Des droits trop larges, aucune trace de qui les a lancés, et pas de bouton stop quand ils s’emballent.',
+      },
     ],
   },
 }

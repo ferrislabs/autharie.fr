@@ -10,8 +10,8 @@ const { locale = 'en' } = Astro.props
 
 const copy = {
   en: {
-    title: 'Everything to run identity and agents, in one place',
-    lead: 'Five building blocks that work together, so you never stitch tools again.',
+    title: 'A complete IAM, with the experience on top',
+    lead: 'Everything a demanding customer expects from your sign in, plus the controls your agents need, in one place.',
     policies: {
       title: 'Access policies',
       description: 'Write in plain sentences what each agent and each user may do. As blocks for everyone, as code for your tech team.',
@@ -23,16 +23,30 @@ const copy = {
     },
     identities: {
       title: 'Identity management',
-      description: 'People, agents and apps each get their own identity, reduced rights and clear delegation. Sign in with Google or the identity providers you already use.',
+      description: 'Users, service accounts and AI agents each get their own identity, reduced rights and clear delegation, in one directory.',
       rows: [
-        ['Lea Martin', 'Person', 'Google'],
+        ['Lea Martin', 'User', 'Passkey'],
         ['Accounting assistant', 'Agent', 'for Lea'],
-        ['Billing service', 'App', 'API key'],
+        ['Billing service', 'Service', 'API key'],
       ],
+    },
+    signin: {
+      title: 'Sign in and security',
+      description: 'The features enterprise customers ask for, ready on day one.',
+      features: ['Passkeys', 'Two-factor', 'SSO with SAML', 'OpenID Connect', 'Google and social sign in', 'Identity providers', 'User federation'],
+    },
+    branding: {
+      title: 'Your theme on sign in pages and emails',
+      description: 'Logo, colours, language and wording on sign in, sign up, password reset and every email your users receive.',
+      signIn: 'Sign in to Acme',
+      button: 'Continue',
+      email: 'Confirm your email',
+      emailBody: 'Hi Lea, confirm your address to finish signing up.',
+      swatches: 'Theme',
     },
     security: {
       title: 'Account security',
-      description: 'Event analysis, privilege escalation prevention and permission audits with Seawatch.',
+      description: 'Event analysis and usage analytics, privilege escalation prevention and permission audits with Seawatch.',
       alerts: [
         ['Privilege escalation blocked', 'red'],
         ['Unusual sign in, Lisbon', 'amber'],
@@ -50,8 +64,8 @@ const copy = {
       message: 'Transfer blocked for Accounting assistant. Lea is notified.',
     },
     governance: {
-      title: 'User governance',
-      description: 'For organisations with several levels: group, subsidiaries, branches, teams. Each level manages its own users and apps, and nothing beyond.',
+      title: 'Roles, clients and organisations',
+      description: 'Roles and app clients per organisation, for structures with several levels: group, subsidiaries, branches, teams. Each level manages its own users and apps, and nothing beyond.',
       tree: [
         ['Acme Group', '1,200 users', 0],
         ['Acme France', '640 users', 1],
@@ -61,8 +75,8 @@ const copy = {
     },
   },
   fr: {
-    title: 'Tout pour piloter l’identité et vos agents, au même endroit',
-    lead: 'Cinq briques qui fonctionnent ensemble, pour ne plus jamais assembler des outils à la main.',
+    title: 'Un IAM complet, avec l’expérience en plus',
+    lead: 'Tout ce qu’un client exigeant attend de votre connexion, et les contrôles dont vos agents ont besoin, au même endroit.',
     policies: {
       title: 'Gestion des règles d’accès',
       description: 'Écrivez en phrases simples ce que chaque agent et chaque utilisateur peut faire. En blocs pour tout le monde, en code pour votre équipe tech.',
@@ -74,16 +88,30 @@ const copy = {
     },
     identities: {
       title: 'Gestion des identités',
-      description: 'Humains, agents et applications ont chacun leur identité, des droits réduits et une délégation claire. Connexion par Google ou les fournisseurs d’identité que vous utilisez déjà.',
+      description: 'Utilisateurs, comptes de service et agents IA ont chacun leur identité, des droits réduits et une délégation claire, dans un seul annuaire.',
       rows: [
-        ['Léa Martin', 'Humain', 'Google'],
+        ['Léa Martin', 'Utilisatrice', 'Passkey'],
         ['Assistant compta', 'Agent', 'pour Léa'],
-        ['Service facturation', 'Appli', 'Clé API'],
+        ['Service facturation', 'Service', 'Clé API'],
       ],
+    },
+    signin: {
+      title: 'Connexion et sécurité',
+      description: 'Les fonctions que demandent les clients exigeants, prêtes dès le premier jour.',
+      features: ['Passkeys', 'Double authentification', 'SSO SAML', 'OpenID Connect', 'Google et connexion sociale', 'Fournisseurs d’identité', 'Fédération d’utilisateurs'],
+    },
+    branding: {
+      title: 'Votre thème sur les pages de connexion et les e-mails',
+      description: 'Logo, couleurs, langue et textes sur la connexion, l’inscription, la réinitialisation du mot de passe et chaque e-mail reçu par vos utilisateurs.',
+      signIn: 'Connexion à Acme',
+      button: 'Continuer',
+      email: 'Confirmez votre e-mail',
+      emailBody: 'Bonjour Léa, confirmez votre adresse pour terminer votre inscription.',
+      swatches: 'Thème',
     },
     security: {
       title: 'Sécurisation de vos comptes',
-      description: 'Analyse des événements, prévention des élévations de privilèges et audit des permissions avec Seawatch.',
+      description: 'Analyse des événements et de l’usage, prévention des élévations de privilèges et audit des permissions avec Seawatch.',
       alerts: [
         ['Élévation de privilège bloquée', 'red'],
         ['Connexion inhabituelle, Lisbonne', 'amber'],
@@ -101,8 +129,8 @@ const copy = {
       message: 'Virement bloqué pour Assistant compta. Léa est prévenue.',
     },
     governance: {
-      title: 'Gouvernance des utilisateurs',
-      description: 'Pour les structures à plusieurs niveaux : groupe, filiales, agences, équipes. Chaque niveau gère ses utilisateurs et ses applications, et rien au-delà.',
+      title: 'Rôles, clients et organisations',
+      description: 'Rôles et clients applicatifs par organisation, pour les structures à plusieurs niveaux : groupe, filiales, agences, équipes. Chaque niveau gère ses utilisateurs et ses applications, et rien au-delà.',
       tree: [
         ['Groupe Acme', '1 200 utilisateurs', 0],
         ['Acme France', '640 utilisateurs', 1],
@@ -182,6 +210,52 @@ const body = 'p-6'
         <div class={body}>
           <h3 class="text-lg font-semibold">{t.identities.title}</h3>
           <p class="mt-1.5 text-sm leading-relaxed text-muted-foreground">{t.identities.description}</p>
+        </div>
+      </article>
+
+      <!-- Sign in and security -->
+      <article class={card}>
+        <div class={art} aria-hidden="true">
+          <ul class="flex max-w-[17rem] flex-wrap justify-center gap-1.5">
+            {t.signin.features.map((f) => <li class="rounded-full border bg-card px-2.5 py-1 text-xs font-medium shadow-raised">{f}</li>)}
+          </ul>
+        </div>
+        <div class={body}>
+          <h3 class="text-lg font-semibold">{t.signin.title}</h3>
+          <p class="mt-1.5 text-sm leading-relaxed text-muted-foreground">{t.signin.description}</p>
+        </div>
+      </article>
+
+      <!-- Branding -->
+      <article class:list={[card, 'lg:col-span-2']}>
+        <div class={art} aria-hidden="true">
+          <div class="flex w-full max-w-lg items-center justify-center gap-4">
+            <div class="w-48 shrink-0 rounded-xl border bg-card p-4 shadow-raised">
+              <div class="flex items-center gap-2">
+                <span class="size-5 rounded-md bg-[#c2410c]" />
+                <span class="text-xs font-semibold">{t.branding.signIn}</span>
+              </div>
+              <div class="mt-3 h-6 rounded-md border" />
+              <div class="mt-2 h-6 rounded-md border" />
+              <div class="mt-2 rounded-md bg-[#c2410c] py-1.5 text-center text-micro font-medium text-white">{t.branding.button}</div>
+            </div>
+            <div class="hidden w-56 shrink-0 rounded-xl border bg-card p-4 shadow-raised sm:block">
+              <div class="h-1.5 w-12 rounded bg-[#c2410c]" />
+              <p class="mt-3 text-xs font-semibold">{t.branding.email}</p>
+              <p class="mt-1.5 text-micro leading-relaxed text-muted-foreground">{t.branding.emailBody}</p>
+              <div class="mt-3 w-fit rounded-md bg-[#c2410c] px-3 py-1 text-micro font-medium text-white">{t.branding.button}</div>
+            </div>
+            <div class="hidden flex-col items-center gap-1.5 md:flex">
+              <span class="text-micro text-muted-foreground">{t.branding.swatches}</span>
+              {['#c2410c', '#634ecf', '#0f766e', '#1d4ed8'].map((c, i) => (
+                <span class:list={['size-5 rounded-full', i === 0 && 'ring-2 ring-[#c2410c] ring-offset-2']} style={`background:${c}`} />
+              ))}
+            </div>
+          </div>
+        </div>
+        <div class={body}>
+          <h3 class="text-lg font-semibold">{t.branding.title}</h3>
+          <p class="mt-1.5 text-sm leading-relaxed text-muted-foreground">{t.branding.description}</p>
         </div>
       </article>
 
