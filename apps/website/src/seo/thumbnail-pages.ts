@@ -7,31 +7,25 @@ import type { StaticPage } from '@explainer/thumbnail/integration'
 
 const home = {
   en: {
-    eyebrow: 'Beta',
-    title: 'Identity, without the weight.',
-    accent: 'Built for the agent era.',
-    description:
-      'The identity platform for startups, built on Ferriskey.',
+    title: 'One identity platform',
+    accent: 'for users, services and AI agents.',
+    description: 'A complete IAM built on Ferriskey, hosted in Europe.',
   },
   fr: {
-    eyebrow: 'Bêta',
-    title: 'L’identité, sans le poids.',
-    accent: 'Pensée pour l’ère des agents.',
-    description:
-      'La plateforme d’identité des startups, construite sur Ferriskey.',
+    title: 'Une plateforme d’identité',
+    accent: 'pour humains, services et agents IA.',
+    description: 'Un IAM complet construit sur Ferriskey, hébergé en Europe.',
   },
 }
 
 const fixed = {
   en: {
     technology: {
-      eyebrow: 'Technology',
       title: 'Boring where it counts,',
       accent: 'built to last.',
       description: 'Rust, Kubernetes, open source and a data plane you can place anywhere.',
     },
     contact: {
-      eyebrow: 'Contact',
       title: 'Tell us what you run,',
       accent: 'we will take it from there.',
       description: 'The beta, a migration or a security question.',
@@ -39,13 +33,11 @@ const fixed = {
   },
   fr: {
     technology: {
-      eyebrow: 'Technologie',
       title: 'Sobre là où ça compte,',
       accent: 'conçu pour durer.',
       description: 'Rust, Kubernetes, open source et un data plane que vous placez où vous voulez.',
     },
     contact: {
-      eyebrow: 'Contact',
       title: 'Dites-nous ce que vous faites tourner,',
       accent: 'nous nous occupons du reste.',
       description: 'La bêta, une migration ou une question de sécurité.',

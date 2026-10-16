@@ -59,16 +59,34 @@ const clamp = (text: string | undefined, max: number) => {
   return `${cut.slice(0, cut.lastIndexOf(' ')).replace(/[,;:\s]+$/, '')}…`
 }
 
-function Row({ name, kind, status }: { name: string; kind: string; status: string }) {
+type Tone = 'ok' | 'blocked'
+
+function Row({ initials, name, kind, status, tone, agent }: { initials: string; name: string; kind: string; status: string; tone: Tone; agent?: boolean }) {
+  const pill = tone === 'ok' ? { bg: '#ecfdf5', border: '#a7f3d0', text: '#047857' } : { bg: '#fef2f2', border: '#fecaca', text: '#b91c1c' }
   return (
-    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '15px 0', borderTop: `1px solid ${BORDER}` }}>
-      <div style={{ display: 'flex', flexDirection: 'column' }}>
+    <div style={{ display: 'flex', alignItems: 'center', padding: '14px 0', borderTop: `1px solid ${BORDER}` }}>
+      <div
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          width: 40,
+          height: 40,
+          borderRadius: 10,
+          background: agent ? INK : 'rgba(99,78,207,0.1)',
+          color: agent ? '#ffffff' : PRIMARY,
+          fontSize: 15,
+          fontWeight: 600,
+        }}
+      >
+        {initials}
+      </div>
+      <div style={{ display: 'flex', flexDirection: 'column', marginLeft: 14, flexGrow: 1 }}>
         <div style={{ fontSize: 19, fontWeight: 600, color: INK }}>{name}</div>
         <div style={{ fontSize: 15, color: MUTED, marginTop: 2 }}>{kind}</div>
       </div>
-      <div style={{ display: 'flex', alignItems: 'center', padding: '5px 11px', borderRadius: 7, background: '#f0fdf4', border: '1px solid #bbf7d0', color: '#15803d', fontSize: 15, fontWeight: 600 }}>
+      <div style={{ display: 'flex', padding: '5px 11px', borderRadius: 7, background: pill.bg, border: `1px solid ${pill.border}`, color: pill.text, fontSize: 15, fontWeight: 600 }}>
         {status}
-        <div style={{ width: 7, height: 7, borderRadius: 4, background: '#22c55e', marginLeft: 8 }} />
       </div>
     </div>
   )
@@ -83,8 +101,22 @@ export async function generateBrandThumbnail(options: BrandThumbnailOptions): Pr
   const description = total > 64 ? undefined : clamp(options.description, total > 48 ? 90 : 130)
   const copy =
     locale === 'fr'
-      ? { deployments: 'Déploiements', action: 'Nouveau déploiement', status: 'En cours', made: 'Conçu en France · 100 % européen' }
-      : { deployments: 'Deployments', action: 'New deployment', status: 'Running', made: 'Made in France · 100% European' }
+      ? {
+          directory: 'Identités',
+          tabs: ['Utilisateurs', 'Services', 'Agents IA'],
+          user: ['LM', 'Léa Martin', 'Utilisatrice · passkey et 2FA', 'Active'],
+          service: ['SF', 'Service facturation', 'Compte de service · clé API', 'Actif'],
+          agent: ['AC', 'Assistant compta', 'Agent IA · a tenté un virement', 'Bloqué'],
+          made: 'Conçu en France · 100 % européen',
+        }
+      : {
+          directory: 'Identities',
+          tabs: ['Users', 'Services', 'AI agents'],
+          user: ['LM', 'Lea Martin', 'User · passkey and two-factor', 'Active'],
+          service: ['BS', 'Billing service', 'Service account · API key', 'Active'],
+          agent: ['AA', 'Accounting assistant', 'AI agent · tried a transfer', 'Blocked'],
+          made: 'Made in France · 100% European',
+        }
 
   return satori(
     <div
@@ -161,7 +193,7 @@ export async function generateBrandThumbnail(options: BrandThumbnailOptions): Pr
         )}
       </div>
 
-      {/* A console panel, cropped by the bottom edge like the hero */}
+      {/* The identity directory: a user, a service and an agent, cropped by the bottom edge */}
       <div
         style={{
           position: 'absolute',
@@ -183,17 +215,30 @@ export async function generateBrandThumbnail(options: BrandThumbnailOptions): Pr
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: 24, height: 24, borderRadius: 12, border: `1px solid ${BORDER}`, fontSize: 12, fontWeight: 500, color: INK }}>A</div>
           <div style={{ marginLeft: 8, fontSize: 17, fontWeight: 600, color: INK }}>Acme</div>
           <div style={{ margin: '0 11px', color: '#b5b5bd', fontSize: 18 }}>/</div>
-          <div style={{ fontSize: 17, color: MUTED }}>{copy.deployments}</div>
+          <div style={{ fontSize: 17, color: MUTED }}>{copy.directory}</div>
         </div>
-        <div style={{ display: 'flex', flexDirection: 'column', padding: '22px 22px 0' }}>
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 14 }}>
-            <div style={{ fontSize: 26, fontWeight: 700, color: INK, letterSpacing: -0.6 }}>{copy.deployments}</div>
-            <div style={{ display: 'flex', padding: '8px 14px', borderRadius: 8, background: PRIMARY, color: '#fff', fontSize: 15, fontWeight: 600 }}>{copy.action}</div>
+        <div style={{ display: 'flex', flexDirection: 'column', padding: '20px 22px 0' }}>
+          <div style={{ display: 'flex', padding: 4, borderRadius: 999, border: `1px solid ${BORDER}`, background: SURFACE, marginBottom: 14, alignSelf: 'flex-start' }}>
+            {copy.tabs.map((tab, i) => (
+              <div
+                key={tab}
+                style={{
+                  display: 'flex',
+                  padding: '6px 14px',
+                  borderRadius: 999,
+                  fontSize: 15,
+                  fontWeight: 500,
+                  background: i === 0 ? PRIMARY : 'transparent',
+                  color: i === 0 ? '#ffffff' : MUTED,
+                }}
+              >
+                {tab}
+              </div>
+            ))}
           </div>
-          <Row name="acme-production" kind="Ferriskey · 1.4.2" status={copy.status} />
-          <Row name="acme-staging" kind="Ferriskey · 1.4.2" status={copy.status} />
-          <Row name="partners" kind="Keycloak · 26.1" status={copy.status} />
-          <Row name="sandbox" kind="Ferriskey · 1.4.2" status={copy.status} />
+          <Row initials={copy.user[0]} name={copy.user[1]} kind={copy.user[2]} status={copy.user[3]} tone="ok" />
+          <Row initials={copy.service[0]} name={copy.service[1]} kind={copy.service[2]} status={copy.service[3]} tone="ok" />
+          <Row initials={copy.agent[0]} name={copy.agent[1]} kind={copy.agent[2]} status={copy.agent[3]} tone="blocked" agent />
         </div>
       </div>
 
